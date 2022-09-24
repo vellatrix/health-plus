@@ -1,0 +1,11 @@
+dependencies {
+}
+
+// main method 없이 라이브러리 역할을 하는 model module
+bootJar {
+    enabled = false
+}
+
+jar{
+    enabled = true
+}

@@ -19,9 +19,16 @@ subprojects{
         mavenCentral()
     }
 
+    // 하위 모듈에서 공통으로 사용될 dependencies
     dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
     }
 
     test {

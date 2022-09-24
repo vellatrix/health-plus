@@ -10,5 +10,5 @@
 include 'app'
 include 'delivery-worker'
 include 'vendor'
-include 'user'
-include 'common'
+include 'customer'
+include 'model'
