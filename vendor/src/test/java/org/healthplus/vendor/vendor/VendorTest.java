@@ -1,9 +1,9 @@
 package org.healthplus.vendor.vendor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.healthplus.vendor.dto.*;
-import org.healthplus.vendor.entity.Vendor;
-import org.healthplus.vendor.enums.IsYn;
+import org.healthplus.vendor.dto.VendorProfileInquiryDTO;
+import org.healthplus.vendor.dto.VendorRegistrationDTO;
+import org.healthplus.vendor.dto.VendorRegistrationResultDTO;
 import org.healthplus.vendor.enums.Result;
 import org.healthplus.vendor.service.VendorService;
 import org.junit.jupiter.api.Test;

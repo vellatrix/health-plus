@@ -3,10 +3,6 @@ package org.healthplus.vendor.repository.impl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.vendor.dto.*;
-import org.healthplus.vendor.entity.QMenu;
-import org.healthplus.vendor.entity.QOptionDetail;
-import org.healthplus.vendor.entity.QOptionGroup;
-import org.healthplus.vendor.entity.QRestaurant;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
