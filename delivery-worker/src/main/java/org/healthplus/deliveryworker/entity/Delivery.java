@@ -1,9 +1,10 @@
 package org.healthplus.deliveryworker.entity;
 
 import lombok.*;
+import javax.persistence.*;
+import org.springframework.lang.Nullable;
 import org.healthplus.model.entity.Address;
 
-import javax.persistence.*;
 
 @Entity
 @Table(name = "delivery")
@@ -11,25 +12,33 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "delivery_id")
-    private Long deliveryId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "delivery_id")
+  private Long deliveryId;
 
-    @Column(name = "order_id")
-    private Long orderId;
+  @Column(name = "order_id")
+  private Long orderId;
 
-    @Column(name = "driver_id")
-    private Long driverId;
+  @Column(name = "driver_id")
+  private Long driverId;
 
-    @Embedded
-    private Address address;
+  @Column(name = "city")
+  private String city;
+  @Column(name = "street")
+  private String street;
+  @Column(name = "zip_code")
+  @Nullable
+  private Integer zipCode;
 
-    @Builder
-    public Delivery(Long deliveryId, Long orderId, Long driverId, Address address) {
-        this.deliveryId = deliveryId;
-        this.orderId = orderId;
-        this.driverId = driverId;
-        this.address = address;
-    }
+  @Builder
+  public Delivery(Long deliveryId, Long orderId, Long driverId, String city, String street,
+      @Nullable Integer zipCode) {
+    this.deliveryId = deliveryId;
+    this.orderId = orderId;
+    this.driverId = driverId;
+    this.city = city;
+    this.street = street;
+    this.zipCode = zipCode;
+  }
 }

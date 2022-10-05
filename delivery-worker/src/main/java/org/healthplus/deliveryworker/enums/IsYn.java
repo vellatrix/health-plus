@@ -1,5 +1,7 @@
 package org.healthplus.deliveryworker.enums;
 
 public enum IsYn {
-    Y, N
+
+  Y, N
+
 }

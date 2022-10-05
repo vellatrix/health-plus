@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class DeliveryWorkerControllerAdvice {
 
-    @ExceptionHandler(value = {DeliveryWorkerException.class})
-    protected ResponseEntity<ErrorResponse> handleDeliveryWorkerException(DeliveryWorkerException e) {
-        log.error("DeliveryWorkerException Code : {} - Message : {}", e.getErrorCode().getHttpStatus(), e.getErrorCode().getMessage());
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
+  @ExceptionHandler(value = {DeliveryWorkerException.class})
+  protected ResponseEntity<ErrorResponse> handleDeliveryWorkerException(
+      DeliveryWorkerException e) {
+    log.error("DeliveryWorkerException Code : {} - Message : {}",
+        e.getErrorCode().getHttpStatus(), e.getErrorCode().getMessage());
+    return ErrorResponse.toResponseEntity(e.getErrorCode());
+  }
+
 }
