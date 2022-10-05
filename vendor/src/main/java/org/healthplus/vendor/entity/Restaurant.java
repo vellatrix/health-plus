@@ -2,19 +2,19 @@ package org.healthplus.vendor.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.healthplus.model.entity.Address;
-import org.healthplus.vendor.dto.VendorRegistrationDTO;
 import org.healthplus.vendor.enums.IsYn;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
 @Entity
 @Table(name = "restaurant")
+@NoArgsConstructor
 public class Restaurant {
 
   @Id
@@ -54,11 +54,22 @@ public class Restaurant {
   @Column(name = "use_yn")
   private IsYn useYn;
 
-  @Embedded
-  private Address address;
+  @Column(name = "create_dt")
+  private LocalDateTime createdAt;
 
-  public Restaurant() {
-  }
+  @Column(name = "modify_dt")
+  private LocalDateTime modifiedAt;
+
+  @Column(name = "city")
+  private String city;
+
+  @Column(name = "street")
+  private String street;
+
+  @Column(name = "zip_code")
+  @Nullable
+  private String zipCode;
+
 
   @Builder
   public Restaurant(Long restaurantId,
@@ -70,7 +81,9 @@ public class Restaurant {
                     String subType,
                     Integer minimumPrice,
                     Integer deliveryFee,
-                    Address address) {
+                    String city,
+                    String street,
+                    String zipCode) {
     this.restaurantId = restaurantId;
     this.vendorId = vendorId;
     this.businessName = businessName;
@@ -82,6 +95,8 @@ public class Restaurant {
     this.deliveryFee = deliveryFee;
     this.openYn = IsYn.N;
     this.useYn = IsYn.Y;
-    this.address = address;
+    this.city = city;
+    this.street = street;
+    this.zipCode = zipCode;
   }
 }

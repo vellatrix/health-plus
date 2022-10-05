@@ -26,7 +26,10 @@ public class OptionDetail {
   @Column(name = "option_group_id")
   private Long optionGroupId;
 
+  @Column(name = "name")
   private String name;
+
+  @Column(name = "price")
   private Integer price;
 
   @Enumerated(EnumType.STRING)

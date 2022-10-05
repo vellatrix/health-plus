@@ -2,7 +2,6 @@ package org.healthplus.vendor.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.model.entity.Address;
 import org.healthplus.vendor.entity.Restaurant;
 import org.healthplus.vendor.entity.Vendor;
 import org.healthplus.vendor.enums.IsYn;
@@ -28,7 +27,7 @@ public class VendorRegistrationResultDTO {
   private IsYn openYn;
   private String city;
   private String street;
-  private Integer zipCode;
+  private String zipCode;
 
   public static VendorRegistrationResultDTO addVendorAndRestaurant(Vendor savedVendor, Restaurant savedRestaurant) {
     return VendorRegistrationResultDTO.builder()
@@ -47,9 +46,9 @@ public class VendorRegistrationResultDTO {
             .minimumPrice(savedRestaurant.getMinimumPrice())
             .deliveryFee(savedRestaurant.getDeliveryFee())
             .openYn(savedRestaurant.getOpenYn())
-            .city(savedRestaurant.getAddress().getCity())
-            .street(savedRestaurant.getAddress().getStreet())
-            .zipCode(savedRestaurant.getAddress().getZipCode())
+            .city(savedRestaurant.getCity())
+            .street(savedRestaurant.getStreet())
+            .zipCode(savedRestaurant.getZipCode())
             .build();
   }
 

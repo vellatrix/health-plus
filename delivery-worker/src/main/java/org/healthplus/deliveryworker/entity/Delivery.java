@@ -3,7 +3,6 @@ package org.healthplus.deliveryworker.entity;
 import lombok.*;
 import javax.persistence.*;
 import org.springframework.lang.Nullable;
-import org.healthplus.model.entity.Address;
 
 
 @Entity
@@ -25,15 +24,21 @@ public class Delivery {
 
   @Column(name = "city")
   private String city;
+
   @Column(name = "street")
   private String street;
+
   @Column(name = "zip_code")
   @Nullable
-  private Integer zipCode;
+  private String zipCode;
 
   @Builder
-  public Delivery(Long deliveryId, Long orderId, Long driverId, String city, String street,
-      @Nullable Integer zipCode) {
+  public Delivery(Long deliveryId,
+                  Long orderId,
+                  Long driverId,
+                  String city,
+                  String street,
+                  String zipCode) {
     this.deliveryId = deliveryId;
     this.orderId = orderId;
     this.driverId = driverId;

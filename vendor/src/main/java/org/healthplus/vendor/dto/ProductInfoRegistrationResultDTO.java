@@ -2,20 +2,12 @@ package org.healthplus.vendor.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.healthplus.model.entity.CommonDateTime;
 import org.healthplus.vendor.entity.Menu;
 import org.healthplus.vendor.entity.OptionDetail;
-import org.healthplus.vendor.entity.OptionGroup;
 import org.healthplus.vendor.enums.Category;
 import org.healthplus.vendor.enums.IsYn;
-import org.healthplus.vendor.enums.MenuType;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -47,7 +39,7 @@ public class ProductInfoRegistrationResultDTO {
             .description(savedMenu.getDescription())
             .soldYn(savedMenu.getSoldYn())
             .useYn(savedMenu.getUseYn())
-            .createdAt(savedMenu.getCommonDateTime().getCreatedAt())
+            .createdAt(savedMenu.getCreatedAt())
             .name(savedMenu.getName())
             .price(savedMenu.getPrice())
             .calorie(savedMenu.getCalorie())

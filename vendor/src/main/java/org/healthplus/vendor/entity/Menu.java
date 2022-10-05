@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.healthplus.model.entity.CommonDateTime;
 import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
 import org.healthplus.vendor.enums.Category;
 import org.healthplus.vendor.enums.IsYn;
@@ -43,18 +42,27 @@ public class Menu {
   @Column(name = "use_yn")
   private IsYn useYn;
 
-  @Embedded
-  private CommonDateTime commonDateTime;
+  @Column(name = "create_dt")
+  private LocalDateTime createdAt;
 
+  @Column(name = "modify_dt")
+  private LocalDateTime modifiedAt;
+
+  @Column(name = "name")
   private String name;
+
+  @Column(name = "price")
   private Integer price;
+
+  @Column(name = "calorie")
   private Integer calorie;
+
+  @Column(name = "description")
   private String description;
 
   @Builder
   public Menu(Long restaurantId,
               Long categoryId,
-              CommonDateTime commonDateTime,
               String name,
               Integer price,
               Integer calorie,
@@ -62,7 +70,7 @@ public class Menu {
               MenuType menuType) {
     this.restaurantId = restaurantId;
     this.categoryId = categoryId;
-    this.commonDateTime = commonDateTime;
+    this.createdAt = LocalDateTime.now();
     this.name = name;
     this.price = price;
     this.calorie = calorie;
@@ -72,15 +80,4 @@ public class Menu {
     this.useYn = IsYn.Y;
   }
 
-  public static Menu addMenu(Long vendorId, ProductInfoRegistrationDTO dto) {
-    return Menu.builder()
-            .name(dto.getName())
-            .price(dto.getPrice())
-            .calorie(dto.getCalorie())
-            .description(dto.getDescription())
-            .commonDateTime(new CommonDateTime(LocalDateTime.now()))
-            .categoryId(Category.selectCategoryId(dto.getCategoryType()))
-            .restaurantId(vendorId)
-            .build();
-  }
 }

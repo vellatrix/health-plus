@@ -3,7 +3,6 @@ package org.healthplus.deliveryworker.entity;
 import lombok.*;
 import org.healthplus.deliveryworker.enums.DeliveryType;
 import org.healthplus.deliveryworker.enums.IsYn;
-import org.healthplus.model.entity.CommonDateTime;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,11 +33,14 @@ public class DeliveryDriver {
   @Column(name = "delivery_type")
   private DeliveryType deliveryType;
 
+  @Column(name = "create_dt")
+  private LocalDateTime createdAt;
+
+  @Column(name = "modify_dt")
+  private LocalDateTime modifiedAt;
+
   @Column(name = "delete_dt")
   private LocalDateTime deletedAt;
-
-  @Embedded
-  private CommonDateTime commonDateTime;
 
   private String id;
   private String password;
@@ -53,8 +55,7 @@ public class DeliveryDriver {
       String phoneNumber,
       String vehicleNumber,
       DeliveryType deliveryType,
-      LocalDateTime deletedAt,
-      CommonDateTime commonDateTime,
+      LocalDateTime createdAt,
       String id,
       String password,
       String email,
@@ -65,8 +66,7 @@ public class DeliveryDriver {
     this.phoneNumber = phoneNumber;
     this.vehicleNumber = vehicleNumber;
     this.deliveryType = deliveryType;
-    this.deletedAt = deletedAt;
-    this.commonDateTime = commonDateTime;
+    this.createdAt = LocalDateTime.now();
     this.id = id;
     this.password = password;
     this.email = email;
