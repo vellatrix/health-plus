@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.healthplus.vendor.entity.QOptionDetail.*;
 
+
 @Repository
 @RequiredArgsConstructor
 public class OptionDetailRepositoryImpl implements OptionDetailRepositoryCustom {

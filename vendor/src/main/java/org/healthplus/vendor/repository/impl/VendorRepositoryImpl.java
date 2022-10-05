@@ -16,6 +16,7 @@ import static org.healthplus.vendor.entity.QOptionDetail.*;
 import static org.healthplus.vendor.entity.QOptionGroup.*;
 import static org.healthplus.vendor.entity.QRestaurant.*;
 
+
 @Repository
 @RequiredArgsConstructor
 public class VendorRepositoryImpl implements VendorRepositoryCustom {
@@ -61,9 +62,9 @@ public class VendorRepositoryImpl implements VendorRepositoryCustom {
               restaurant.minimumPrice.as("minimumPrice"),
               restaurant.deliveryFee.as("deliveryFee"),
               restaurant.openYn.as("openYn"),
-              restaurant.address.city,
-              restaurant.address.street,
-              restaurant.address.zipCode.as("zipCode")
+              restaurant.city.as("city"),
+              restaurant.street.as("street"),
+              restaurant.zipCode.as("zipCode")
             ))
             .from(restaurant)
             .where(restaurant.vendorId.eq(vendorId))

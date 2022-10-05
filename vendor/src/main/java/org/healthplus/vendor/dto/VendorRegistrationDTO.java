@@ -5,8 +5,6 @@ import lombok.Getter;
 import org.healthplus.vendor.entity.Restaurant;
 import org.healthplus.vendor.entity.Vendor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Builder
 public class VendorRegistrationDTO {

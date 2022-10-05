@@ -51,7 +51,7 @@ public class VendorTest {
           .deliveryFee(0)
           .city("서울특별시 서초구")
           .street("서초대로 332")
-          .zipCode(13324)
+          .zipCode("13324")
           .build();
 
   @Test

@@ -54,12 +54,6 @@ public class Restaurant {
   @Column(name = "use_yn")
   private IsYn useYn;
 
-  @Column(name = "create_dt")
-  private LocalDateTime createdAt;
-
-  @Column(name = "modify_dt")
-  private LocalDateTime modifiedAt;
-
   @Column(name = "city")
   private String city;
 

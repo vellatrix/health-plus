@@ -15,7 +15,7 @@ public class RestaurantInfoInquiryDTO {
   private IsYn openYn;
   private String city;
   private String street;
-  private Integer zipCode;
+  private String zipCode;
 
   @QueryProjection
   public RestaurantInfoInquiryDTO(String businessName,
@@ -26,7 +26,7 @@ public class RestaurantInfoInquiryDTO {
                                   IsYn openYn,
                                   String city,
                                   String street,
-                                  Integer zipCode) {
+                                  String zipCode) {
     this.businessName = businessName;
     this.businessHour = businessHour;
     this.businessNumber = businessNumber;

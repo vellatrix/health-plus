@@ -13,23 +13,4 @@ public enum Category {
     this.id = id;
   }
 
-  public static Long selectCategoryId(String type) {
-    for (Category value : Category.values()) {
-      if(type.equalsIgnoreCase(value.name())) {
-        return value.getId();
-      }
-    }
-
-    return 0L;
-  }
-
-  public static String selectCategoryName(Long id) {
-    for(Category value : Category.values()) {
-      if(id == value.getId()) {
-        return value.name();
-      }
-    }
-
-    return "None";
-  }
 }

@@ -5,18 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.healthplus.vendor.dto.*;
 import org.healthplus.vendor.entity.*;
 import org.healthplus.vendor.enums.Result;
-import org.healthplus.vendor.exception.*;
+import org.healthplus.vendor.exception.CustomException;
 import org.healthplus.vendor.repository.*;
 import org.healthplus.vendor.service.VendorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.healthplus.vendor.enums.Result.*;
+import static org.healthplus.vendor.enums.Result.SUCCESS;
 import static org.healthplus.vendor.exception.ErrorCode.*;
 
 @Service

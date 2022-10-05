@@ -1,8 +1,6 @@
 package org.healthplus.vendor.menu;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.healthplus.vendor.dto.*;
 import org.healthplus.vendor.enums.MenuType;
 import org.healthplus.vendor.service.VendorService;
@@ -37,6 +35,7 @@ public class MenuTest {
   private ObjectMapper objectMapper;
 
   static ProductInfoRegistrationDTO productInfo = ProductInfoRegistrationDTO.builder()
+          .categoryId(1L)
           .name("치즈 샐러드")
           .price(9000)
           .calorie(200)

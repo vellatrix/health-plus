@@ -14,6 +14,7 @@ import java.util.List;
 import static org.healthplus.vendor.entity.QMenu.*;
 import static org.healthplus.vendor.entity.QOptionDetail.*;
 
+
 @Repository
 @RequiredArgsConstructor
 public class MenuRepositoryImpl implements MenuRepositoryCustom {
@@ -26,7 +27,7 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
             .set(menu.name, productInfo.getName())
             .set(menu.price, productInfo.getPrice())
             .set(menu.calorie, productInfo.getCalorie())
-            .set(menu.commonDateTime.modifiedAt, LocalDateTime.now())
+            .set(menu.modifiedAt, LocalDateTime.now())
             .where(menu.menuId.eq(productId))
             .execute();
   }

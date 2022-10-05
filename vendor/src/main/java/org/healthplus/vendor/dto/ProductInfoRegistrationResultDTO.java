@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.ToString;
 import org.healthplus.vendor.entity.Menu;
 import org.healthplus.vendor.entity.OptionDetail;
-import org.healthplus.vendor.enums.Category;
 import org.healthplus.vendor.enums.IsYn;
 
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ public class ProductInfoRegistrationResultDTO {
 
   private Long menuId;
   private Long restaurantId;
-  private String category;
+  private Long categoryId;
   private String type;
   private String description;
   private IsYn soldYn;
@@ -34,7 +33,7 @@ public class ProductInfoRegistrationResultDTO {
     return ProductInfoRegistrationResultDTO.builder()
             .menuId(savedMenu.getMenuId())
             .restaurantId(savedMenu.getRestaurantId())
-            .category(Category.selectCategoryName(savedMenu.getCategoryId()))
+            .categoryId(savedMenu.getCategoryId())
             .type(savedMenu.getMenuType().name())
             .description(savedMenu.getDescription())
             .soldYn(savedMenu.getSoldYn())
