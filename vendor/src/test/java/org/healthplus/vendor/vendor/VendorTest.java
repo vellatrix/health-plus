@@ -1,9 +1,9 @@
 package org.healthplus.vendor.vendor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.healthplus.vendor.dto.*;
-import org.healthplus.vendor.entity.Vendor;
-import org.healthplus.vendor.enums.IsYn;
+import org.healthplus.vendor.dto.VendorProfileInquiryDTO;
+import org.healthplus.vendor.dto.VendorRegistrationDTO;
+import org.healthplus.vendor.dto.VendorRegistrationResultDTO;
 import org.healthplus.vendor.enums.Result;
 import org.healthplus.vendor.service.VendorService;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ public class VendorTest {
           .deliveryFee(0)
           .city("서울특별시 서초구")
           .street("서초대로 332")
-          .zipCode(13324)
+          .zipCode("13324")
           .build();
 
   @Test

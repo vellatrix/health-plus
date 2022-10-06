@@ -6,7 +6,14 @@ import lombok.ToString;
 import org.healthplus.vendor.dto.ProductOptionDetailInfoDTO;
 import org.healthplus.vendor.enums.IsYn;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +33,10 @@ public class OptionDetail {
   @Column(name = "option_group_id")
   private Long optionGroupId;
 
+  @Column(name = "name")
   private String name;
+
+  @Column(name = "price")
   private Integer price;
 
   @Enumerated(EnumType.STRING)

@@ -1,9 +1,17 @@
 package org.healthplus.deliveryworker.entity;
 
-import lombok.*;
-import javax.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
-import org.healthplus.model.entity.Address;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
@@ -25,15 +33,21 @@ public class Delivery {
 
   @Column(name = "city")
   private String city;
+
   @Column(name = "street")
   private String street;
+
   @Column(name = "zip_code")
   @Nullable
-  private Integer zipCode;
+  private String zipCode;
 
   @Builder
-  public Delivery(Long deliveryId, Long orderId, Long driverId, String city, String street,
-      @Nullable Integer zipCode) {
+  public Delivery(Long deliveryId,
+                  Long orderId,
+                  Long driverId,
+                  String city,
+                  String street,
+                  String zipCode) {
     this.deliveryId = deliveryId;
     this.orderId = orderId;
     this.driverId = driverId;

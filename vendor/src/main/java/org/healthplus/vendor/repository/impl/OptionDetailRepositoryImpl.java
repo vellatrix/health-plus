@@ -2,12 +2,12 @@ package org.healthplus.vendor.repository.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.healthplus.vendor.entity.QOptionDetail;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import static org.healthplus.vendor.entity.QOptionDetail.*;
+
 
 @Repository
 @RequiredArgsConstructor

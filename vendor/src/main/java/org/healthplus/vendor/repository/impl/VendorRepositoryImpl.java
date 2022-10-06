@@ -3,10 +3,6 @@ package org.healthplus.vendor.repository.impl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.vendor.dto.*;
-import org.healthplus.vendor.entity.QMenu;
-import org.healthplus.vendor.entity.QOptionDetail;
-import org.healthplus.vendor.entity.QOptionGroup;
-import org.healthplus.vendor.entity.QRestaurant;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +11,7 @@ import static org.healthplus.vendor.entity.QMenu.*;
 import static org.healthplus.vendor.entity.QOptionDetail.*;
 import static org.healthplus.vendor.entity.QOptionGroup.*;
 import static org.healthplus.vendor.entity.QRestaurant.*;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -61,9 +58,9 @@ public class VendorRepositoryImpl implements VendorRepositoryCustom {
               restaurant.minimumPrice.as("minimumPrice"),
               restaurant.deliveryFee.as("deliveryFee"),
               restaurant.openYn.as("openYn"),
-              restaurant.address.city,
-              restaurant.address.street,
-              restaurant.address.zipCode.as("zipCode")
+              restaurant.city.as("city"),
+              restaurant.street.as("street"),
+              restaurant.zipCode.as("zipCode")
             ))
             .from(restaurant)
             .where(restaurant.vendorId.eq(vendorId))

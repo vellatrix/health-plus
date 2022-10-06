@@ -2,10 +2,7 @@ package org.healthplus.vendor.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
-import org.healthplus.vendor.entity.OptionGroup;
 import org.healthplus.vendor.enums.IsYn;
-
-import java.util.List;
 
 @Getter
 public class ProductInfoInquiryDTO {

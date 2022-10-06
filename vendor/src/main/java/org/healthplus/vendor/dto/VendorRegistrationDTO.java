@@ -2,13 +2,8 @@ package org.healthplus.vendor.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.model.entity.Address;
-import org.healthplus.model.entity.CommonDateTime;
 import org.healthplus.vendor.entity.Restaurant;
 import org.healthplus.vendor.entity.Vendor;
-import org.healthplus.vendor.enums.IsYn;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -30,7 +25,7 @@ public class VendorRegistrationDTO {
   private Integer deliveryFee;
   private String city;
   private String street;
-  private Integer zipCode;
+  private String zipCode;
 
   public Vendor toVendorEntity() {
     return Vendor.builder()
@@ -41,7 +36,6 @@ public class VendorRegistrationDTO {
             .accountNumber(accountNumber)
             .email(email)
             .phoneNumber(phoneNumber)
-            .timeManagement(new CommonDateTime(LocalDateTime.now()))
             .build();
   }
   
@@ -55,7 +49,9 @@ public class VendorRegistrationDTO {
             .subType(subType)
             .minimumPrice(minimumPrice)
             .deliveryFee(deliveryFee)
-            .address(new Address(city, street, zipCode))
+            .city(city)
+            .street(street)
+            .zipCode(zipCode)
             .build();
   }
 }

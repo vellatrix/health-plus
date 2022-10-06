@@ -27,7 +27,7 @@ public class VendorProfileInquiryDTO {
   private IsYn openYn;
   private String city;
   private String street;
-  private Integer zipCode;
+  private String zipCode;
 
   public static VendorProfileInquiryDTO setProfile(Vendor vendor, Restaurant restaurant) {
     return VendorProfileInquiryDTO.builder()
@@ -46,9 +46,9 @@ public class VendorProfileInquiryDTO {
             .minimumPrice(restaurant.getMinimumPrice())
             .deliveryFee(restaurant.getDeliveryFee())
             .openYn(restaurant.getOpenYn())
-            .city(restaurant.getAddress().getCity())
-            .street(restaurant.getAddress().getStreet())
-            .zipCode(restaurant.getAddress().getZipCode())
+            .city(restaurant.getCity())
+            .street(restaurant.getStreet())
+            .zipCode(restaurant.getZipCode())
             .build();
   }
 

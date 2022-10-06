@@ -1,11 +1,21 @@
 package org.healthplus.deliveryworker.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.healthplus.deliveryworker.enums.DeliveryType;
 import org.healthplus.deliveryworker.enums.IsYn;
-import org.healthplus.model.entity.CommonDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,11 +44,14 @@ public class DeliveryDriver {
   @Column(name = "delivery_type")
   private DeliveryType deliveryType;
 
+  @Column(name = "create_dt")
+  private LocalDateTime createdAt;
+
+  @Column(name = "modify_dt")
+  private LocalDateTime modifiedAt;
+
   @Column(name = "delete_dt")
   private LocalDateTime deletedAt;
-
-  @Embedded
-  private CommonDateTime commonDateTime;
 
   private String id;
   private String password;
@@ -53,8 +66,7 @@ public class DeliveryDriver {
       String phoneNumber,
       String vehicleNumber,
       DeliveryType deliveryType,
-      LocalDateTime deletedAt,
-      CommonDateTime commonDateTime,
+      LocalDateTime createdAt,
       String id,
       String password,
       String email,
@@ -65,8 +77,7 @@ public class DeliveryDriver {
     this.phoneNumber = phoneNumber;
     this.vehicleNumber = vehicleNumber;
     this.deliveryType = deliveryType;
-    this.deletedAt = deletedAt;
-    this.commonDateTime = commonDateTime;
+    this.createdAt = LocalDateTime.now();
     this.id = id;
     this.password = password;
     this.email = email;

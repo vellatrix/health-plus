@@ -2,19 +2,25 @@ package org.healthplus.vendor.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.healthplus.model.entity.Address;
-import org.healthplus.vendor.dto.VendorRegistrationDTO;
 import org.healthplus.vendor.enums.IsYn;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @ToString
 @Entity
 @Table(name = "restaurant")
+@NoArgsConstructor
 public class Restaurant {
 
   @Id
@@ -54,11 +60,16 @@ public class Restaurant {
   @Column(name = "use_yn")
   private IsYn useYn;
 
-  @Embedded
-  private Address address;
+  @Column(name = "city")
+  private String city;
 
-  public Restaurant() {
-  }
+  @Column(name = "street")
+  private String street;
+
+  @Column(name = "zip_code")
+  @Nullable
+  private String zipCode;
+
 
   @Builder
   public Restaurant(Long restaurantId,
@@ -70,7 +81,9 @@ public class Restaurant {
                     String subType,
                     Integer minimumPrice,
                     Integer deliveryFee,
-                    Address address) {
+                    String city,
+                    String street,
+                    String zipCode) {
     this.restaurantId = restaurantId;
     this.vendorId = vendorId;
     this.businessName = businessName;
@@ -82,6 +95,8 @@ public class Restaurant {
     this.deliveryFee = deliveryFee;
     this.openYn = IsYn.N;
     this.useYn = IsYn.Y;
-    this.address = address;
+    this.city = city;
+    this.street = street;
+    this.zipCode = zipCode;
   }
 }
