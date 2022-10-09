@@ -5,8 +5,7 @@ import org.healthplus.deliveryworker.repository.impl.DeliveryDriverRepositoryCus
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface DeliveryDriverJpaRepository extends JpaRepository<DeliveryDriver, Long> {
-
-  DeliveryDriver save(DeliveryDriver deliveryDriver);
+public interface DeliveryDriverRepository extends JpaRepository<DeliveryDriver, Long>,
+    DeliveryDriverRepositoryCustom {
 
 }

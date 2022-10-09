@@ -1,7 +1,6 @@
 package org.healthplus.deliveryworker.entity;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,7 @@ import java.time.LocalDateTime;
 @Table(name = "delivery_driver")
 @Getter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryDriver {
 
   @Id
@@ -86,6 +84,5 @@ public class DeliveryDriver {
     this.name = name;
     this.location = location;
   }
-
 
 }
