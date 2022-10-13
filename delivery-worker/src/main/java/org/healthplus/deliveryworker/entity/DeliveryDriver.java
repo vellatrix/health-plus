@@ -53,12 +53,19 @@ public class DeliveryDriver {
   @Column(name = "delete_dt")
   private LocalDateTime deletedAt;
 
+  @Column(name = "id")
   private String id;
-  private String password;
-  private String email;
-  private String name;
-  private String location;
 
+  @Column(name = "password")
+  private String password;
+  @Column(name = "email")
+  private String email;
+
+  @Column(name = "name")
+  private String name;
+
+  @Column(name = "location")
+  private String location;
 
   @Builder
   public DeliveryDriver(Long driverId,
