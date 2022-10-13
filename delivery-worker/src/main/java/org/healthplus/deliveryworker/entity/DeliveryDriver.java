@@ -68,7 +68,7 @@ public class DeliveryDriver {
   private String location;
 
   @Builder
-  public DeliveryDriver(Long driverId,
+  public DeliveryDriver(
       IsYn userYn,
       String phoneNumber,
       String vehicleNumber,
@@ -79,7 +79,6 @@ public class DeliveryDriver {
       String email,
       String name,
       String location) {
-    this.driverId = driverId;
     this.userYn = userYn;
     this.phoneNumber = phoneNumber;
     this.vehicleNumber = vehicleNumber;
