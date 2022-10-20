@@ -3,6 +3,8 @@ package org.healthplus.vendor.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.healthplus.vendor.dto.ProductOptionDetailInfoDTO;
+import org.healthplus.vendor.dto.ProductOptionGroupInfoDTO;
 import org.healthplus.vendor.enums.IsYn;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Getter
 @ToString
@@ -29,6 +32,9 @@ public class OptionGroup {
   @Column(name = "menu_id")
   private Long menuId;
 
+  @Column(name = "name")
+  private String name;
+
   @Enumerated(EnumType.STRING)
   @Column(name = "basic_choice_yn")
   private IsYn basicChoiceYn;
@@ -41,13 +47,22 @@ public class OptionGroup {
   @Column(name = "use_yn")
   private IsYn useYn;
 
-  public OptionGroup(Long menuId) {
+  public OptionGroup(Long menuId, String name, IsYn basicChoiceYn, IsYn etcChoiceYn) {
     this.menuId = menuId;
-    this.basicChoiceYn = IsYn.Y;
-    this.etcChoiceYn = IsYn.N;
+    this.name = name;
+    this.basicChoiceYn = basicChoiceYn;
+    this.etcChoiceYn = etcChoiceYn;
     this.useYn = IsYn.Y;
   }
 
+  public ProductOptionGroupInfoDTO toOptionGroupDto(List<ProductOptionDetailInfoDTO> optionDetails) {
+    return ProductOptionGroupInfoDTO.builder()
+            .name(name)
+            .basicChoiceYn(basicChoiceYn)
+            .etcChoiceYn(etcChoiceYn)
+            .optionDetails(optionDetails)
+            .build();
 
+  }
 
 }

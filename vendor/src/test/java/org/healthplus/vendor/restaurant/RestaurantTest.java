@@ -1,7 +1,7 @@
 package org.healthplus.vendor.restaurant;
 
 import org.healthplus.vendor.dto.RestaurantInfoInquiryDTO;
-import org.healthplus.vendor.service.VendorService;
+import org.healthplus.vendor.service.RestaurantService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RestaurantTest {
 
   @Autowired
-  VendorService vendorService;
+  RestaurantService restaurantService;
 
   @Autowired
   MockMvc mockMvc;
@@ -41,7 +41,7 @@ public class RestaurantTest {
   void getRestaurantInfo() throws Exception {
     Long vendorId = 1L;
 
-    RestaurantInfoInquiryDTO restaurantInfo = vendorService.getRestaurant(vendorId);
+    RestaurantInfoInquiryDTO restaurantInfo = restaurantService.getRestaurant(vendorId);
 
     assertThat(restaurantInfo).isNotNull();
   }

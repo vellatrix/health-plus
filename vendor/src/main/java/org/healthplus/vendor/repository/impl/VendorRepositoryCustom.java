@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface VendorRepositoryCustom {
 
-  ProductInfoInquiryDTO findProductInfo(Long vendorId, Long productId);
-
-  List<ProductOptionDetailInfoDTO> findProductOptionInfo(Long productId);
-
   RestaurantInfoInquiryDTO findRestaurantInfo(Long vendorId);
 
 

@@ -2,6 +2,7 @@ package org.healthplus.vendor.exception;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,17 @@ public class ErrorResponse {
                     .timestamp(LocalDateTime.now())
                     .status(errorCode.getHttpStatus().value())
                     .message(errorCode.getMessage())
+                    .build()
+            );
+  }
+
+  public static ResponseEntity<ErrorResponse> toResponseEntity(HttpStatus status, String message) {
+    return ResponseEntity
+            .status(status)
+            .body(ErrorResponse.builder()
+                    .timestamp(LocalDateTime.now())
+                    .status(status.value())
+                    .message(message)
                     .build()
             );
   }

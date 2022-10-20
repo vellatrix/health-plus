@@ -61,13 +61,18 @@ public class OptionDetail {
     return optionDetailList;
   }
 
-  public static List<ProductOptionDetailInfoDTO> toDTO(List<OptionDetail> optionDetails) {
+  public static List<ProductOptionDetailInfoDTO> toDTOList(List<OptionDetail> optionDetails) {
     List<ProductOptionDetailInfoDTO> optionDetailDTOList = new ArrayList<>();
 
     for (OptionDetail optionDetail : optionDetails) {
-      optionDetailDTOList.add(new ProductOptionDetailInfoDTO(optionDetail.getName(), optionDetail.getPrice()));
+      optionDetailDTOList.add(new ProductOptionDetailInfoDTO(optionDetail.getOptionDetailId(), optionDetail.getName(), optionDetail.getPrice()));
     }
 
     return optionDetailDTOList;
   }
+
+  public static ProductOptionDetailInfoDTO toDTO(OptionDetail optionDetail) {
+    return new ProductOptionDetailInfoDTO(optionDetail.getOptionDetailId(), optionDetail.getName(), optionDetail.getPrice());
+  }
+
 }

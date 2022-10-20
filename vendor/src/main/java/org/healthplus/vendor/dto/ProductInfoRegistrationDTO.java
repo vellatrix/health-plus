@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.healthplus.vendor.entity.Menu;
 import org.healthplus.vendor.enums.MenuType;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class ProductInfoRegistrationDTO {
@@ -17,7 +19,7 @@ public class ProductInfoRegistrationDTO {
   private Integer calorie;
   private String categoryType;
   private MenuType menuType;
-  private ProductOptionGroupInfoDTO optionGroup;
+  private List<ProductOptionGroupInfoDTO> optionGroup;
 
   @Builder
   public ProductInfoRegistrationDTO(Long categoryId,
@@ -27,7 +29,7 @@ public class ProductInfoRegistrationDTO {
                                     Integer calorie,
                                     String categoryType,
                                     MenuType menuType,
-                                    ProductOptionGroupInfoDTO optionGroup) {
+                                    List<ProductOptionGroupInfoDTO> optionGroup) {
     this.categoryId = categoryId;
     this.name = name;
     this.price = price;
