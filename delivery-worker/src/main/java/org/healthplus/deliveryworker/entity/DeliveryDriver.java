@@ -67,7 +67,7 @@ public class DeliveryDriver {
   @Column(name = "location")
   private String location;
 
-  @Builder
+  @Builder(builderMethodName = "registrationBuilder")
   public DeliveryDriver(
       IsYn userYn,
       String phoneNumber,
