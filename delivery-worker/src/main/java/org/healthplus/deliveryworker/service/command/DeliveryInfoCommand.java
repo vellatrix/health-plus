@@ -38,17 +38,17 @@ public class DeliveryInfoCommand {
   }
 
   public DeliveryDriver toEntity() {
-    return new DeliveryDriver(
-        userYn,
-        phoneNumber,
-        vehicleNumber,
-        deliveryType,
-        LocalDateTime.now(),
-        id,
-        password,
-        email,
-        name,
-        location
-        );
+    return DeliveryDriver.registrationBuilder()
+        .id(id)
+        .name(name)
+        .password(password)
+        .email(email)
+        .location(location)
+        .phoneNumber(phoneNumber)
+        .vehicleNumber(vehicleNumber)
+        .deliveryType(deliveryType)
+        .createdAt(LocalDateTime.now())
+        .userYn(userYn)
+        .build();
   }
 }
