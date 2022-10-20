@@ -53,15 +53,22 @@ public class DeliveryDriver {
   @Column(name = "delete_dt")
   private LocalDateTime deletedAt;
 
+  @Column(name = "id")
   private String id;
+
+  @Column(name = "password")
   private String password;
+  @Column(name = "email")
   private String email;
+
+  @Column(name = "name")
   private String name;
+
+  @Column(name = "location")
   private String location;
 
-
   @Builder
-  public DeliveryDriver(Long driverId,
+  public DeliveryDriver(
       IsYn userYn,
       String phoneNumber,
       String vehicleNumber,
@@ -72,7 +79,6 @@ public class DeliveryDriver {
       String email,
       String name,
       String location) {
-    this.driverId = driverId;
     this.userYn = userYn;
     this.phoneNumber = phoneNumber;
     this.vehicleNumber = vehicleNumber;

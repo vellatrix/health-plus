@@ -13,8 +13,8 @@
 
 CREATE TABLE `delivery_driver` (
 	`driver_id`	int	NOT NULL,
-	`car_number`	varchar	NULL,
-	`car_type`	varchar	NULL,
+	`vehicle_number`	varchar	NULL,
+	`delivery_type`	varchar	NULL,
 	`id`	varchar	NULL,
 	`password`	varchar	NULL,
 	`location`	varchar	NULL,
