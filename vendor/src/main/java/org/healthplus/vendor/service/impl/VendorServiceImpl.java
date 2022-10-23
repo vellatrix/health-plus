@@ -46,60 +46,6 @@ public class VendorServiceImpl implements VendorService {
   private final OptionGroupRepository optionGroupRepository;
   private final OptionDetailRepository optionDetailRepository;
 
-  @Override
-  public ProductInfoInquiryDTO getProduct(Long vendorId, Long productId) {
-
-    ProductInfoInquiryDTO product = vendorRepository.findProductInfo(vendorId, productId);
-    List<ProductOptionDetailInfoDTO> optionList = vendorRepository.findProductOptionInfo(productId);
-
-    product.addOptionGroup(new ProductOptionGroupInfoDTO(optionList));
-
-    return product;
-  }
-
-  @Override
-  public RestaurantInfoInquiryDTO getRestaurant(Long vendorId) {
-    return vendorRepository.findRestaurantInfo(vendorId);
-  }
-
-  @Transactional(rollbackFor = Exception.class)
-  @Override
-  public Result updateProduct(Long vendorId, Long productId, ProductInfoDTO productInfo) {
-
-    long result = menuRepository.modifyProductInfo(vendorId, productId, productInfo);
-    if(result == 0) throw new CustomException(MENU_MODIFICATION_FAIL);
-
-    long optionCount = productInfo.getOptionGroup().getOptionDetails().size();
-    long successCount = menuRepository.modifyOptionDetailInfo(productInfo.getOptionGroup().getOptionDetails());
-
-    if(successCount != optionCount) throw new CustomException(MENU_OPTION_UPDATE_FAIL);
-
-    return SUCCESS;
-  }
-
-  @Transactional(rollbackFor = Exception.class)
-  @Override
-  public ProductInfoRegistrationResultDTO registerProductInfo(Long restaurantId, ProductInfoRegistrationDTO productInfo) {
-
-    Menu menuEntity = productInfo.toMenuEntity(restaurantId);
-
-    Menu savedMenu = menuRepository.save(menuEntity);
-
-    OptionGroup savedOptionGroup = optionGroupRepository.save(new OptionGroup(savedMenu.getMenuId()));
-
-    List<OptionDetail> optionDetails = OptionDetail.addOptionDetails(savedOptionGroup.getOptionGroupId(), productInfo.getOptionGroup().getOptionDetails());
-
-    List<OptionDetail> savedOptionDetails;
-    if(optionDetails.size() != 0) {
-      savedOptionDetails = optionDetailRepository.saveAll(optionDetails);
-    }
-    else {
-      savedOptionDetails = Collections.EMPTY_LIST;
-      log.info("No Menu Option Detail to register");
-    }
-
-    return ProductInfoRegistrationResultDTO.addProduct(savedMenu, savedOptionDetails);
-  }
 
   @Transactional(rollbackFor = Exception.class)
   @Override
@@ -126,14 +72,15 @@ public class VendorServiceImpl implements VendorService {
   @Override
   public Result removeVendor(Long vendorId) {
     try {
-      vendorRepository.deleteById(vendorId);
       Long restaurantId = restaurantRepository.findById(vendorId).get().getRestaurantId();
       List<Long> menuIdList = menuRepository.findIdList(restaurantId);
-      menuRepository.deleteAllById(menuIdList);
       List<Long> optionGroupIdList = optionGroupRepository.findIdList(menuIdList);
-      optionGroupRepository.deleteAllById(optionGroupIdList);
       List<Long> optionDetailIdList = optionDetailRepository.findIdList(optionGroupIdList);
+
       optionDetailRepository.deleteAllById(optionDetailIdList);
+      optionGroupRepository.deleteAllById(optionGroupIdList);
+      menuRepository.deleteAllById(menuIdList);
+      vendorRepository.deleteById(vendorId);
 
       return SUCCESS;
     }

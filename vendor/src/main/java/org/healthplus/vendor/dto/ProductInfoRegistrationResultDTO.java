@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.healthplus.vendor.entity.Menu;
 import org.healthplus.vendor.entity.OptionDetail;
+import org.healthplus.vendor.entity.OptionGroup;
 import org.healthplus.vendor.enums.IsYn;
 
 import java.time.LocalDateTime;
@@ -26,23 +27,23 @@ public class ProductInfoRegistrationResultDTO {
   private String name;
   private Integer price;
   private Integer calorie;
-  private List<ProductOptionDetailInfoDTO> optionDetails;
+  private List<ProductOptionGroupInfoDTO> optionGroups;
 
-  public static ProductInfoRegistrationResultDTO addProduct(Menu savedMenu,
-                                                            List<OptionDetail> savedOptionDetails) {
+  public static ProductInfoRegistrationResultDTO addProduct(Menu menu,
+                                                            List<ProductOptionGroupInfoDTO> optionGroups) {
     return ProductInfoRegistrationResultDTO.builder()
-            .menuId(savedMenu.getMenuId())
-            .restaurantId(savedMenu.getRestaurantId())
-            .categoryId(savedMenu.getCategoryId())
-            .type(savedMenu.getMenuType().name())
-            .description(savedMenu.getDescription())
-            .soldYn(savedMenu.getSoldYn())
-            .useYn(savedMenu.getUseYn())
-            .createdAt(savedMenu.getCreatedAt())
-            .name(savedMenu.getName())
-            .price(savedMenu.getPrice())
-            .calorie(savedMenu.getCalorie())
-            .optionDetails(OptionDetail.toDTO(savedOptionDetails))
+            .menuId(menu.getMenuId())
+            .restaurantId(menu.getRestaurantId())
+            .categoryId(menu.getCategoryId())
+            .type(menu.getMenuType().name())
+            .description(menu.getDescription())
+            .soldYn(menu.getSoldYn())
+            .useYn(menu.getUseYn())
+            .createdAt(menu.getCreatedAt())
+            .name(menu.getName())
+            .price(menu.getPrice())
+            .calorie(menu.getCalorie())
+            .optionGroups(optionGroups)
             .build();
   }
 }

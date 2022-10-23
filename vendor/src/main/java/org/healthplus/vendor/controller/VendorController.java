@@ -29,43 +29,6 @@ public class VendorController {
 
   private final VendorService vendorService;
 
-  @GetMapping("/{vendorId}/{productId}/info")
-  public ResponseEntity<ProductInfoInquiryDTO> getProductInfo(@PathVariable Long vendorId,
-                                                              @PathVariable Long productId) {
-
-    return ResponseEntity.ok(vendorService.getProduct(vendorId, productId));
-  }
-
-  @GetMapping("/{vendorId}/info")
-  public ResponseEntity<RestaurantInfoInquiryDTO> getRestaurantInfo(@PathVariable Long vendorId) {
-
-    return ResponseEntity.ok(vendorService.getRestaurant(vendorId));
-  }
-
-  @PostMapping("/{vendorId}/{productId}/order")
-  public ResponseEntity<ProductOrderDTO> orderProduct(@PathVariable Long vendorId,
-                                                      @PathVariable Long productId) {
-
-    // todo : 주문
-    return ResponseEntity.ok(new ProductOrderDTO());
-  }
-
-  @PutMapping("/{vendorId}/{productId}")
-  public ResponseEntity<Result> changeProductInfo(@PathVariable Long vendorId,
-                                                  @PathVariable Long productId,
-                                                  @RequestBody ProductInfoDTO productInfo) {
-
-    return ResponseEntity.ok(vendorService.updateProduct(vendorId, productId, productInfo));
-
-  }
-
-  @PostMapping("/{restaurantId}/product")
-  public ResponseEntity<ProductInfoRegistrationResultDTO> addProductInfo(@PathVariable Long restaurantId,
-                                                                         @RequestBody ProductInfoRegistrationDTO productInfo) {
-
-    return ResponseEntity.ok(vendorService.registerProductInfo(restaurantId, productInfo));
-  }
-
   @GetMapping("/{vendorId}/profile")
   public ResponseEntity<VendorProfileInquiryDTO> getVendorProfile(@PathVariable Long vendorId) {
 

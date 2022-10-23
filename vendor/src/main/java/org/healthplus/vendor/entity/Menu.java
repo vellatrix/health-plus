@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.healthplus.vendor.dto.ProductInfoListDTO;
 import org.healthplus.vendor.enums.IsYn;
 import org.healthplus.vendor.enums.MenuType;
 
@@ -85,4 +86,32 @@ public class Menu {
     this.useYn = IsYn.Y;
   }
 
+
+  @Builder
+  public Menu(Long menuId,
+              IsYn soldYn,
+              IsYn useYn,
+              String name,
+              Integer price,
+              Integer calorie,
+              String description) {
+    this.menuId = menuId;
+    this.soldYn = soldYn;
+    this.useYn = useYn;
+    this.name = name;
+    this.price = price;
+    this.calorie = calorie;
+    this.description = description;
+  }
+
+  public ProductInfoListDTO toMenuListDto() {
+    return ProductInfoListDTO.builder()
+            .name(name)
+            .price(price)
+            .calorie(calorie)
+            .description(description)
+            .soldYn(soldYn)
+            .useYn(useYn)
+            .build();
+  }
 }

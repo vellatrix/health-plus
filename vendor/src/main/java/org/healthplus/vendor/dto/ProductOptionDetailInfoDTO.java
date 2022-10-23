@@ -15,10 +15,14 @@ public class ProductOptionDetailInfoDTO {
   private Integer price;
 
   @QueryProjection
-  public ProductOptionDetailInfoDTO(String name, Integer price) {
+  public ProductOptionDetailInfoDTO(Long optionDetailId, String name, Integer price) {
+    this.optionDetailId = optionDetailId;
     this.name = name;
     this.price = price;
   }
 
-
+  public ProductOptionDetailInfoDTO(String name, Integer price) {
+    this.name = name;
+    this.price = price;
+  }
 }
