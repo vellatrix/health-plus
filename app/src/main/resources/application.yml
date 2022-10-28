@@ -10,7 +10,7 @@ spring:
 
   flyway:
     enabled: true # flyway 사용여부
-    baseline-on-migrate: true # baseline 설정
+    baseline-on-migrate: false # baseline 설정
     baseline-version: 1 # baseline-version을 몇부터 실행할지 설정
     url: jdbc:mysql://localhost:3306/health-plus
     user: root

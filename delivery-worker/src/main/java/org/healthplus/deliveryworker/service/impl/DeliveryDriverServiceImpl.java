@@ -10,7 +10,7 @@ import org.healthplus.deliveryworker.presentation.responseDto.DeliveryDriverProf
 import org.healthplus.deliveryworker.presentation.responseDto.DeliveryDriverRegistrationResultDTO;
 import org.healthplus.deliveryworker.repository.DeliveryDriverRepository;
 import org.healthplus.deliveryworker.service.DeliveryDriverService;
-import org.healthplus.deliveryworker.service.command.DeliveryInfoCommand;
+import org.healthplus.deliveryworker.service.command.DeliveryDriverInfoCommand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +24,9 @@ public class DeliveryDriverServiceImpl implements DeliveryDriverService {
 
   @Override
   public DeliveryDriverRegistrationResultDTO registerDriver(
-      DeliveryInfoCommand deliveryInfoCommand) {
+      DeliveryDriverInfoCommand deliveryDriverInfoCommand) {
     return DeliveryDriverRegistrationResultDTO.addDriverResult(
-        deliveryDriverRepository.save(deliveryInfoCommand.toEntity()));
+        deliveryDriverRepository.save(deliveryDriverInfoCommand.toEntity()));
   }
 
   @Override
