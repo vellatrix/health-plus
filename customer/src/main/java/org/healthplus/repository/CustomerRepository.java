@@ -1,7 +1,8 @@
 package org.healthplus.repository;
 
-import org.springframework.stereotype.Repository;
+import org.healthplus.entity.Customer;
+import org.healthplus.repository.impl.CustomerRepositoryCustom;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class CustomerRepository {
+public interface CustomerRepository extends JpaRepository<Customer, Long>, CustomerRepositoryCustom {
 }

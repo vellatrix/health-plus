@@ -19,23 +19,5 @@ public class VendorRepositoryImpl implements VendorRepositoryCustom {
 
   private final JPAQueryFactory query;
 
-  @Override
-  public RestaurantInfoInquiryDTO findRestaurantInfo(Long vendorId) {
-    return query.select(new QRestaurantInfoInquiryDTO(
-              restaurant.businessName.as("businessName"),
-              restaurant.businessHour.as("businessHour"),
-              restaurant.businessNumber.as("businessNumber"),
-              restaurant.minimumPrice.as("minimumPrice"),
-              restaurant.deliveryFee.as("deliveryFee"),
-              restaurant.openYn.as("openYn"),
-              restaurant.city.as("city"),
-              restaurant.street.as("street"),
-              restaurant.zipCode.as("zipCode")
-            ))
-            .from(restaurant)
-            .where(restaurant.vendorId.eq(vendorId))
-            .fetchOne();
-
-  }
 
 }

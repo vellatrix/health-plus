@@ -42,4 +42,5 @@ public class OptionGroupRepositoryImpl implements OptionGroupRepositoryCustom {
               .where(optionGroup.optionGroupId.eq(optionGroupDto.getOptionGroupId()))
               .execute();
   }
+
 }

@@ -1,4 +1,4 @@
-package org.healthplus.vendor.exception;
+package org.healthplus.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.TransactionException;

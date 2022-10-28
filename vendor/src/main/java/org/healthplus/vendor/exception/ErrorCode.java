@@ -13,6 +13,7 @@ public enum ErrorCode {
   /* 400 BAD_REQUEST */
   INVALID_VENDOR(BAD_REQUEST, "존재하지 않는 판매회원입니다."),
   INVALID_RESTAURANT(BAD_REQUEST, "존재하지 않는 식당입니다."),
+  INVALID_MENU(BAD_REQUEST, "존재하지 않는 메뉴입니다."),
   EMPTY_MENU(BAD_REQUEST, "등록할 메뉴가 없습니다."),
   /* 404 NOT_FOUND */
 

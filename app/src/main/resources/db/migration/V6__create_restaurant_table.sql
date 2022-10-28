@@ -14,7 +14,7 @@ CREATE TABLE `restaurant`
     `use_yn`          char(1)     NOT NULL DEFAULT 'Y' COMMENT '사용여부',
     `city`            varchar(50) NOT NULL COMMENT '시/군/구',
     `street`          varchar(50) NOT NULL COMMENT '동/내/읍',
-    `zip_code`        bigint      NOT NULL COMMENT '우편번호',
+    `zip_code`        varchar(6)  NOT NULL COMMENT '우편번호',
     PRIMARY KEY (`restaurant_id`),
     UNIQUE KEY `business_number` (`business_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COMMENT='식당';

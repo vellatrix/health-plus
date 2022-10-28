@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.healthplus.vendor.dto.ProductInfoListDTO;
+import org.healthplus.vendor.dto.ProductInfoDTO;
+import org.healthplus.vendor.dto.ProductOptionGroupInfoDTO;
 import org.healthplus.vendor.enums.IsYn;
 import org.healthplus.vendor.enums.MenuType;
 
@@ -17,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @ToString
@@ -59,6 +61,9 @@ public class Menu {
 
   @Column(name = "price")
   private Integer price;
+
+  @Column(name = "stock")
+  private Integer stock;
 
   @Column(name = "calorie")
   private Integer calorie;
@@ -104,8 +109,21 @@ public class Menu {
     this.description = description;
   }
 
-  public ProductInfoListDTO toMenuListDto() {
-    return ProductInfoListDTO.builder()
+  public static ProductInfoDTO toDTO(Menu menu, List<ProductOptionGroupInfoDTO> optionGroupDtoList) {
+    return ProductInfoDTO.builder()
+            .menuId(menu.getMenuId())
+            .name(menu.getName())
+            .price(menu.getPrice())
+            .description(menu.getDescription())
+            .useYn(menu.getUseYn())
+            .soldYn(menu.getSoldYn())
+            .calorie(menu.getCalorie())
+            .optionGroup(optionGroupDtoList)
+            .build();
+  }
+
+  public ProductInfoDTO toMenuListDto() {
+    return ProductInfoDTO.builder()
             .name(name)
             .price(price)
             .calorie(calorie)

@@ -51,7 +51,7 @@ public class OptionDetail {
   }
 
   public static List<OptionDetail> addOptionDetails(Long optionGroupId, List<ProductOptionDetailInfoDTO> optionDetails) {
-    if(optionDetails.size() == 0) return Collections.EMPTY_LIST;
+    if(optionDetails.size() == 0) throw new IllegalArgumentException("옵션 상세 데이터가 존재하지 않습니다.");
 
     List<OptionDetail> optionDetailList = new ArrayList<>();
     for (ProductOptionDetailInfoDTO dto : optionDetails) {

@@ -6,6 +6,6 @@ CREATE TABLE `delivery`
     `driver_id`   bigint      NOT NULL COMMENT '라이더 PK',
     `city`        varchar(50) NOT NULL COMMENT '시/군/구',
     `street`      varchar(50) NOT NULL COMMENT '동/내/읍',
-    `zipcode`     bigint DEFAULT NULL COMMENT '우편번호',
+    `zipcode`     varchar(6) DEFAULT NULL COMMENT '우편번호',
     PRIMARY KEY (`delivery_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='배달';

@@ -40,17 +40,4 @@ public class ProductInfoRegistrationDTO {
     this.optionGroup = optionGroup;
   }
 
-  public Menu toMenuEntity(Long restaurantId) {
-    return Menu.builder()
-            .restaurantId(restaurantId)
-            .categoryId(categoryId)
-            .name(name)
-            .price(price)
-            .calorie(calorie)
-            .description(description)
-            .menuType(menuType)
-            .build();
-
-  }
-
 }

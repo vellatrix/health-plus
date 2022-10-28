@@ -2,8 +2,8 @@ package org.healthplus.vendor.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.healthplus.vendor.dto.ProductInfoInquiryDTO;
-import org.healthplus.vendor.dto.ProductInfoListDTO;
+import org.healthplus.vendor.dto.ProductInfoByCategoryDTO;
+import org.healthplus.vendor.dto.ProductInfoDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationResultDTO;
 import org.healthplus.vendor.dto.ProductOptionDetailInfoDTO;
@@ -17,13 +17,18 @@ import org.healthplus.vendor.repository.MenuRepository;
 import org.healthplus.vendor.repository.OptionDetailRepository;
 import org.healthplus.vendor.repository.OptionGroupRepository;
 import org.healthplus.vendor.service.MenuService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static org.healthplus.vendor.enums.Result.SUCCESS;
@@ -39,21 +44,26 @@ public class MenuServiceImpl implements MenuService {
   private final OptionDetailRepository optionDetailRepository;
 
   @Override
-  public ProductInfoInquiryDTO getProduct(Long restaurantId, Long productId) {
+  public ProductInfoDTO getProduct(Long restaurantId, Long productId) {
 
-    ProductInfoInquiryDTO product = menuRepository.findProductInfo(restaurantId, productId);
-    List<ProductOptionDetailInfoDTO> optionList = optionDetailRepository.findProductOptionInfo(productId);
+    Menu menu = menuRepository.findById(productId).orElseThrow(() -> new CustomException(INVALID_MENU));
+    List<Menu> menuList = Collections.singletonList(menu);
+    List<OptionGroup> optionGroupList = optionGroupRepository.findAllByMenuId(productId);
+    List<OptionDetail> optionDetailList = optionDetailRepository.findAllByOptionGroupIdIn(optionGroupList.stream()
+            .map(optionGroup -> optionGroup.getOptionGroupId())
+            .collect(Collectors.toList()));
 
-    product.addOptionGroup(new ProductOptionGroupInfoDTO(optionList));
+    List<ProductInfoDTO> productsDto = getProductsDto(menuList, optionGroupList, optionDetailList);
 
-    return product;
+    return productsDto.get(0);
   }
 
-  @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+  @Transactional(rollbackFor = Exception.class)
   @Override
-  public Result updateProduct(Long vendorId, Long productId, ProductInfoListDTO productInfo) {
+  public List<ProductInfoDTO> updateProduct(Long restaurantId, Long productId, ProductInfoDTO productInfo) {
+    if(restaurantId == null || restaurantId == 0) throw new CustomException(INVALID_RESTAURANT);
 
-    long result = menuRepository.modifyProductInfo(vendorId, productId, productInfo);
+    long result = menuRepository.modifyProductInfo(restaurantId, productId, productInfo);
     if(result == 0) throw new CustomException(MENU_MODIFICATION_FAIL);
 
     long optionGroupModificationCount = 0;
@@ -72,7 +82,17 @@ public class MenuServiceImpl implements MenuService {
 
     if(optionDetailModificationCount != optionDetailCount) throw new CustomException(MENU_OPTION_DETAIL_UPDATE_FAIL);
 
-    return SUCCESS;
+    List<Menu> updatedMenu = Collections.singletonList(menuRepository.findById(productId).get());
+    List<OptionGroup> updatedOptionGroupList = optionGroupRepository.findAllByMenuId(updatedMenu.get(0).getMenuId());
+    List<Long> optionGroupIdList = updatedOptionGroupList.stream()
+            .map(optionGroup -> optionGroup.getOptionGroupId())
+            .collect(Collectors.toList());
+
+    List<OptionDetail> updatedOptionDetailList = optionDetailRepository.findAllByOptionGroupIdIn(optionGroupIdList);
+
+    List<ProductInfoDTO> productListDto = getProductsDto(updatedMenu, updatedOptionGroupList, updatedOptionDetailList);
+
+    return productListDto;
   }
 
   @Transactional(rollbackFor = Exception.class)
@@ -80,14 +100,22 @@ public class MenuServiceImpl implements MenuService {
   public List<ProductInfoRegistrationResultDTO> registerProductInfo(Long restaurantId, List<ProductInfoRegistrationDTO> productInfoList) {
 
     if(restaurantId == null || restaurantId == 0) throw new CustomException(INVALID_RESTAURANT);
-    if(productInfoList.size() == 0) throw new CustomException(EMPTY_MENU);
+    if(CollectionUtils.isEmpty(productInfoList)) throw new CustomException(EMPTY_MENU);
 
     List<ProductInfoRegistrationResultDTO> dtoList = new ArrayList<>();
 
     for (ProductInfoRegistrationDTO productInfo : productInfoList) {
-      Menu menuEntity = productInfo.toMenuEntity(restaurantId);
+      Menu menu = Menu.builder()
+              .restaurantId(restaurantId)
+              .categoryId(productInfo.getCategoryId())
+              .name(productInfo.getName())
+              .price(productInfo.getPrice())
+              .calorie(productInfo.getCalorie())
+              .description(productInfo.getDescription())
+              .menuType(productInfo.getMenuType())
+              .build();
 
-      Menu savedMenu = menuRepository.save(menuEntity);
+      Menu savedMenu = menuRepository.save(menu);
 
       List<ProductOptionGroupInfoDTO> optionGroupDtoList = new ArrayList<>();
 
@@ -102,17 +130,32 @@ public class MenuServiceImpl implements MenuService {
         optionGroupDtoList.add(savedOptionGroup.toOptionGroupDto(OptionDetail.toDTOList(savedOptionDetails)));
       }
 
-      dtoList.add(ProductInfoRegistrationResultDTO.addProduct(savedMenu, optionGroupDtoList));
+      ProductInfoRegistrationResultDTO resultDto = ProductInfoRegistrationResultDTO.builder()
+              .menuId(savedMenu.getMenuId())
+              .restaurantId(savedMenu.getRestaurantId())
+              .categoryId(savedMenu.getCategoryId())
+              .type(savedMenu.getMenuType().name())
+              .description(savedMenu.getDescription())
+              .soldYn(savedMenu.getSoldYn())
+              .useYn(savedMenu.getUseYn())
+              .createdAt(savedMenu.getCreatedAt())
+              .name(savedMenu.getName())
+              .price(savedMenu.getPrice())
+              .calorie(savedMenu.getCalorie())
+              .optionGroups(optionGroupDtoList)
+              .build();
+
+      dtoList.add(resultDto);
     }
 
     return dtoList;
   }
 
   @Override
-  public List<ProductInfoListDTO> getProductList(Long restaurantId) {
+  public List<ProductInfoDTO> getProductList(Long restaurantId) {
     if(restaurantId == null || restaurantId == 0) throw new CustomException(INVALID_VENDOR);
 
-    List<Menu> menuList = menuRepository.findProductListByVendorId(restaurantId);
+    List<Menu> menuList = menuRepository.findAllByRestaurantId(restaurantId);
 
     List<OptionGroup> groupList = optionGroupRepository.findGroupList(menuList.stream()
             .map(Menu::getMenuId)
@@ -122,8 +165,27 @@ public class MenuServiceImpl implements MenuService {
             .map(OptionGroup::getOptionGroupId)
             .collect(Collectors.toList()));
 
-    List<ProductInfoListDTO> menuDtoList = new ArrayList<>(menuList.size());
+    List<ProductInfoDTO> menuDtoList = getProductsDto(menuList, groupList, detailList);
 
+    return menuDtoList;
+  }
+
+  @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+  @Override
+  public Result removeProductInfo(Long restaurantId, Long productId) {
+
+    List<Long> optionGroupIdList = optionGroupRepository.findIdList(Arrays.asList(productId));
+    int executionResult = optionDetailRepository.deleteByOptionGroupIdList(optionGroupIdList);
+    optionGroupRepository.deleteByMenuId(productId);
+    menuRepository.deleteById(productId);
+
+    if(executionResult == 0) throw new CustomException(MENU_REMOVAL_FAIL);
+
+    return SUCCESS;
+  }
+
+  private List<ProductInfoDTO> getProductsDto(List<Menu> menuList, List<OptionGroup> groupList, List<OptionDetail> detailList) {
+    List<ProductInfoDTO> menuDtoList = new ArrayList<>();
     for (Menu menu : menuList) {
       List<ProductOptionGroupInfoDTO> optionGroupDtoList = new ArrayList<>();
 
@@ -137,42 +199,20 @@ public class MenuServiceImpl implements MenuService {
         }
 
         if(menu.getMenuId() == optionGroup.getMenuId()) {
-          optionGroupDtoList.add(ProductOptionGroupInfoDTO.builder()
-                  .optionGroupId(optionGroup.getOptionGroupId())
-                  .name(optionGroup.getName())
-                  .basicChoiceYn(optionGroup.getBasicChoiceYn())
-                  .etcChoiceYn(optionGroup.getEtcChoiceYn())
-                  .optionDetails(optionDetailDtoList)
-                  .build());
+          optionGroupDtoList.add(OptionGroup.toDTO(optionGroup, optionDetailDtoList));
         }
       }
 
-      menuDtoList.add(ProductInfoListDTO.builder()
-              .menuId(menu.getMenuId())
-              .name(menu.getName())
-              .price(menu.getPrice())
-              .description(menu.getDescription())
-              .useYn(menu.getUseYn())
-              .soldYn(menu.getSoldYn())
-              .calorie(menu.getCalorie())
-              .optionGroup(optionGroupDtoList)
-              .build());
+      menuDtoList.add(Menu.toDTO(menu, optionGroupDtoList));
     }
-
     return menuDtoList;
   }
 
-  @Transactional(rollbackFor = Exception.class)
   @Override
-  public Result removeProductInfo(Long restaurantId, Long productId) {
+  public Page<ProductInfoByCategoryDTO> getProductListByCategoryId(Long categoryId, Pageable pageable) {
 
-    List<Long> optionGroupIdList = optionGroupRepository.findIdList(Arrays.asList(productId));
-    int executionResult = optionDetailRepository.deleteByOptionGroupIdList(optionGroupIdList);
-    optionGroupRepository.deleteByMenuId(productId);
-    menuRepository.deleteById(productId);
+    Page<ProductInfoByCategoryDTO> menuList = menuRepository.findByCategoryId(categoryId, pageable);
 
-    if(executionResult == 0) throw new CustomException(MENU_REMOVAL_FAIL);
-
-    return SUCCESS;
+    return menuList;
   }
 }

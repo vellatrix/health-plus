@@ -1,7 +1,8 @@
 package org.healthplus.vendor.menu;
 
+import org.healthplus.vendor.dto.ProductInfoByCategoryDTO;
 import org.healthplus.vendor.dto.ProductInfoInquiryDTO;
-import org.healthplus.vendor.dto.ProductInfoListDTO;
+import org.healthplus.vendor.dto.ProductInfoDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationResultDTO;
 import org.healthplus.vendor.dto.ProductOptionDetailInfoDTO;
@@ -9,7 +10,6 @@ import org.healthplus.vendor.dto.ProductOptionGroupInfoDTO;
 import org.healthplus.vendor.enums.IsYn;
 import org.healthplus.vendor.enums.MenuType;
 import org.healthplus.vendor.enums.Result;
-import org.healthplus.vendor.repository.MenuRepository;
 import org.healthplus.vendor.repository.OptionDetailRepository;
 import org.healthplus.vendor.repository.OptionGroupRepository;
 import org.healthplus.vendor.service.MenuService;
@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -46,11 +48,9 @@ public class MenuTest {
     Long vendorId = 1L;
     Long productId = 1L;
 
-    ProductInfoInquiryDTO productInfo = menuService.getProduct(vendorId, productId);
+    ProductInfoDTO productInfo = menuService.getProduct(vendorId, productId);
 
-    assertThat(productInfo.getBusinessName()).isEqualTo("슈퍼 샐러드");
-    assertThat(productInfo.getProductName()).isEqualTo("닭가슴살 샐러드");
-    assertThat(productInfo.getOptionGroup().getOptionDetails().size()).isEqualTo(3);
+    assertThat(productInfo).isNotNull();
   }
 
   @Test
@@ -124,7 +124,7 @@ public class MenuTest {
     Long restaurantId = 1L;
 
     // when
-    List<ProductInfoListDTO> productList = menuService.getProductList(restaurantId);
+    List<ProductInfoDTO> productList = menuService.getProductList(restaurantId);
 
     // then
     assertThat(productList).isNotNull();
@@ -139,6 +139,53 @@ public class MenuTest {
     Result result = menuService.removeProductInfo(restaurantId, productId);
 
     assertThat(result).isEqualTo(Result.SUCCESS);
+  }
+
+  @Test
+  void updateProduct() {
+    Long restaurantId = 1L;
+    Long productId = 1L;
+
+    ProductInfoDTO newProductInfo = ProductInfoDTO.builder()
+            .menuId(1L)
+            .name("골드 치킨 샐러드")
+            .price(13000)
+            .calorie(600)
+            .description("우아한 샐러드")
+            .optionGroup(Arrays.asList(
+                    new ProductOptionGroupInfoDTO(2L,"냠냠", IsYn.Y, IsYn.N,
+                            Arrays.asList(
+                                    new ProductOptionDetailInfoDTO(2L,"냠 치킨", 12000),
+                                    new ProductOptionDetailInfoDTO(3L,"냠2 치킨", 13000),
+                                    new ProductOptionDetailInfoDTO(4L,"냠3 치킨", 20000)
+                            )),
+                    new ProductOptionGroupInfoDTO(3L,"소스선택", IsYn.Y, IsYn.Y,
+                            Arrays.asList(
+                                    new ProductOptionDetailInfoDTO(40L,"오리엔탈", 500),
+                                    new ProductOptionDetailInfoDTO(41L,"양념", 600),
+                                    new ProductOptionDetailInfoDTO(42L,"갈릭", 800),
+                                    new ProductOptionDetailInfoDTO(43L,"타르타르", 700)
+                            ))
+            ))
+            .build();
+
+    List<ProductInfoDTO> result = menuService.updateProduct(restaurantId,
+                                                                productId,
+                                                                newProductInfo);
+
+    System.out.println(result);
+    assertThat(result).isNotNull();
+  }
+
+  @Test
+  void getProductListByCategoryId() {
+    Long categoryId = 1L;
+
+    PageRequest pageRequest = PageRequest.of(0, 4);
+
+    Page<ProductInfoByCategoryDTO> productList = menuService.getProductListByCategoryId(categoryId, pageRequest);
+
+    assertThat(productList.getSize()).isEqualTo(4);
   }
 
 }

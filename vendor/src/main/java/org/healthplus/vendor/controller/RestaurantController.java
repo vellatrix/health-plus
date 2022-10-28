@@ -16,9 +16,9 @@ public class RestaurantController {
 
   private final RestaurantService restaurantService;
 
-  @GetMapping("/{vendorId}/info")
-  public ResponseEntity<RestaurantInfoInquiryDTO> getRestaurantInfo(@PathVariable Long vendorId) {
+  @GetMapping("/{restaurantId}/info")
+  public RestaurantInfoInquiryDTO getRestaurantInfo(@PathVariable Long restaurantId) {
 
-    return ResponseEntity.ok(restaurantService.getRestaurant(vendorId));
+    return restaurantService.getRestaurant(restaurantId);
   }
 }

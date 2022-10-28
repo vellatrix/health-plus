@@ -2,19 +2,9 @@ package org.healthplus.vendor.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.healthplus.vendor.dto.ProductInfoDTO;
-import org.healthplus.vendor.dto.ProductInfoInquiryDTO;
-import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
-import org.healthplus.vendor.dto.ProductInfoRegistrationResultDTO;
-import org.healthplus.vendor.dto.ProductOptionDetailInfoDTO;
-import org.healthplus.vendor.dto.ProductOptionGroupInfoDTO;
-import org.healthplus.vendor.dto.RestaurantInfoInquiryDTO;
 import org.healthplus.vendor.dto.VendorProfileInquiryDTO;
 import org.healthplus.vendor.dto.VendorRegistrationDTO;
 import org.healthplus.vendor.dto.VendorRegistrationResultDTO;
-import org.healthplus.vendor.entity.Menu;
-import org.healthplus.vendor.entity.OptionDetail;
-import org.healthplus.vendor.entity.OptionGroup;
 import org.healthplus.vendor.entity.Restaurant;
 import org.healthplus.vendor.entity.Vendor;
 import org.healthplus.vendor.enums.Result;
@@ -29,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.healthplus.vendor.enums.Result.SUCCESS;
@@ -49,13 +38,58 @@ public class VendorServiceImpl implements VendorService {
 
   @Transactional(rollbackFor = Exception.class)
   @Override
-  public VendorRegistrationResultDTO registerVendor(VendorRegistrationDTO vendorInfo) {
+  public VendorRegistrationResultDTO registerVendor(VendorRegistrationDTO vendorDto) {
 
-    Vendor savedVendor = vendorRepository.save(vendorInfo.toVendorEntity());
+    Vendor vendor = Vendor.builder()
+            .id(vendorDto.getId())
+            .password(vendorDto.getPassword())
+            .name(vendorDto.getName())
+            .bank(vendorDto.getBank())
+            .accountNumber(vendorDto.getAccountNumber())
+            .email(vendorDto.getEmail())
+            .phoneNumber(vendorDto.getPhoneNumber())
+            .build();
 
-    Restaurant savedRestaurant = restaurantRepository.save(vendorInfo.toRestaurantEntity(savedVendor.getVendorId()));
+    Vendor savedVendor = vendorRepository.save(vendor);
 
-    return VendorRegistrationResultDTO.addVendorAndRestaurant(savedVendor, savedRestaurant);
+    Restaurant restaurant = Restaurant.builder()
+            .vendorId(savedVendor.getVendorId())
+            .businessName(vendorDto.getBusinessName())
+            .businessHour(vendorDto.getBusinessHour())
+            .businessNumber(vendorDto.getBusinessNumber())
+            .mainType(vendorDto.getMainType())
+            .subType(vendorDto.getSubType())
+            .minimumPrice(vendorDto.getMinimumPrice())
+            .deliveryFee(vendorDto.getDeliveryFee())
+            .city(vendorDto.getCity())
+            .street(vendorDto.getStreet())
+            .zipCode(vendorDto.getZipCode())
+            .build();
+
+    Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+
+    VendorRegistrationResultDTO vendorRegistrationResultDTO = VendorRegistrationResultDTO.builder()
+            .menuId(savedVendor.getVendorId())
+            .name(savedVendor.getName())
+            .bank(savedVendor.getBank())
+            .accountNumber(savedVendor.getAccountNumber())
+            .email(savedVendor.getEmail())
+            .phoneNumber(savedVendor.getPhoneNumber())
+            .restaurantId(savedRestaurant.getRestaurantId())
+            .businessName(savedRestaurant.getBusinessName())
+            .businessHour(savedRestaurant.getBusinessHour())
+            .businessNumber(savedRestaurant.getBusinessNumber())
+            .mainType(savedRestaurant.getMainType())
+            .subType(savedRestaurant.getSubType())
+            .minimumPrice(savedRestaurant.getMinimumPrice())
+            .deliveryFee(savedRestaurant.getDeliveryFee())
+            .openYn(savedRestaurant.getOpenYn())
+            .city(savedRestaurant.getCity())
+            .street(savedRestaurant.getStreet())
+            .zipCode(savedRestaurant.getZipCode())
+            .build();
+
+    return vendorRegistrationResultDTO;
 
   }
 
@@ -65,14 +99,35 @@ public class VendorServiceImpl implements VendorService {
     Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new CustomException(INVALID_VENDOR));
     Restaurant restaurant = restaurantRepository.findByVendorId(vendorId);
 
-    return VendorProfileInquiryDTO.setProfile(vendor, restaurant);
+    VendorProfileInquiryDTO vendorProfileInquiryDTO = VendorProfileInquiryDTO.builder()
+            .menuId(vendor.getVendorId())
+            .name(vendor.getName())
+            .bank(vendor.getBank())
+            .accountNumber(vendor.getAccountNumber())
+            .email(vendor.getEmail())
+            .phoneNumber(vendor.getPhoneNumber())
+            .restaurantId(restaurant.getRestaurantId())
+            .businessName(restaurant.getBusinessName())
+            .businessHour(restaurant.getBusinessHour())
+            .businessNumber(restaurant.getBusinessNumber())
+            .mainType(restaurant.getMainType())
+            .subType(restaurant.getSubType())
+            .minimumPrice(restaurant.getMinimumPrice())
+            .deliveryFee(restaurant.getDeliveryFee())
+            .openYn(restaurant.getOpenYn())
+            .city(restaurant.getCity())
+            .street(restaurant.getStreet())
+            .zipCode(restaurant.getZipCode())
+            .build();
+
+    return vendorProfileInquiryDTO;
   }
 
   @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public Result removeVendor(Long vendorId) {
     try {
-      Long restaurantId = restaurantRepository.findById(vendorId).get().getRestaurantId();
+      Long restaurantId = restaurantRepository.findById(vendorId).orElseThrow(() -> new CustomException(INVALID_RESTAURANT)).getRestaurantId();
       List<Long> menuIdList = menuRepository.findIdList(restaurantId);
       List<Long> optionGroupIdList = optionGroupRepository.findIdList(menuIdList);
       List<Long> optionDetailIdList = optionDetailRepository.findIdList(optionGroupIdList);

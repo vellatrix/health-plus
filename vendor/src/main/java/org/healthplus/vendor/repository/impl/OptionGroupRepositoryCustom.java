@@ -12,4 +12,5 @@ public interface OptionGroupRepositoryCustom {
   List<OptionGroup> findGroupList(List<Long> optionGroupIdList);
 
   long modifyOptionGroupInfo(ProductOptionGroupInfoDTO optionGroupList);
+
 }

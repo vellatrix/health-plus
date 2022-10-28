@@ -29,27 +29,4 @@ public class VendorRegistrationResultDTO {
   private String street;
   private String zipCode;
 
-  public static VendorRegistrationResultDTO addVendorAndRestaurant(Vendor savedVendor, Restaurant savedRestaurant) {
-    return VendorRegistrationResultDTO.builder()
-            .menuId(savedVendor.getVendorId())
-            .name(savedVendor.getName())
-            .bank(savedVendor.getBank())
-            .accountNumber(savedVendor.getAccountNumber())
-            .email(savedVendor.getEmail())
-            .phoneNumber(savedVendor.getPhoneNumber())
-            .restaurantId(savedRestaurant.getRestaurantId())
-            .businessName(savedRestaurant.getBusinessName())
-            .businessHour(savedRestaurant.getBusinessHour())
-            .businessNumber(savedRestaurant.getBusinessNumber())
-            .mainType(savedRestaurant.getMainType())
-            .subType(savedRestaurant.getSubType())
-            .minimumPrice(savedRestaurant.getMinimumPrice())
-            .deliveryFee(savedRestaurant.getDeliveryFee())
-            .openYn(savedRestaurant.getOpenYn())
-            .city(savedRestaurant.getCity())
-            .street(savedRestaurant.getStreet())
-            .zipCode(savedRestaurant.getZipCode())
-            .build();
-  }
-
 }

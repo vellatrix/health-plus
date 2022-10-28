@@ -17,4 +17,6 @@ public interface OptionDetailRepository extends JpaRepository<OptionDetail, Long
 
 
   long deleteByOptionGroupId(Long optionGroupId);
+
+  List<OptionDetail> findAllByOptionGroupIdIn(List<Long> optionGroupIdList);
 }

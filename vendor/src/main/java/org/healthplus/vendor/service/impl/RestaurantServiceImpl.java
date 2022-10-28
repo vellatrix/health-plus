@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 public class RestaurantServiceImpl implements RestaurantService {
 
   private final RestaurantRepository restaurantRepository;
-  private final VendorRepository vendorRepository;
 
   @Override
-  public RestaurantInfoInquiryDTO getRestaurant(Long vendorId) {
-    return vendorRepository.findRestaurantInfo(vendorId);
+  public RestaurantInfoInquiryDTO getRestaurant(Long restaurantId) {
+    return restaurantRepository.findRestaurantInfo(restaurantId);
   }
 }
