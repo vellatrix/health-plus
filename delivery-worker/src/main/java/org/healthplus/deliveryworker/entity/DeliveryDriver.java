@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.healthplus.deliveryworker.enums.DeliveryStatus;
 import org.healthplus.deliveryworker.enums.DeliveryType;
 import org.healthplus.deliveryworker.enums.IsYn;
 
@@ -18,6 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+/*
+ * 배달 노동자 Entity
+ * */
 @Entity
 @Table(name = "delivery_driver")
 @Getter
@@ -66,6 +70,10 @@ public class DeliveryDriver {
 
   @Column(name = "location")
   private String location;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "delivery_status")
+  private DeliveryStatus deliveryStatus;
 
   @Builder(builderMethodName = "registrationBuilder")
   public DeliveryDriver(

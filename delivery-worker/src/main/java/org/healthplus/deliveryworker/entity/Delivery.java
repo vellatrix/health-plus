@@ -13,7 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+/*
+* 배달 목적지 Entity
+* */
 @Entity
 @Table(name = "delivery")
 @Getter

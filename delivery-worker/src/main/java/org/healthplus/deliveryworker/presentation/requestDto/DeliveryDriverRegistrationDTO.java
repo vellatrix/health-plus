@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.healthplus.deliveryworker.enums.DeliveryType;
 import org.healthplus.deliveryworker.enums.IsYn;
-import org.healthplus.deliveryworker.service.command.DeliveryInfoCommand;
+import org.healthplus.deliveryworker.service.command.DeliveryDriverInfoCommand;
 
 @Getter
 @NoArgsConstructor
@@ -21,8 +21,8 @@ public class DeliveryDriverRegistrationDTO {
   private IsYn userYn;
 
 
-  public DeliveryInfoCommand toCommand() {
-    return new DeliveryInfoCommand(id, password, email, location, deliveryType, vehicleNumber,
+  public DeliveryDriverInfoCommand toCommand() {
+    return new DeliveryDriverInfoCommand(id, password, email, location, deliveryType, vehicleNumber,
         phoneNumber, name, userYn);
   }
 }
