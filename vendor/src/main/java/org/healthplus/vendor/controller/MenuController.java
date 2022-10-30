@@ -1,9 +1,7 @@
 package org.healthplus.vendor.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.model.config.RestTemplateConfig;
 import org.healthplus.vendor.dto.ProductInfoByCategoryDTO;
-import org.healthplus.vendor.dto.ProductInfoInquiryDTO;
 import org.healthplus.vendor.dto.ProductInfoDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationResultDTO;

@@ -55,26 +55,4 @@ public class OptionGroup {
     this.useYn = IsYn.Y;
   }
 
-  public static ProductOptionGroupInfoDTO toDTO(OptionGroup optionGroup, List<ProductOptionDetailInfoDTO> optionDetailDtoList) {
-    return ProductOptionGroupInfoDTO.builder()
-            .optionGroupId(optionGroup.getOptionGroupId())
-            .name(optionGroup.getName())
-            .basicChoiceYn(optionGroup.getBasicChoiceYn())
-            .etcChoiceYn(optionGroup.getEtcChoiceYn())
-            .optionDetails(optionDetailDtoList)
-            .build();
-  }
-
-
-  public ProductOptionGroupInfoDTO toOptionGroupDto(List<ProductOptionDetailInfoDTO> optionDetails) {
-    return ProductOptionGroupInfoDTO.builder()
-            .optionGroupId(optionGroupId)
-            .name(name)
-            .basicChoiceYn(basicChoiceYn)
-            .etcChoiceYn(etcChoiceYn)
-            .optionDetails(optionDetails)
-            .build();
-
-  }
-
 }

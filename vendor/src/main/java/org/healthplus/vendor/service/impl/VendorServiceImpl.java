@@ -16,6 +16,7 @@ import org.healthplus.vendor.repository.RestaurantRepository;
 import org.healthplus.vendor.repository.VendorRepository;
 import org.healthplus.vendor.service.VendorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 

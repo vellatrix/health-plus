@@ -46,9 +46,11 @@ public class MenuTest {
   @Test
   void getProductInfo() throws Exception {
     Long vendorId = 1L;
-    Long productId = 1L;
+    Long productId = 2L;
 
     ProductInfoDTO productInfo = menuService.getProduct(vendorId, productId);
+
+    System.out.println(productInfo);
 
     assertThat(productInfo).isNotNull();
   }

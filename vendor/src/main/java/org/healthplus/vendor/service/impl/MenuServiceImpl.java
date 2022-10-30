@@ -17,18 +17,18 @@ import org.healthplus.vendor.repository.MenuRepository;
 import org.healthplus.vendor.repository.OptionDetailRepository;
 import org.healthplus.vendor.repository.OptionGroupRepository;
 import org.healthplus.vendor.service.MenuService;
+import org.healthplus.vendor.util.MenuDataConvertor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static org.healthplus.vendor.enums.Result.SUCCESS;
@@ -66,29 +66,28 @@ public class MenuServiceImpl implements MenuService {
     long result = menuRepository.modifyProductInfo(restaurantId, productId, productInfo);
     if(result == 0) throw new CustomException(MENU_MODIFICATION_FAIL);
 
-    long optionGroupModificationCount = 0;
-    long optionDetailModificationCount = 0;
-    for(ProductOptionGroupInfoDTO group : productInfo.getOptionGroup()) {
-      optionGroupModificationCount += optionGroupRepository.modifyOptionGroupInfo(group);
-      optionDetailModificationCount += optionDetailRepository.modifyOptionDetailInfo(group.getOptionDetails());
-    }
+    AtomicLong optionGroupModificationCount = new AtomicLong();
+    AtomicLong optionDetailModificationCount = new AtomicLong();
+    productInfo.getOptionGroup().forEach(group -> {
+      optionGroupModificationCount.addAndGet(optionGroupRepository.modifyOptionGroupInfo(group));
+      optionDetailModificationCount.addAndGet(optionDetailRepository.modifyOptionDetailInfo(group.getOptionDetails()));
 
-    if(optionGroupModificationCount != productInfo.getOptionGroup().size()) throw new CustomException(MENU_OPTION_GROUP_UPDATE_FAIL);
+    });
+
+    if(optionGroupModificationCount.get() != productInfo.getOptionGroup().size()) throw new CustomException(MENU_OPTION_GROUP_UPDATE_FAIL);
 
     long optionDetailCount = productInfo.getOptionGroup().stream()
             .map(group -> group.getOptionDetails().size())
             .reduce(0, Integer::sum)
             .longValue();
 
-    if(optionDetailModificationCount != optionDetailCount) throw new CustomException(MENU_OPTION_DETAIL_UPDATE_FAIL);
+    if(optionDetailModificationCount.get() != optionDetailCount) throw new CustomException(MENU_OPTION_DETAIL_UPDATE_FAIL);
 
     List<Menu> updatedMenu = Collections.singletonList(menuRepository.findById(productId).get());
     List<OptionGroup> updatedOptionGroupList = optionGroupRepository.findAllByMenuId(updatedMenu.get(0).getMenuId());
-    List<Long> optionGroupIdList = updatedOptionGroupList.stream()
+    List<OptionDetail> updatedOptionDetailList = optionDetailRepository.findAllByOptionGroupIdIn(updatedOptionGroupList.stream()
             .map(optionGroup -> optionGroup.getOptionGroupId())
-            .collect(Collectors.toList());
-
-    List<OptionDetail> updatedOptionDetailList = optionDetailRepository.findAllByOptionGroupIdIn(optionGroupIdList);
+            .collect(Collectors.toList()));
 
     List<ProductInfoDTO> productListDto = getProductsDto(updatedMenu, updatedOptionGroupList, updatedOptionDetailList);
 
@@ -104,49 +103,27 @@ public class MenuServiceImpl implements MenuService {
 
     List<ProductInfoRegistrationResultDTO> dtoList = new ArrayList<>();
 
-    for (ProductInfoRegistrationDTO productInfo : productInfoList) {
-      Menu menu = Menu.builder()
-              .restaurantId(restaurantId)
-              .categoryId(productInfo.getCategoryId())
-              .name(productInfo.getName())
-              .price(productInfo.getPrice())
-              .calorie(productInfo.getCalorie())
-              .description(productInfo.getDescription())
-              .menuType(productInfo.getMenuType())
-              .build();
+    productInfoList.forEach(
+            menuDto -> {
+              Menu savedMenu = menuRepository.save(MenuDataConvertor.createMenu(restaurantId, menuDto));
 
-      Menu savedMenu = menuRepository.save(menu);
+              List<ProductOptionGroupInfoDTO> optionGroupDtoList = new ArrayList<>();
 
-      List<ProductOptionGroupInfoDTO> optionGroupDtoList = new ArrayList<>();
+              menuDto.getOptionGroup().forEach(
+                      groupDto -> {
+                        OptionGroup savedOptionGroup = optionGroupRepository.save(MenuDataConvertor.createOptionGroup(savedMenu.getMenuId(), groupDto));
 
-      for(ProductOptionGroupInfoDTO groupInfo : productInfo.getOptionGroup()) {
-        OptionGroup savedOptionGroup = optionGroupRepository.save(new OptionGroup(savedMenu.getMenuId(),
-                                                                                  groupInfo.getName(),
-                                                                                  groupInfo.getBasicChoiceYn(),
-                                                                                  groupInfo.getEtcChoiceYn()));
+                        List<OptionDetail> optionDetails = MenuDataConvertor.addOptionDetails(savedOptionGroup.getOptionGroupId(), groupDto.getOptionDetails());
+                        List<OptionDetail> savedOptionDetails = optionDetailRepository.saveAll(optionDetails);
+                        List<ProductOptionDetailInfoDTO> optionDetailInfoDtoList = MenuDataConvertor.toInquiryDTOList(savedOptionDetails);
 
-        List<OptionDetail> optionDetails = OptionDetail.addOptionDetails(savedOptionGroup.getOptionGroupId(), groupInfo.getOptionDetails());
-        List<OptionDetail> savedOptionDetails = optionDetailRepository.saveAll(optionDetails);
-        optionGroupDtoList.add(savedOptionGroup.toOptionGroupDto(OptionDetail.toDTOList(savedOptionDetails)));
-      }
+                        optionGroupDtoList.add(MenuDataConvertor.toOptionGroupDto(savedOptionGroup, optionDetailInfoDtoList));
+                      }
+              );
 
-      ProductInfoRegistrationResultDTO resultDto = ProductInfoRegistrationResultDTO.builder()
-              .menuId(savedMenu.getMenuId())
-              .restaurantId(savedMenu.getRestaurantId())
-              .categoryId(savedMenu.getCategoryId())
-              .type(savedMenu.getMenuType().name())
-              .description(savedMenu.getDescription())
-              .soldYn(savedMenu.getSoldYn())
-              .useYn(savedMenu.getUseYn())
-              .createdAt(savedMenu.getCreatedAt())
-              .name(savedMenu.getName())
-              .price(savedMenu.getPrice())
-              .calorie(savedMenu.getCalorie())
-              .optionGroups(optionGroupDtoList)
-              .build();
-
-      dtoList.add(resultDto);
-    }
+              dtoList.add(MenuDataConvertor.toRegistrationResultDTO(savedMenu, optionGroupDtoList));
+            }
+    );
 
     return dtoList;
   }
@@ -186,25 +163,24 @@ public class MenuServiceImpl implements MenuService {
 
   private List<ProductInfoDTO> getProductsDto(List<Menu> menuList, List<OptionGroup> groupList, List<OptionDetail> detailList) {
     List<ProductInfoDTO> menuDtoList = new ArrayList<>();
-    for (Menu menu : menuList) {
-      List<ProductOptionGroupInfoDTO> optionGroupDtoList = new ArrayList<>();
+    menuList.forEach(
+                    menu -> {
+                      List<ProductOptionGroupInfoDTO> optionGroupDtoList = new ArrayList<>();
+                      groupList.stream()
+                              .filter(group -> group.getMenuId() == menu.getMenuId())
+                              .forEach(
+                                      group -> {
+                                        List<ProductOptionDetailInfoDTO> optionDetailDtoList = new ArrayList<>();
+                                        detailList.stream()
+                                                .filter(detail -> detail.getOptionGroupId() == group.getOptionGroupId())
+                                                .forEach(detail -> optionDetailDtoList.add(MenuDataConvertor.toOptionDetailInquiryDTO(detail)));
+                                        optionGroupDtoList.add(MenuDataConvertor.toOptionGroupInquiryDTO(group, optionDetailDtoList));
+                                      }
+                              );
+                      menuDtoList.add(MenuDataConvertor.toMenuInquiryDTO(menu, optionGroupDtoList));
+                    }
+            );
 
-      for (OptionGroup optionGroup : groupList) {
-        List<ProductOptionDetailInfoDTO> optionDetailDtoList = new ArrayList<>();
-
-        for (OptionDetail optionDetail : detailList) {
-          if (optionGroup.getOptionGroupId() == optionDetail.getOptionGroupId()) {
-            optionDetailDtoList.add(OptionDetail.toDTO(optionDetail));
-          }
-        }
-
-        if(menu.getMenuId() == optionGroup.getMenuId()) {
-          optionGroupDtoList.add(OptionGroup.toDTO(optionGroup, optionDetailDtoList));
-        }
-      }
-
-      menuDtoList.add(Menu.toDTO(menu, optionGroupDtoList));
-    }
     return menuDtoList;
   }
 

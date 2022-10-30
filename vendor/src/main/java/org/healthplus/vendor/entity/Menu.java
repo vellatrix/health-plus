@@ -25,6 +25,7 @@ import java.util.List;
 @Entity
 @Table(name = "menu")
 @NoArgsConstructor
+@Builder
 public class Menu {
 
   @Id
@@ -71,65 +72,5 @@ public class Menu {
   @Column(name = "description")
   private String description;
 
-  @Builder
-  public Menu(Long restaurantId,
-              Long categoryId,
-              String name,
-              Integer price,
-              Integer calorie,
-              String description,
-              MenuType menuType) {
-    this.restaurantId = restaurantId;
-    this.categoryId = categoryId;
-    this.createdAt = LocalDateTime.now();
-    this.name = name;
-    this.price = price;
-    this.calorie = calorie;
-    this.description = description;
-    this.menuType = menuType;
-    this.soldYn = IsYn.Y;
-    this.useYn = IsYn.Y;
-  }
 
-
-  @Builder
-  public Menu(Long menuId,
-              IsYn soldYn,
-              IsYn useYn,
-              String name,
-              Integer price,
-              Integer calorie,
-              String description) {
-    this.menuId = menuId;
-    this.soldYn = soldYn;
-    this.useYn = useYn;
-    this.name = name;
-    this.price = price;
-    this.calorie = calorie;
-    this.description = description;
-  }
-
-  public static ProductInfoDTO toDTO(Menu menu, List<ProductOptionGroupInfoDTO> optionGroupDtoList) {
-    return ProductInfoDTO.builder()
-            .menuId(menu.getMenuId())
-            .name(menu.getName())
-            .price(menu.getPrice())
-            .description(menu.getDescription())
-            .useYn(menu.getUseYn())
-            .soldYn(menu.getSoldYn())
-            .calorie(menu.getCalorie())
-            .optionGroup(optionGroupDtoList)
-            .build();
-  }
-
-  public ProductInfoDTO toMenuListDto() {
-    return ProductInfoDTO.builder()
-            .name(name)
-            .price(price)
-            .calorie(calorie)
-            .description(description)
-            .soldYn(soldYn)
-            .useYn(useYn)
-            .build();
-  }
 }

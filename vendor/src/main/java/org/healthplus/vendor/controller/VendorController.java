@@ -30,6 +30,7 @@ public class VendorController {
   @DeleteMapping("/{vendorId}")
   public Result removeVendorInfo(@PathVariable Long vendorId) {
     return vendorService.removeVendor(vendorId);
+
   }
 
   @PostMapping

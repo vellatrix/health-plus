@@ -50,29 +50,4 @@ public class OptionDetail {
     this.useYn = IsYn.Y;
   }
 
-  public static List<OptionDetail> addOptionDetails(Long optionGroupId, List<ProductOptionDetailInfoDTO> optionDetails) {
-    if(optionDetails.size() == 0) throw new IllegalArgumentException("옵션 상세 데이터가 존재하지 않습니다.");
-
-    List<OptionDetail> optionDetailList = new ArrayList<>();
-    for (ProductOptionDetailInfoDTO dto : optionDetails) {
-      optionDetailList.add(new OptionDetail(optionGroupId, dto.getName(), dto.getPrice()));
-    }
-
-    return optionDetailList;
-  }
-
-  public static List<ProductOptionDetailInfoDTO> toDTOList(List<OptionDetail> optionDetails) {
-    List<ProductOptionDetailInfoDTO> optionDetailDTOList = new ArrayList<>();
-
-    for (OptionDetail optionDetail : optionDetails) {
-      optionDetailDTOList.add(new ProductOptionDetailInfoDTO(optionDetail.getOptionDetailId(), optionDetail.getName(), optionDetail.getPrice()));
-    }
-
-    return optionDetailDTOList;
-  }
-
-  public static ProductOptionDetailInfoDTO toDTO(OptionDetail optionDetail) {
-    return new ProductOptionDetailInfoDTO(optionDetail.getOptionDetailId(), optionDetail.getName(), optionDetail.getPrice());
-  }
-
 }
