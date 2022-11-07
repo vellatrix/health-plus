@@ -1,9 +1,10 @@
 package org.healthplus.model.role;
 
 /*
-* Application Login 시 사용
+* 다양한 Context에서 사용됩니다.
 * */
 public enum Role {
+  RESTAURANT,
   VENDOR,
   DELIVERY_WORKER,
   CUSTOMER
