@@ -7,9 +7,18 @@
  * in the user manual at https://docs.gradle.org/7.5.1/userguide/multi_project_builds.html
  */
 
+
+rootProject.name = 'health-plus'
 include 'app'
 include 'delivery-worker'
 include 'vendor'
 include 'customer'
 include 'model'
-include 'user'
+
+include(
+        'user-api',
+        'user-api:user-presentation',
+        'user-api:user-application',
+        'user-api:user-domain',
+        'user-api:user-infrastructure',
+)

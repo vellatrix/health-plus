@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':model')
+    implementation project(':user-api:user-application')
+    implementation 'org.springframework.security:spring-security-jwt:1.1.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
+}

@@ -1,6 +1,7 @@
 dependencies {
-    implementation project(':model')
-    implementation 'org.springframework.security:spring-security-jwt:1.1.1.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation project(':delivery-worker')
+    implementation project(':vendor')
+    implementation project(':common')
 }
