@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/restaurant")
+@RequestMapping("/restaurants")
 public class RestaurantController {
 
   private final RestaurantService restaurantService;

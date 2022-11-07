@@ -1,4 +1,4 @@
-package org.healthplus.exception;
+package org.healthplus.customer.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

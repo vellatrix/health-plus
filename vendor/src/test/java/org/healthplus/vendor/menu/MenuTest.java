@@ -1,7 +1,6 @@
 package org.healthplus.vendor.menu;
 
 import org.healthplus.vendor.dto.ProductInfoByCategoryDTO;
-import org.healthplus.vendor.dto.ProductInfoInquiryDTO;
 import org.healthplus.vendor.dto.ProductInfoDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationResultDTO;
