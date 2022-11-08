@@ -55,14 +55,4 @@ public class OptionGroup {
     this.useYn = IsYn.Y;
   }
 
-  public ProductOptionGroupInfoDTO toOptionGroupDto(List<ProductOptionDetailInfoDTO> optionDetails) {
-    return ProductOptionGroupInfoDTO.builder()
-            .name(name)
-            .basicChoiceYn(basicChoiceYn)
-            .etcChoiceYn(etcChoiceYn)
-            .optionDetails(optionDetails)
-            .build();
-
-  }
-
 }

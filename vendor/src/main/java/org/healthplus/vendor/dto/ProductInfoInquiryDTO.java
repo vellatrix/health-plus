@@ -30,8 +30,4 @@ public class ProductInfoInquiryDTO {
     this.price = price;
   }
 
-  public void addOptionGroup(ProductOptionGroupInfoDTO optionGroup) {
-    this.optionGroup = optionGroup;
-  }
-
 }

@@ -37,21 +37,6 @@ public class OptionDetailRepositoryImpl implements OptionDetailRepositoryCustom 
   }
 
   @Override
-  public List<ProductOptionDetailInfoDTO> findProductOptionInfo(Long productId) {
-    return query.select(new QProductOptionDetailInfoDTO(
-            optionDetail.optionDetailId,
-            optionDetail.name,
-            optionDetail.price
-            ))
-            .from(menu)
-            .innerJoin(optionGroup).on(optionGroup.menuId.eq(menu.menuId))
-            .innerJoin(optionDetail).on(optionDetail.optionGroupId.eq(optionGroup.optionGroupId))
-            .where(menu.menuId.eq(productId))
-            .fetch();
-
-  }
-
-  @Override
   public long modifyOptionDetailInfo(List<ProductOptionDetailInfoDTO> optionInfo) {
 
     long count = 0;

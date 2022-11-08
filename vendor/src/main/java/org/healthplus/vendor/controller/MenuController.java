@@ -1,15 +1,19 @@
 package org.healthplus.vendor.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.healthplus.vendor.dto.ProductInfoByCategoryDTO;
 import org.healthplus.vendor.dto.ProductInfoDTO;
-import org.healthplus.vendor.dto.ProductInfoInquiryDTO;
-import org.healthplus.vendor.dto.ProductInfoListDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationDTO;
 import org.healthplus.vendor.dto.ProductInfoRegistrationResultDTO;
 import org.healthplus.vendor.dto.ProductOrderDTO;
+import org.healthplus.vendor.enums.ResponseMessageCode;
 import org.healthplus.vendor.enums.Result;
 import org.healthplus.vendor.service.MenuService;
-import org.springframework.http.ResponseEntity;
+import org.healthplus.vendor.util.MenuDataConvertor;
+import org.healthplus.vendor.util.Response;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,60 +23,107 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.healthplus.vendor.enums.ResponseMessageCode.*;
+import static org.healthplus.vendor.enums.Result.FAIL;
+import static org.healthplus.vendor.enums.Result.SUCCESS;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/menu")
+@RequestMapping("/menus")
 public class MenuController {
 
   private final MenuService menuService;
 
   @GetMapping("/{restaurantId}/{productId}/info")
-  public ResponseEntity<ProductInfoInquiryDTO> getProductInfo(@PathVariable Long restaurantId,
-                                                              @PathVariable Long productId) {
+  public Response getProduct(@PathVariable Long restaurantId,
+                                   @PathVariable Long productId) {
 
-    return ResponseEntity.ok(menuService.getProduct(restaurantId, productId));
+    ProductInfoDTO data = menuService.getProduct(restaurantId, productId);
+    return Response.builder()
+            .message(data == null ? INQUIRY_FAIL.getContent() : INQUIRY_SUCCESS.getContent())
+            .status(data == null ? NO_CONTENT : OK)
+            .data(data)
+            .build();
   }
 
   @GetMapping("/{restaurantId}/info")
-  public ResponseEntity<List<ProductInfoListDTO>> getProductInfoList(@PathVariable Long restaurantId) {
+  public Response getProductList(@PathVariable Long restaurantId) {
 
-    return ResponseEntity.ok(menuService.getProductList(restaurantId));
-
+    List<ProductInfoDTO> data = menuService.getProductList(restaurantId);
+    return Response.builder()
+            .message(data.size() == 0 ? INQUIRY_FAIL.getContent() : INQUIRY_SUCCESS.getContent())
+            .status(data.size() == 0 ? NO_CONTENT : OK)
+            .data(data)
+            .build();
   }
 
   @PostMapping("/{restaurantId}/order")
-  public ResponseEntity<ProductOrderDTO> orderProduct(@PathVariable Long restaurantId,
-                                                      @RequestBody List<ProductInfoListDTO> productList) {
+  public Response orderProduct(@PathVariable Long restaurantId,
+                               @RequestBody List<ProductInfoDTO> productList) {
 
     // todo : 주문
-    return ResponseEntity.ok(new ProductOrderDTO());
+    return Response.builder()
+            .message(null)
+            .status(null)
+            .data(null)
+            .build();
   }
 
   @PatchMapping("/{restaurantId}/{productId}")
-  public ResponseEntity<Result> changeProductInfo(@PathVariable Long restaurantId,
-                                                  @PathVariable Long productId,
-                                                  @RequestBody ProductInfoListDTO productInfo) {
+  public Response changeProduct(@PathVariable Long restaurantId,
+                                @PathVariable Long productId,
+                                @RequestBody ProductInfoDTO productInfo) {
 
-    return ResponseEntity.ok(menuService.updateProduct(restaurantId, productId, productInfo));
 
+    List<ProductInfoDTO> data = menuService.updateProduct(restaurantId, productId, productInfo);
+    return Response.builder()
+            .message(data.size() == 0 ? UPDATE_FAIL.getContent() : UPDATE_SUCCESS.getContent())
+            .status(data.size() == 0 ? NO_CONTENT : OK)
+            .data(data)
+            .build();
   }
 
   @PostMapping("/{restaurantId}/product")
-  public ResponseEntity<List<ProductInfoRegistrationResultDTO>> addProductInfo(@PathVariable Long restaurantId,
-                                                                               @RequestBody List<ProductInfoRegistrationDTO> productInfo) {
+  public Response addProduct(@PathVariable Long restaurantId,
+                             @RequestBody List<ProductInfoRegistrationDTO> productInfo) {
 
-    return ResponseEntity.ok(menuService.registerProductInfo(restaurantId, productInfo));
+
+    List<ProductInfoRegistrationResultDTO> data = menuService.registerProductInfo(restaurantId, productInfo);
+    return Response.builder()
+            .message(data.size() == 0 ? REGISTER_FAIL.getContent() : REGISTER_SUCCESS.getContent())
+            .status(data.size() == 0 ? NO_CONTENT : CREATED)
+            .data(data)
+            .build();
   }
 
   @DeleteMapping("/{restaurantId}/{productId}")
-  public ResponseEntity<Result> deleteProductInfo(@PathVariable Long restaurantId,
-                                                  @PathVariable Long productId) {
+  public Response deleteProduct(@PathVariable Long restaurantId,
+                                @PathVariable Long productId) {
 
-    return ResponseEntity.ok(menuService.removeProductInfo(restaurantId, productId));
 
+    Result data = menuService.removeProductInfo(restaurantId, productId);
+
+    return Response.builder()
+            .message(data.equals(SUCCESS) ? DELETE_SUCCESS.getContent() : DELETE_FAIL.getContent())
+            .status(data.equals(SUCCESS) ? NO_CONTENT : OK)
+            .data(data)
+            .build();
   }
 
 
+  @GetMapping("/category/products/{categoryId}")
+  public Response getProductListByCategoryId(@PathVariable Long categoryId,
+                                                           Pageable pageable) {
+    Page<ProductInfoByCategoryDTO> data = menuService.getProductListByCategoryId(categoryId, pageable);
+
+    return Response.builder()
+            .message(data.getTotalElements() == 0 ? INQUIRY_FAIL.getContent() : INQUIRY_SUCCESS.getContent())
+            .status(data.getTotalElements() == 0 ? NO_CONTENT : OK)
+            .data(data)
+            .build();
+  }
 }

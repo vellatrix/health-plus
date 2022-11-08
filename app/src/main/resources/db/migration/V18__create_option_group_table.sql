@@ -3,6 +3,7 @@ CREATE TABLE `option_group`
 (
     `option_group_id` bigint  NOT NULL AUTO_INCREMENT COMMENT '메뉴 옵션 그룹 PK',
     `menu_id`         bigint  NOT NULL COMMENT '메뉴 PK',
+    `name`            varchar(50) NOT NULL COMMENT '옵션명',
     `basic_choice_yn` char(1) NOT NULL DEFAULT 'Y' COMMENT '기본 선택',
     `etc_choice_yn`   char(1) NOT NULL DEFAULT 'N' COMMENT '기타 선택 (메뉴 옵션 상세 메뉴 중 택일)',
     `use_yn`          char(1) NOT NULL DEFAULT 'Y' COMMENT '사용 여부',

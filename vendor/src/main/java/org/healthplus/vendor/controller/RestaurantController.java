@@ -3,7 +3,6 @@ package org.healthplus.vendor.controller;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.vendor.dto.RestaurantInfoInquiryDTO;
 import org.healthplus.vendor.service.RestaurantService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/restaurant")
+@RequestMapping("/restaurants")
 public class RestaurantController {
 
   private final RestaurantService restaurantService;
 
-  @GetMapping("/{vendorId}/info")
-  public ResponseEntity<RestaurantInfoInquiryDTO> getRestaurantInfo(@PathVariable Long vendorId) {
+  @GetMapping("/{restaurantId}/info")
+  public RestaurantInfoInquiryDTO getRestaurantInfo(@PathVariable Long restaurantId) {
 
-    return ResponseEntity.ok(restaurantService.getRestaurant(vendorId));
+    return restaurantService.getRestaurant(restaurantId);
   }
 }

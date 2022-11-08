@@ -29,21 +29,4 @@ public class ProductInfoRegistrationResultDTO {
   private Integer calorie;
   private List<ProductOptionGroupInfoDTO> optionGroups;
 
-  public static ProductInfoRegistrationResultDTO addProduct(Menu menu,
-                                                            List<ProductOptionGroupInfoDTO> optionGroups) {
-    return ProductInfoRegistrationResultDTO.builder()
-            .menuId(menu.getMenuId())
-            .restaurantId(menu.getRestaurantId())
-            .categoryId(menu.getCategoryId())
-            .type(menu.getMenuType().name())
-            .description(menu.getDescription())
-            .soldYn(menu.getSoldYn())
-            .useYn(menu.getUseYn())
-            .createdAt(menu.getCreatedAt())
-            .name(menu.getName())
-            .price(menu.getPrice())
-            .calorie(menu.getCalorie())
-            .optionGroups(optionGroups)
-            .build();
-  }
 }

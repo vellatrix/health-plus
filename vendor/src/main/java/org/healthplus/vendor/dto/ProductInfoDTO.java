@@ -1,15 +1,27 @@
 package org.healthplus.vendor.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.healthplus.vendor.enums.IsYn;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
+@ToString
+@Builder
 public class ProductInfoDTO {
 
+  private Long menuId;
   private String name;
-  private Integer price;
+  private String description;
   private Integer calorie;
-  private LocalDateTime modifiedAt;
-  private ProductOptionGroupInfoDTO optionGroup;
+  private IsYn soldYn;
+  private IsYn useYn;
+  private Integer price;
+  private List<ProductOptionGroupInfoDTO> optionGroup;
+
+
 }

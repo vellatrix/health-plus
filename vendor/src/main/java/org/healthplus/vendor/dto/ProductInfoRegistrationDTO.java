@@ -10,6 +10,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@Builder
 public class ProductInfoRegistrationDTO {
 
   private Long categoryId;
@@ -20,37 +21,5 @@ public class ProductInfoRegistrationDTO {
   private String categoryType;
   private MenuType menuType;
   private List<ProductOptionGroupInfoDTO> optionGroup;
-
-  @Builder
-  public ProductInfoRegistrationDTO(Long categoryId,
-                                    String name,
-                                    Integer price,
-                                    String description,
-                                    Integer calorie,
-                                    String categoryType,
-                                    MenuType menuType,
-                                    List<ProductOptionGroupInfoDTO> optionGroup) {
-    this.categoryId = categoryId;
-    this.name = name;
-    this.price = price;
-    this.description = description;
-    this.calorie = calorie;
-    this.categoryType = categoryType;
-    this.menuType = menuType;
-    this.optionGroup = optionGroup;
-  }
-
-  public Menu toMenuEntity(Long restaurantId) {
-    return Menu.builder()
-            .restaurantId(restaurantId)
-            .categoryId(categoryId)
-            .name(name)
-            .price(price)
-            .calorie(calorie)
-            .description(description)
-            .menuType(menuType)
-            .build();
-
-  }
 
 }

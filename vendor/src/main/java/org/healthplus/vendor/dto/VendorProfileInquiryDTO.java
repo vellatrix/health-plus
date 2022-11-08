@@ -29,27 +29,4 @@ public class VendorProfileInquiryDTO {
   private String street;
   private String zipCode;
 
-  public static VendorProfileInquiryDTO setProfile(Vendor vendor, Restaurant restaurant) {
-    return VendorProfileInquiryDTO.builder()
-            .menuId(vendor.getVendorId())
-            .name(vendor.getName())
-            .bank(vendor.getBank())
-            .accountNumber(vendor.getAccountNumber())
-            .email(vendor.getEmail())
-            .phoneNumber(vendor.getPhoneNumber())
-            .restaurantId(restaurant.getRestaurantId())
-            .businessName(restaurant.getBusinessName())
-            .businessHour(restaurant.getBusinessHour())
-            .businessNumber(restaurant.getBusinessNumber())
-            .mainType(restaurant.getMainType())
-            .subType(restaurant.getSubType())
-            .minimumPrice(restaurant.getMinimumPrice())
-            .deliveryFee(restaurant.getDeliveryFee())
-            .openYn(restaurant.getOpenYn())
-            .city(restaurant.getCity())
-            .street(restaurant.getStreet())
-            .zipCode(restaurant.getZipCode())
-            .build();
-  }
-
 }
