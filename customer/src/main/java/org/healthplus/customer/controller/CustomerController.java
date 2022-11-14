@@ -1,15 +1,8 @@
 package org.healthplus.customer.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.customer.dto.CustomerInquiryDTO;
-import org.healthplus.customer.dto.CustomerRegistrationDTO;
-import org.healthplus.customer.enums.Result;
 import org.healthplus.customer.service.CustomerService;
 import org.healthplus.vendor.service.MenuService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,18 +15,18 @@ public class CustomerController {
   private final MenuService menuService;
 
   // 가입
-  @PostMapping()
+  /*@PostMapping()
   public Result registerCustomer(@RequestBody CustomerRegistrationDTO dto) {
     return customerService.registerCustomer(dto);
-  }
+  }*/
 
   // 조회
-  @GetMapping("/{customerId}")
+  /*@GetMapping("/{customerId}")
   public CustomerInquiryDTO retrieveCustomer(@PathVariable Long customerId) {
 
 
     return customerService.getCustomerProfile(customerId);
-  }
+  }*/
 
 
   // 변경

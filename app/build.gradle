@@ -2,5 +2,44 @@ dependencies {
     implementation project(':customer')
     implementation project(':delivery-worker')
     implementation project(':vendor')
-    implementation project(':user-api')
+    implementation project(':model')
+
+    // user-api modules
+    implementation project(':user-api:user-domain')
+    implementation project(':user-api:user-presentation')
+    implementation project(':user-api:user-application')
+    implementation project(':user-api:user-infrastructure')
+
+    // customer-api modules
+    implementation project(':customer-api:customer-domain')
+    implementation project(':customer-api:customer-presentation')
+    implementation project(':customer-api:customer-application')
+    implementation project(':customer-api:customer-infrastructure')
+
+    // order-api modules(with payment)
+    implementation project(':order-api:order-domain')
+    implementation project(':order-api:order-presentation')
+    implementation project(':order-api:order-application')
+    implementation project(':order-api:order-infrastructure')
+
+    // shop-api modules
+    implementation project(':shop-api:shop-domain')
+    implementation project(':shop-api:shop-presentation')
+    implementation project(':shop-api:shop-application')
+    implementation project(':shop-api:shop-infrastructure')
+
+    // notification-api modules
+    implementation project(':notification-api:notification-domain')
+    implementation project(':notification-api:notification-presentation')
+    implementation project(':notification-api:notification-application')
+    implementation project(':notification-api:notification-infrastructure')
+
+    // delivery-api modules
+    implementation project(':delivery-api:delivery-domain')
+    implementation project(':delivery-api:delivery-presentation')
+    implementation project(':delivery-api:delivery-application')
+    implementation project(':delivery-api:delivery-infrastructure')
+
+    implementation "org.flywaydb:flyway-mysql"
+    runtimeOnly 'mysql:mysql-connector-java'
 }

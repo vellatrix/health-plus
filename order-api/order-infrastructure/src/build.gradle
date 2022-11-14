@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':model')
+    implementation project(':order-api:order-domain')
+    implementation project(':order-api:order-application')
+    implementation project(':order-api:order-presentation')
+}

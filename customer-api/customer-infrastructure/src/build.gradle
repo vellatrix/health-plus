@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':model')
+    implementation project(':customer-api:customer-application')
+    implementation project(':customer-api:customer-domain')
+    implementation project(':customer-api:customer-presentation')
+}

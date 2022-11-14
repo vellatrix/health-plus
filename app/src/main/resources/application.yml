@@ -18,3 +18,15 @@ spring:
     useMysqlMetadata: true # add useMysqlMetadata=true to your jdbc url -> driver will return “MySQL” server type.
   main:
     allow-bean-definition-overriding: true
+
+  jpa:
+    database: mysql
+    properties:
+      hibernate:
+        show-sql: false
+        default_batch_fetch_size: 1000
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
