@@ -2,5 +2,11 @@ dependencies {
     implementation project(':customer')
     implementation project(':delivery-worker')
     implementation project(':vendor')
-    implementation project(':user-api')
+    implementation project(':model')
+
+    // user-api modules
+    implementation project(':user-api:user-domain')
+    implementation project(':user-api:user-presentation')
+    implementation project(':user-api:user-application')
+    implementation project(':user-api:user-infrastructure')
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserRepositoryImpl implements UserRepository {
 
   private Map<Long, User> userMap = new HashMap<>();
-
+  private Long sequence = 0L;
   @Override
   public User save(User user) {
     userMap.put(user.getUserId(), user);

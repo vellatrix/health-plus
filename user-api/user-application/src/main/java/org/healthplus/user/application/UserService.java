@@ -3,6 +3,7 @@ package org.healthplus.user.application;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.user.domain.PasswordEncryption;
+import org.healthplus.user.domain.TokenGenerator;
 import org.healthplus.user.domain.UserRepository;
 import org.healthplus.user.domain.entity.User;
 import org.healthplus.user.domain.exception.PasswordMismatchException;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+  private final TokenGenerator tokenGenerator;
   private final UserRepository userRepository;
   private final PasswordEncryption passwordManager;
 
@@ -42,6 +44,8 @@ public class UserService {
       throw new PasswordMismatchException();
     }
 
-    // TODO: 2022/10/30 인증 인가 
+    // TODO: 2022/10/30 인증 인가
+    /*String token = tokenGenerator.generate(
+        new TokenPayloadDto(user.getId(), user.getName(), user.getEmail()));*/
   }
 }
