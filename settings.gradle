@@ -22,3 +22,46 @@ include(
         'user-api:user-domain',
         'user-api:user-infrastructure',
 )
+
+include(
+        'customer-api',
+        'customer-api:customer-presentation',
+        'customer-api:customer-application',
+        'customer-api:customer-domain',
+        'customer-api:customer-infrastructure',
+)
+
+include(
+        'delivery-api',
+        'delivery-api:delivery-presentation',
+        'delivery-api:delivery-application',
+        'delivery-api:delivery-domain',
+        'delivery-api:delivery-infrastructure',
+)
+
+include(
+        'notification-api',
+        'notification-api:notification-presentation',
+        'notification-api:notification-application',
+        'notification-api:notification-domain',
+        'notification-api:notification-infrastructure',
+)
+
+include(
+        'shop-api',
+        'shop-api:shop-presentation',
+        'shop-api:shop-application',
+        'shop-api:shop-domain',
+        'shop-api:shop-infrastructure',
+)
+
+// order api는 결제(payment)를 포함하고 있습니다.
+include(
+        'order-api',
+        'order-api:order-presentation',
+        'order-api:order-application',
+        'order-api:order-domain',
+        'order-api:order-infrastructure',
+)
+include 'customer-api'
+
