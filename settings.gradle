@@ -10,9 +10,6 @@
 
 rootProject.name = 'health-plus'
 include 'app'
-include 'delivery-worker'
-include 'vendor'
-include 'customer'
 include 'model'
 
 include(
@@ -63,5 +60,4 @@ include(
         'order-api:order-domain',
         'order-api:order-infrastructure',
 )
-include 'customer-api'
 
