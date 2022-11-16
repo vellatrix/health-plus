@@ -1,7 +1,5 @@
 dependencies {
-    implementation project(':customer')
-    implementation project(':delivery-worker')
-    implementation project(':vendor')
+
     implementation project(':model')
 
     // user-api modules
