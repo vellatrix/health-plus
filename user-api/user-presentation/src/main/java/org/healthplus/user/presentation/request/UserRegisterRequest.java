@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRegisterRequest {
 
-  private String id;
+  private String email;
 
   private String name;
-
-  private String email;
 
   private String password;
 

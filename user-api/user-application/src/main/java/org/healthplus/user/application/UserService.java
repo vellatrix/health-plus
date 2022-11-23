@@ -1,6 +1,5 @@
 package org.healthplus.user.application;
 
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.user.domain.PasswordEncryption;
 import org.healthplus.user.domain.TokenGenerator;
@@ -21,25 +20,25 @@ public class UserService {
   private final PasswordEncryption passwordManager;
 
   @Transactional
-  public void signUp(String id, String name, String email, String password, String phoneNumber) {
+  public void signUp(String id, String nickName, String email, String password, String phoneNumber) {
 
-    if (userRepository.existUser(id)) {
+    if (userRepository.existsByEmail(id)) {
       throw new UserExistException();
     }
 
     // TODO: 2022/10/30 email 관련된 도메인 정책 생각해보기
     String encryptedPW = passwordManager.encryptor(password);
-    User user = new User(id, name, email, encryptedPW, phoneNumber, LocalDateTime.now());
+    User user = new User(email, nickName, encryptedPW, phoneNumber);
     userRepository.save(user);
   }
 
-  public void login(String id, String password) {
-    User user = userRepository.findUserById(id);
+  public void login(String email, String password) {
+    User user = userRepository.findByEmail(email);
     if (user == null) {
       throw new UserNotFoundException();
     }
 
-    boolean matchResult = passwordManager.matchPassword(user.getId(), password);
+    boolean matchResult = passwordManager.matchPassword(user.getPassword(), password);
     if (!matchResult) {
       throw new PasswordMismatchException();
     }

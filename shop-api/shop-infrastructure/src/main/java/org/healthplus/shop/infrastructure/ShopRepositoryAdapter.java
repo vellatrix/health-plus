@@ -29,11 +29,12 @@ public class ShopRepositoryAdapter implements ShopRepository {
 
   @Override
   public List<Menu> findByShopId(Long shopId) {
-    return em.createQuery("select m, og, o from Menu m " +
+    /*return em.createQuery("select m, og, o from Menu m " +
             "join m.optionGroups og " +
-            "join og.options o where m.shopId = :shopId", Menu.class)
-            .setParameter("shopId", shopId)
-            .getResultList();
+            "join og.options o where m.id = :shopId", Menu.class)
+             .setParameter("shopId", shopId)
+            .getResultList();*/
+    return null;
   }
 
   public void saveMenu(Menu menu) {

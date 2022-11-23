@@ -73,6 +73,10 @@ public class Menu {
     this.category = category;
   }
 
+  public Menu() {
+
+  }
+
   public void setShop(Shop shop) {
     this.shop = shop;
   }

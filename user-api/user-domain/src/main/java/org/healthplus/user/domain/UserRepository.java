@@ -9,9 +9,9 @@ public interface UserRepository {
   * */
   User save(User user);
 
-  boolean existUser(String id);
+  User findByEmail(String email);
 
-  boolean matchPassword(String password);
+  boolean existsByEmail(String email);
 
-  User findUserById(String id);
+  boolean isMatchPassword(String password);
 }

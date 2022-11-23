@@ -1,8 +1,6 @@
 package org.healthplus.shop.application.dto;
 
 import lombok.Getter;
-import org.healthplus.shop.domain.shop.Menu;
-import org.healthplus.shop.domain.shop.Money;
 
 
 @Getter

@@ -1,11 +1,7 @@
 package org.healthplus.user.domain.entity;
 
-import java.time.LocalDateTime;
-import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,14 +21,11 @@ public class User {
   @Column(name = "user_id")
   private Long userId;
 
-  @Column(name = "id", nullable = false)
-  private String id;
-
-  @Column(name = "name", nullable = false)
-  private String name;
-
   @Column(name = "email", nullable = false)
-  private String email; // Email
+  private String email;
+
+  @Column(name = "nick", nullable = false)
+  private String nickName;
 
   @Column(name = "password", nullable = false)
   private String password;
@@ -40,42 +33,16 @@ public class User {
   @Column(name = "phone_number", nullable = false)
   private String phoneNumber;
 
-  @Column(name = "create_dt")
-  private LocalDateTime createdAt;
+  @Column(name = "role")
+  private Role role;
 
-  @Column(name = "modify_dt")
-  private LocalDateTime modifiedAt;
-
-  @Column(name = "delete_dt")
-  private LocalDateTime deletedAt;
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  @Column(name = "roles")
-  private Set<Role> roles;
-
-  public User(String id, String name, String email, String password, String phoneNumber,
-      LocalDateTime createdAt) {
-    this.id = id;
-    this.name = name;
+  public User(String email, String nickName, String password, String phoneNumber) {
     this.email = email;
+    this.nickName = nickName;
     this.password = password;
     this.phoneNumber = phoneNumber;
-    this.createdAt = createdAt;
   }
 
   public User() {
-
   }
-
-  /*
-  public void updateRoles() {
-    this.roles.add(asd);
-    this.validateRoles();
-  }
-
-  public void validateRoles() {
-    this.roles.size() <= 1
-  }
-*/
-
 }
