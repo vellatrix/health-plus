@@ -1,7 +1,7 @@
 package org.healthplus.shop.infrastructure;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.domain.repository.ShopRepository;
+import org.healthplus.shop.application.repository.ShopRepository;
 import org.healthplus.shop.domain.shop.Menu;
 import org.healthplus.shop.domain.shop.Shop;
 import org.springframework.stereotype.Repository;

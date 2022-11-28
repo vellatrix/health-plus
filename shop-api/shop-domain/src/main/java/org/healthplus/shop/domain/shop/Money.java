@@ -14,6 +14,10 @@ public class Money {
     this.value = value;
   }
 
+  public Integer currentMoney() {
+    return this.value;
+  }
+
   public void plus(Money money) {
     this.value += money.getValue();
   }

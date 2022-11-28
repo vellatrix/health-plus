@@ -21,7 +21,7 @@ public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "cate_id")
-  private Long id;
+  private Integer id;
 
   private String type;
 
@@ -31,5 +31,7 @@ public class Category {
   @Enumerated(EnumType.STRING)
   private IsYn useYn;
 
-
+  public Category(Integer id) {
+    this.id = id;
+  }
 }

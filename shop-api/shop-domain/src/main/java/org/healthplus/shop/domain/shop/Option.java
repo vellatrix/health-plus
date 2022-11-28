@@ -1,5 +1,6 @@
 package org.healthplus.shop.domain.shop;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.shop.enums.IsYn;
 
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "options")
@@ -31,12 +33,47 @@ public class Option {
 
   private String name;
   private Money price;
+  private Integer displayOrder;
 
   @Enumerated(EnumType.STRING)
   private IsYn useYn;
 
+  @Builder
+  public Option(Long id, String name, Money price, Integer displayOrder) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.displayOrder = displayOrder;
+  }
+
+  public Option(String name, Money price, Integer displayOrder) {
+    this.name = name;
+    this.price = price;
+    this.displayOrder = displayOrder;
+  }
+
   public void setOptionGroup(OptionGroup optionGroup) {
     this.optionGroup = optionGroup;
   }
+
+  public void changeOption(Option option) {
+    this.name = option.getName();
+    this.price = option.getPrice();
+    this.displayOrder = option.getDisplayOrder();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Option option = (Option) o;
+    return Objects.equals(name, option.name) && Objects.equals(price, option.price);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, price);
+  }
+
 
 }

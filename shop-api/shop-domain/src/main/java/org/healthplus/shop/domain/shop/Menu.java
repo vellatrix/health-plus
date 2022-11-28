@@ -21,9 +21,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "menu")
@@ -47,7 +47,7 @@ public class Menu {
   private String description;
 
   @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<OptionGroup> optionGroups = new HashSet<>();
+  private List<OptionGroup> optionGroups = new ArrayList<>();
 
   @JoinColumn(name = "shop_id")
   @ManyToOne(fetch = FetchType.LAZY)
@@ -64,7 +64,18 @@ public class Menu {
   private IsYn useYn;
 
   @Builder
-  public Menu(String name, Type type, Money price, String description, Set<OptionGroup> optionGroups, Category category) {
+  public Menu(Long id, String name, Type type, Money price, String description, List<OptionGroup> optionGroups, Category category) {
+    this.id = id;
+    this.name = name;
+    this.type = type;
+    this.price = price;
+    this.description = description;
+    this.optionGroups = optionGroups;
+    this.category = category;
+  }
+
+  @Builder
+  public Menu(String name, Type type, Money price, String description, List<OptionGroup> optionGroups, Category category) {
     this.name = name;
     this.type = type;
     this.price = price;
@@ -75,6 +86,10 @@ public class Menu {
 
   public Menu() {
 
+  }
+
+  public void checkValidCategory() {
+    if(this.category == null) throw new IllegalStateException("존재하지 않는 카테고리입니다.");
   }
 
   public void setShop(Shop shop) {
@@ -91,6 +106,23 @@ public class Menu {
             .filter(og -> og.getId() == optionGroupId)
             .findFirst()
             .orElseThrow(OptionGroupNotFoundException::new);
+  }
+
+  public void changeMenu(Menu menu) {
+    this.name = menu.getName();
+    this.type = menu.getType();
+    this.price = menu.getPrice();
+    this.description = menu.getDescription();
+
+    this.optionGroups.forEach(innerOptionGroup -> {
+      OptionGroup optionGroup = menu.getOptionGroups().stream()
+              .filter(outerOptionGroup -> innerOptionGroup.getId() == outerOptionGroup.getId())
+              .findAny()
+              .orElseThrow(OptionGroupNotFoundException::new);
+
+      innerOptionGroup.changeOptionGroup(optionGroup);
+    });
+
   }
 
   public void deleteOptionGroup(Long optionGroupId) {
@@ -110,4 +142,5 @@ public class Menu {
   public int hashCode() {
     return Objects.hash(id, name);
   }
+
 }

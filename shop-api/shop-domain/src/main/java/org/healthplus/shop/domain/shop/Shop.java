@@ -1,9 +1,10 @@
 package org.healthplus.shop.domain.shop;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
 import org.healthplus.shop.domain.shop.enums.IsYn;
-import org.hibernate.annotations.SortNatural;
+import org.healthplus.shop.domain.shop.enums.OpenStatus;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,9 +17,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Objects;
 
 @Entity
 @Table(name = "shop")
@@ -36,9 +37,8 @@ public class Shop {
   private Integer minimumPrice;
   private Integer deliveryFee;
 
-  @SortNatural
   @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, orphanRemoval = true)
-  private SortedSet<Menu> menus = new TreeSet<>();
+  private List<Menu> menus = new ArrayList<>();
 
   private VendorId vendorId;
 
@@ -46,7 +46,31 @@ public class Shop {
   private Address address;
 
   @Enumerated(EnumType.STRING)
-  private IsYn openYn;
+  private OpenStatus openStatus;
+
+  @Builder
+  public Shop(Business business, Integer minimumPrice, Integer deliveryFee, VendorId vendorId, Address address) {
+    this.business = business;
+    this.minimumPrice = minimumPrice;
+    this.deliveryFee = deliveryFee;
+    this.vendorId = vendorId;
+    this.address = address;
+  }
+
+  public Shop(Long shopId, String businessHour, Integer deliveryFee, Integer minimumPrice) {
+    this.id = shopId;
+    this.business.changeBusinessHour(businessHour);
+    this.deliveryFee = deliveryFee;
+    this.minimumPrice = minimumPrice;
+  }
+
+  public void closeShop() {
+    this.openStatus = OpenStatus.CLOSED;
+  }
+
+  public void openShop() {
+    this.openStatus = OpenStatus.OPEN;
+  }
 
   public void addMenu(Menu menu) {
     this.menus.add(menu);
@@ -65,5 +89,22 @@ public class Shop {
     this.menus.remove(menu);
   }
 
+  public void changeShopData(Shop from) {
+    this.business = from.business;
+    this.minimumPrice = from.minimumPrice;
+    this.deliveryFee = from.deliveryFee;
+  }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Shop shop = (Shop) o;
+    return id.equals(shop.id) && business.equals(shop.business) && vendorId.equals(shop.vendorId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, business, vendorId);
+  }
 }

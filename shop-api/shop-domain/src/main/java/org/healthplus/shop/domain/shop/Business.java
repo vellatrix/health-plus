@@ -15,4 +15,9 @@ public class Business {
   private String businessHour;
   private String mainType;
   private String subType;
+
+
+  public void changeBusinessHour(String businessHour) {
+    this.businessHour = businessHour;
+  }
 }

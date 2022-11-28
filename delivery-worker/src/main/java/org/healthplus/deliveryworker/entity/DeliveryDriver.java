@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.healthplus.deliveryworker.enums.DeliveryStatus;
 import org.healthplus.deliveryworker.enums.DeliveryType;
 import org.healthplus.deliveryworker.enums.IsYn;
 
@@ -19,9 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-/*
- * 배달 노동자 Entity
- * */
 @Entity
 @Table(name = "delivery_driver")
 @Getter
@@ -57,26 +53,15 @@ public class DeliveryDriver {
   @Column(name = "delete_dt")
   private LocalDateTime deletedAt;
 
-  @Column(name = "id")
   private String id;
-
-  @Column(name = "password")
   private String password;
-  @Column(name = "email")
   private String email;
-
-  @Column(name = "name")
   private String name;
-
-  @Column(name = "location")
   private String location;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "delivery_status")
-  private DeliveryStatus deliveryStatus;
 
-  @Builder(builderMethodName = "registrationBuilder")
-  public DeliveryDriver(
+  @Builder
+  public DeliveryDriver(Long driverId,
       IsYn userYn,
       String phoneNumber,
       String vehicleNumber,
@@ -87,6 +72,7 @@ public class DeliveryDriver {
       String email,
       String name,
       String location) {
+    this.driverId = driverId;
     this.userYn = userYn;
     this.phoneNumber = phoneNumber;
     this.vehicleNumber = vehicleNumber;

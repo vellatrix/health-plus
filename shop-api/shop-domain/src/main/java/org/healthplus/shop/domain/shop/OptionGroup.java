@@ -1,9 +1,9 @@
 package org.healthplus.shop.domain.shop;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.exception.OptionNotFoundException;
 import org.healthplus.shop.domain.shop.enums.IsYn;
-import org.hibernate.annotations.SortNatural;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,9 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "option_group")
@@ -36,9 +36,8 @@ public class OptionGroup {
   @JoinColumn(name = "menu_id")
   private Menu menu;
 
-  @SortNatural
   @OneToMany(mappedBy = "optionGroup", cascade = CascadeType.ALL, orphanRemoval = true)
-  private SortedSet<Option> options = new TreeSet<>();
+  private List<Option> options = new ArrayList<>();
 
   @Enumerated(EnumType.STRING)
   private IsYn basicChoiceYn;
@@ -48,6 +47,20 @@ public class OptionGroup {
 
   @Enumerated(EnumType.STRING)
   private IsYn useYn;
+
+  @Builder
+  public OptionGroup(Long id, IsYn basicChoiceYn, IsYn etcChoiceYn, List<Option> options) {
+    this.id = id;
+    this.basicChoiceYn = basicChoiceYn;
+    this.etcChoiceYn = etcChoiceYn;
+    this.options = options;
+  }
+
+  public OptionGroup(IsYn basicChoiceYn, IsYn etcChoiceYn, List<Option> options) {
+    this.basicChoiceYn = basicChoiceYn;
+    this.etcChoiceYn = etcChoiceYn;
+    this.options = options;
+  }
 
   public void addOption(Option option) {
     this.options.add(option);
@@ -67,7 +80,21 @@ public class OptionGroup {
 
   public void deleteOption(Long optionId) {
     Option option = findOption(optionId);
-    options.remove(option);
+    this.options.remove(option);
+  }
+
+  public void changeOptionGroup(OptionGroup optionGroup) {
+    this.basicChoiceYn = optionGroup.getBasicChoiceYn();
+    this.etcChoiceYn = optionGroup.getEtcChoiceYn();
+
+    this.options.forEach(innerOption -> {
+      Option option = optionGroup.getOptions().stream()
+              .filter(outerOption -> outerOption.getId() == innerOption.getId())
+              .findAny()
+              .orElseThrow(OptionNotFoundException::new);
+
+      innerOption.changeOption(option);
+    });
   }
 
   @Override
@@ -82,4 +109,5 @@ public class OptionGroup {
   public int hashCode() {
     return Objects.hash(id);
   }
+
 }

@@ -1,13 +1,12 @@
 package org.healthplus.shop.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.application.MenuInquiryService;
+import org.healthplus.shop.application.VendorModificationService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class MenuInquiryController {
+public class VendorModificationController {
 
-  private final MenuInquiryService menuInquiryService;
-
+  private final VendorModificationService vendorModificationService;
 }

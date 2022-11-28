@@ -1,4 +1,4 @@
-package org.healthplus.shop.domain.repository;
+package org.healthplus.shop.application.repository;
 
 import org.healthplus.shop.domain.shop.Menu;
 import org.healthplus.shop.domain.shop.Shop;
