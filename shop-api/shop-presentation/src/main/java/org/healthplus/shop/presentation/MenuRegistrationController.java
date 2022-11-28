@@ -1,7 +1,7 @@
 package org.healthplus.shop.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.application.MenuRegistrationService;
+import org.healthplus.shop.application.service.MenuRegistrationService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/shop")
 public class MenuRegistrationController {
 
-  private final MenuRegistrationService menuRegistrationService;
+  // private final MenuRegistrationService menuRegistrationService;
 
 }

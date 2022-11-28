@@ -26,4 +26,5 @@ public class VendorResponseDataConvertor {
             .nickName(vendor.getNickName())
             .build();
   }
+
 }
