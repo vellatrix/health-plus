@@ -18,8 +18,8 @@ public class ShopRepositoryAdapter implements ShopRepository {
   private final EntityManager em;
 
   @Override
-  public void save(Shop shop) {
-    jpaShopRepository.save(shop);
+  public Shop saveShop(Shop shop) {
+    return jpaShopRepository.save(shop);
   }
 
   @Override
@@ -37,6 +37,13 @@ public class ShopRepositoryAdapter implements ShopRepository {
     return null;
   }
 
+  @Override
+  public void removeShop(Shop shop) {
+    jpaShopRepository.delete(shop);
+  }
+
+
+  @Override
   public void saveMenu(Menu menu) {
     em.persist(menu);
   }

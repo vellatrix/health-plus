@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ShopRepository {
 
-  void save(Shop shop);
+  Shop saveShop(Shop shop);
 
   Optional<Shop> findById(Long id);
 
@@ -17,5 +17,7 @@ public interface ShopRepository {
   void saveMenus(List<Menu> menus);
 
   List<Menu> findByShopId(Long shopId);
+
+  void removeShop(Shop shop);
 
 }
