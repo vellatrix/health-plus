@@ -1,8 +1,7 @@
 package org.healthplus.shop.infrastructure;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.application.repository.VendorRepository;
-import org.healthplus.shop.domain.vendor.Vendor;
+import org.healthplus.shop.entity.Vendor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
