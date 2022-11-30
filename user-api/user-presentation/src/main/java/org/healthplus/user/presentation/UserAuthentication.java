@@ -1,6 +1,5 @@
 package org.healthplus.user.presentation;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.healthplus.user.application.UserService;
@@ -21,21 +20,25 @@ public class UserAuthentication {
   /*
   * 회원 가입
   * */
-  @PostMapping("/api/auth/user/register")
-  public List<String> signup(@RequestBody SignUpRequest registerRequest) {
+  @PostMapping("/api/auth/user/signup")
+  public String signup(@RequestBody SignUpRequest registerRequest) {
+    log.info("signup");
     userService.signUp(registerRequest.getEmail(), registerRequest.getNickName(),
         registerRequest.getEmail(),
         registerRequest.getPassword(), registerRequest.getPhoneNumber());
-    return List.of("user1");
+    return "ok";
   }
 
+  @GetMapping("/test")
+  public String test() {
+    return "OK";
+  }
 
   /*
    * 회원 가입 확인
    * */
   @GetMapping("/api/auth/user/confirm")
   public void registerConfirm() {
-
   }
 
   /*

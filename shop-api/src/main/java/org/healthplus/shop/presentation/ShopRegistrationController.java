@@ -1,13 +1,12 @@
 package org.healthplus.shop.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.healthplus.shop.application.service.VendorRegistrationService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/menu")
-public class MenuRemovalController {
+public class ShopRegistrationController {
 
-   // private final MenuRemovalService menuRemovalService;
+  private final VendorRegistrationService vendorRegistrationService;
 }

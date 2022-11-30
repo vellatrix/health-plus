@@ -1,4 +1,0 @@
-dependencies {
-    implementation project(':model')
-    implementation project(':notification-api:notification-domain')
-}

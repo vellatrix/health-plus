@@ -1,6 +1,0 @@
-dependencies {
-    implementation project(':model')
-    implementation project(':delivery-api:delivery-application')
-    implementation project(':delivery-api:delivery-domain')
-    implementation project(':delivery-api:delivery-presentation')
-}
