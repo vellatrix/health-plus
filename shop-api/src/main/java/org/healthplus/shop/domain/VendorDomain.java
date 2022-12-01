@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.entity.Bank;
 import org.healthplus.shop.domain.enums.IsYn;
-
 import java.time.LocalDateTime;
 
 @Getter
