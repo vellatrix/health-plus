@@ -4,15 +4,8 @@ include 'model'
 
 include 'customer-api'
 include 'delivery-api'
-include 'user-api'
 include 'shop-api'
 include 'order-api'
 include 'notification-api'
+include 'account-api'
 
-include(
-        'user-api',
-        'user-api:user-presentation',
-        'user-api:user-application',
-        'user-api:user-domain',
-        'user-api:user-infrastructure',
-)
