@@ -1,10 +1,9 @@
-package org.healthplus.shop.entity;
+package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.shop.domain.exception.OptionGroupNotFoundException;
-import org.healthplus.shop.entity.enums.IsYn;
-import org.healthplus.shop.entity.enums.Type;
+import org.healthplus.shop.domain.enums.IsYn;
+import org.healthplus.shop.domain.enums.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +22,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "menu")

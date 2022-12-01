@@ -1,7 +1,7 @@
 package org.healthplus.shop.infrastructure;
 
-import org.healthplus.shop.entity.Menu;
-import org.healthplus.shop.entity.Shop;
+import org.healthplus.shop.domain.entity.Menu;
+import org.healthplus.shop.domain.entity.Shop;
 
 import java.util.List;
 import java.util.Optional;

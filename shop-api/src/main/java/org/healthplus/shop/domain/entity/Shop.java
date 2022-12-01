@@ -1,8 +1,8 @@
-package org.healthplus.shop.entity;
+package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.shop.entity.enums.ShopStatus;
+import org.healthplus.shop.domain.enums.ShopStatus;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

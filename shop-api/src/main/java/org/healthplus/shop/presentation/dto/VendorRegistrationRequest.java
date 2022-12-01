@@ -1,7 +1,7 @@
 package org.healthplus.shop.presentation.dto;
 
 import lombok.Getter;
-import org.healthplus.shop.entity.Vendor;
+import org.healthplus.shop.domain.entity.Vendor;
 
 @Getter
 public class VendorRegistrationRequest {

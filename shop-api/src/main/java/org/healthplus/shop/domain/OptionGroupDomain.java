@@ -3,7 +3,7 @@ package org.healthplus.shop.domain;
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.exception.OptionNotFoundException;
-import org.healthplus.shop.entity.enums.IsYn;
+import org.healthplus.shop.domain.enums.IsYn;
 
 import java.util.ArrayList;
 import java.util.List;

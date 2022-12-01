@@ -1,4 +1,4 @@
-package org.healthplus.shop.entity;
+package org.healthplus.shop.domain.entity;
 
 import lombok.Getter;
 

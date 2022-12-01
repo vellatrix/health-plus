@@ -2,9 +2,9 @@ package org.healthplus.shop.presentation.convertor;
 
 import org.healthplus.shop.presentation.dto.VendorModificationResponse;
 import org.healthplus.shop.presentation.dto.VendorRetrievalResponse;
-import org.healthplus.shop.entity.Vendor;
+import org.healthplus.shop.domain.entity.Vendor;
 
-public class VendorResponseDataConvertor {
+public class VendorResponseDtoConvertor {
 
   public static VendorRetrievalResponse toVendorRetrievalResponse(Vendor vendor) {
     return VendorRetrievalResponse.builder()
