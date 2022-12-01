@@ -3,9 +3,9 @@ package org.healthplus.shop.presentation;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.model.result.ApiResponse;
 import org.healthplus.shop.application.service.VendorRetrievalService;
-import org.healthplus.shop.presentation.convertor.VendorResponseDataConvertor;
+import org.healthplus.shop.presentation.convertor.VendorResponseDtoConvertor;
 import org.healthplus.shop.presentation.dto.VendorRetrievalResponse;
-import org.healthplus.shop.entity.Vendor;
+import org.healthplus.shop.domain.entity.Vendor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ public class VendorRetrievalController {
   @GetMapping("/{vendorId}")
   public ApiResponse<VendorRetrievalResponse> retrieveVendor(@PathVariable Long vendorId) {
     Vendor vendor = vendorRetrievalService.retrieveVendor(vendorId);
-    VendorRetrievalResponse responseData = VendorResponseDataConvertor.toVendorRetrievalResponse(vendor);
+    VendorRetrievalResponse responseData = VendorResponseDtoConvertor.toVendorRetrievalResponse(vendor);
 
     return ApiResponse.success(responseData);
   }

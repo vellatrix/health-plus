@@ -1,70 +1,31 @@
-package org.healthplus.shop.domain.shop;
+package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.exception.OptionGroupNotFoundException;
-import org.healthplus.shop.domain.shop.enums.IsYn;
-import org.healthplus.shop.domain.shop.enums.Type;
+import org.healthplus.shop.domain.enums.IsYn;
+import org.healthplus.shop.domain.enums.Type;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "menu")
 @Getter
-public class Menu {
+public class MenuDomain {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "menu_id")
   private Long id;
-
   private String name;
-
-  @Enumerated(EnumType.STRING)
   private Type type;
-
-  @Embedded
-  private Money price;
-
-  @Column(name = "desc")
+  private MoneyDomain price;
   private String description;
-
-  @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<OptionGroup> optionGroups = new ArrayList<>();
-
-  @JoinColumn(name = "shop_id")
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Shop shop;
-
-  @JoinColumn(name = "cate_id")
-  @OneToOne(fetch = FetchType.LAZY)
-  private Category category;
-
-  @Enumerated(EnumType.STRING)
+  private List<OptionGroupDomain> optionGroups = new ArrayList<>();
+  private ShopDomain shop;
+  private CategoryDomain category;
   private IsYn soldYn;
-
-  @Enumerated(EnumType.STRING)
   private IsYn useYn;
 
   @Builder
-  public Menu(Long id, String name, Type type, Money price, String description, List<OptionGroup> optionGroups, Category category) {
+  public MenuDomain(Long id, String name, Type type, MoneyDomain price, String description, List<OptionGroupDomain> optionGroups, CategoryDomain category) {
     this.id = id;
     this.name = name;
     this.type = type;
@@ -75,7 +36,7 @@ public class Menu {
   }
 
   @Builder
-  public Menu(String name, Type type, Money price, String description, List<OptionGroup> optionGroups, Category category) {
+  public MenuDomain(String name, Type type, MoneyDomain price, String description, List<OptionGroupDomain> optionGroups, CategoryDomain category) {
     this.name = name;
     this.type = type;
     this.price = price;
@@ -84,7 +45,7 @@ public class Menu {
     this.category = category;
   }
 
-  public Menu() {
+  public MenuDomain() {
 
   }
 
@@ -92,30 +53,30 @@ public class Menu {
     if(this.category == null) throw new IllegalStateException("존재하지 않는 카테고리입니다.");
   }
 
-  public void setShop(Shop shop) {
+  public void setShop(ShopDomain shop) {
     this.shop = shop;
   }
 
-  public void addOptionGroup(OptionGroup optionGroup) {
+  public void addOptionGroup(OptionGroupDomain optionGroup) {
     this.optionGroups.add(optionGroup);
     optionGroup.setMenu(this);
   }
 
-  public OptionGroup findOptionGroup(Long optionGroupId) {
+  public OptionGroupDomain findOptionGroup(Long optionGroupId) {
     return this.optionGroups.stream()
             .filter(og -> og.getId() == optionGroupId)
             .findFirst()
             .orElseThrow(OptionGroupNotFoundException::new);
   }
 
-  public void changeMenu(Menu menu) {
+  public void changeMenu(MenuDomain menu) {
     this.name = menu.getName();
     this.type = menu.getType();
     this.price = menu.getPrice();
     this.description = menu.getDescription();
 
     this.optionGroups.forEach(innerOptionGroup -> {
-      OptionGroup optionGroup = menu.getOptionGroups().stream()
+      OptionGroupDomain optionGroup = menu.getOptionGroups().stream()
               .filter(outerOptionGroup -> innerOptionGroup.getId() == outerOptionGroup.getId())
               .findAny()
               .orElseThrow(OptionGroupNotFoundException::new);
@@ -126,7 +87,7 @@ public class Menu {
   }
 
   public void deleteOptionGroup(Long optionGroupId) {
-    OptionGroup optionGroup = findOptionGroup(optionGroupId);
+    OptionGroupDomain optionGroup = findOptionGroup(optionGroupId);
     this.optionGroups.remove(optionGroup);
   }
 
@@ -134,7 +95,7 @@ public class Menu {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Menu menu = (Menu) o;
+    MenuDomain menu = (MenuDomain) o;
     return Objects.equals(id, menu.id) && Objects.equals(name, menu.name);
   }
 

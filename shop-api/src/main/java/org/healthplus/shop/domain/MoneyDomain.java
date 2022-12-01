@@ -1,16 +1,13 @@
-package org.healthplus.shop.domain.shop;
+package org.healthplus.shop.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
 @Getter
-public class Money {
+public class MoneyDomain {
 
   private Integer value;
 
-  public Money(Integer value) {
+  public MoneyDomain(Integer value) {
     this.value = value;
   }
 
@@ -18,11 +15,11 @@ public class Money {
     return this.value;
   }
 
-  public void plus(Money money) {
+  public void plus(MoneyDomain money) {
     this.value += money.getValue();
   }
 
-  public void minus(Money money) {
+  public void minus(MoneyDomain money) {
     this.value -= money.getValue();
   }
 

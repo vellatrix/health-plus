@@ -1,14 +1,11 @@
-package org.healthplus.shop.domain.shop;
+package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
 @Getter
 @Builder
-public class Business {
+public class BusinessDomain {
 
   private String businessName;
   private String businessNumber;

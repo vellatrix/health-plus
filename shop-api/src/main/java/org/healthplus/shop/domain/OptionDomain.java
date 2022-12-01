@@ -2,7 +2,7 @@ package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.shop.entity.enums.IsYn;
+import org.healthplus.shop.domain.enums.IsYn;
 
 import java.util.Objects;
 

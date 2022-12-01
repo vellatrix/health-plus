@@ -3,10 +3,10 @@ package org.healthplus.shop.presentation;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.model.result.ApiResponse;
 import org.healthplus.shop.application.service.VendorModificationService;
-import org.healthplus.shop.presentation.convertor.VendorResponseDataConvertor;
+import org.healthplus.shop.presentation.convertor.VendorResponseDtoConvertor;
 import org.healthplus.shop.presentation.dto.VendorModificationRequest;
 import org.healthplus.shop.presentation.dto.VendorModificationResponse;
-import org.healthplus.shop.entity.Vendor;
+import org.healthplus.shop.domain.entity.Vendor;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +26,7 @@ public class VendorModificationController {
 
     Vendor vendor = dto.toVendor();
     Vendor modifiedVendor = vendorModificationService.modifyVendor(vendor);
-    VendorModificationResponse responseData = VendorResponseDataConvertor.toVendorModificationResponse(modifiedVendor);
+    VendorModificationResponse responseData = VendorResponseDtoConvertor.toVendorModificationResponse(modifiedVendor);
 
     return ApiResponse.success(responseData);
   }
