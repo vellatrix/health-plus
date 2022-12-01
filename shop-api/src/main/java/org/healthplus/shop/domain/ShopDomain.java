@@ -3,7 +3,7 @@ package org.healthplus.shop.domain;
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
-import org.healthplus.shop.entity.enums.ShopStatus;
+import org.healthplus.shop.domain.enums.ShopStatus;
 
 import java.util.ArrayList;
 import java.util.List;

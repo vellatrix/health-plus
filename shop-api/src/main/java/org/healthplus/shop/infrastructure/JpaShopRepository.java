@@ -1,7 +1,7 @@
 package org.healthplus.shop.infrastructure;
 
-import org.healthplus.shop.entity.Menu;
-import org.healthplus.shop.entity.Shop;
+import org.healthplus.shop.domain.entity.Menu;
+import org.healthplus.shop.domain.entity.Shop;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,35 +1,61 @@
-package org.healthplus.shop.domain;
+package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.shop.domain.entity.Bank;
 import org.healthplus.shop.domain.enums.IsYn;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "vendor")
 @Getter
-public class VendorDomain {
+public class Vendor {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "vendor_id")
   private Long id;
+
   private String nickName;
   private String email;
   private String phoneNumber;
   private String name;
   private String password;
 
+  @Embedded
   private Bank bank;
-  private UserIdDomain userId;
+
+  @Embedded
+  private Long userId;
+
+  @Column(name = "create_dt")
   private LocalDateTime createdAt;
+
+  @Column(name = "modify_dt")
   private LocalDateTime modifiedAt;
+
+  @Column(name = "delete_dt")
   private LocalDateTime deletedAt;
+
+  @Enumerated(EnumType.STRING)
   private IsYn useYn;
 
   @Builder
-  public VendorDomain(String nickName,
+  public Vendor(String nickName,
                 String email,
                 String phoneNumber,
                 String name,
                 String password,
-                UserIdDomain userId) {
+                Long userId) {
     this.nickName = nickName;
     this.email = email;
     this.phoneNumber = phoneNumber;
@@ -38,14 +64,10 @@ public class VendorDomain {
     this.userId = userId;
   }
 
-  public VendorDomain(Long id, String nickName, String email) {
+  public Vendor(Long id, String nickName, String email) {
     this.id = id;
     this.nickName = nickName;
     this.email = email;
   }
 
-  public void changeVendorData(VendorDomain from) {
-    this.nickName = from.nickName;
-    this.email = from.email;
-  }
 }
