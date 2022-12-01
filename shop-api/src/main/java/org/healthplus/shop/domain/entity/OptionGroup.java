@@ -2,9 +2,7 @@ package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.healthplus.shop.domain.enums.IsYn;
-import org.healthplus.shop.domain.exception.OptionNotFoundException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "option_group")
@@ -50,11 +47,10 @@ public class OptionGroup {
   private IsYn useYn;
 
   @Builder
-  public OptionGroup(Long id, IsYn basicChoiceYn, IsYn etcChoiceYn, IsYn useYn, List<Option> options) {
+  public OptionGroup(Long id, IsYn basicChoiceYn, IsYn etcChoiceYn, List<Option> options) {
     this.id = id;
     this.basicChoiceYn = basicChoiceYn;
     this.etcChoiceYn = etcChoiceYn;
-    this.useYn = useYn;
     this.options = options;
   }
 
@@ -64,35 +60,5 @@ public class OptionGroup {
     this.options = options;
   }
 
-  public void changeData(OptionGroup optionGroup) {
-    this.basicChoiceYn = optionGroup.getBasicChoiceYn();
-    this.etcChoiceYn = optionGroup.getEtcChoiceYn();
-    this.useYn = optionGroup.getUseYn();
 
-    optionGroup.getOptions().forEach(o -> {
-      Option option = findOption(o.getId());
-      option.changeData(o);
-    });
-
-  }
-
-  private Option findOption(Long optionId) {
-    return this.options.stream()
-            .filter(o -> o.getId() == optionId)
-            .findAny()
-            .orElseThrow(OptionNotFoundException::new);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    OptionGroup that = (OptionGroup) o;
-    return Objects.equals(id, that.id) && basicChoiceYn == that.basicChoiceYn && etcChoiceYn == that.etcChoiceYn && useYn == that.useYn;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, basicChoiceYn, etcChoiceYn, useYn);
-  }
 }

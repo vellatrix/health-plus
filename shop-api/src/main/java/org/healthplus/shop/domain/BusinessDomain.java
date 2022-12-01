@@ -1,14 +1,11 @@
-package org.healthplus.shop.domain.entity;
+package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
 @Getter
 @Builder
-public class Business {
+public class BusinessDomain {
 
   private String businessName;
   private String businessNumber;
@@ -16,4 +13,8 @@ public class Business {
   private String mainType;
   private String subType;
 
+
+  public void changeBusinessHour(String businessHour) {
+    this.businessHour = businessHour;
+  }
 }
