@@ -13,4 +13,6 @@ public interface JpaShopRepository extends JpaRepository<Shop, Long> {
           attributePaths = {"menus", "menus.optionGroup", "menus.optionGroup.options"},
           type = EntityGraph.EntityGraphType.LOAD)
   Optional<Menu> findMenuById(Long id);
+
+  Optional<Shop> findByVendorId(Long vendorId);
 }
