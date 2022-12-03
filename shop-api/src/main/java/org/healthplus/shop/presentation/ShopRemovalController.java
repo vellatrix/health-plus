@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ShopRemovalController {
 
-
   private final VendorRemovalService vendorRemovalService;
 
 }

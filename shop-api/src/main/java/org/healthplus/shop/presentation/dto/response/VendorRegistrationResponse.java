@@ -1,9 +1,11 @@
-package org.healthplus.shop.presentation.dto;
+package org.healthplus.shop.presentation.dto.response;
 
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
-public class VendorRetrievalRequest {
+public class VendorRegistrationResponse {
 
   private Long vendorId;
   private String nickName;
@@ -12,7 +14,6 @@ public class VendorRetrievalRequest {
   private String name;
   private String bank;
   private String accountNumber;
-  private String password;
   private Long userId;
 
 }

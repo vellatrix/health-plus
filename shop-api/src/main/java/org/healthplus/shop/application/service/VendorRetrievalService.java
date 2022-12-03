@@ -15,7 +15,7 @@ public class VendorRetrievalService {
   private final VendorRepository vendorRepository;
 
   public Vendor retrieveVendor(Long vendorId) {
-    return Optional.ofNullable(vendorRepository.findBasicInfo(vendorId)).orElseThrow(VendorNotFoundException::new);
+    return vendorRepository.findById(vendorId).orElseThrow(VendorNotFoundException::new);
   }
 
 }
