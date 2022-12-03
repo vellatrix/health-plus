@@ -24,14 +24,6 @@ public class VendorRepositoryAdapter implements VendorRepository {
     return jpaVendorRepository.findById(id);
   }
 
-  @Override
-  public Vendor findBasicInfo(Long vendorId) {
-    return em.createQuery(
-            "select v.id, v.name, v.businessName, v.businessNumber, v.businessHour, v.mainType, v.subType " +
-            "from Vendor v where v.id = :vendorId", Vendor.class)
-            .setParameter("vendorId", vendorId)
-            .getSingleResult();
-  }
 
   @Override
   public void remove(Vendor vendor) {

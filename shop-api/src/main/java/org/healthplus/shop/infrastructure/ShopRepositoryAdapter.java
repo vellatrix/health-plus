@@ -36,6 +36,16 @@ public class ShopRepositoryAdapter implements ShopRepository {
     return null;
   }
 
+  @Override
+  public Optional<Shop> findByVendorId(Long vendorId) {
+    return jpaShopRepository.findByVendorId(vendorId);
+  }
+
+  @Override
+  public void remove(Shop shop) {
+    jpaShopRepository.delete(shop);
+  }
+
   public void saveMenu(Menu menu) {
     em.persist(menu);
   }

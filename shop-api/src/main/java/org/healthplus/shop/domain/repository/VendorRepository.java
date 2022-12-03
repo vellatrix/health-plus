@@ -10,7 +10,5 @@ public interface VendorRepository {
 
   Optional<Vendor> findById(Long id);
 
-  Vendor findBasicInfo(Long id);
-
   void remove(Vendor vendor);
 }

@@ -18,4 +18,7 @@ public interface ShopRepository {
 
   List<Menu> findByShopId(Long shopId);
 
+  Optional<Shop> findByVendorId(Long vendorId);
+
+  void remove(Shop shop);
 }
