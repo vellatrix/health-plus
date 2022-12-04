@@ -2,13 +2,13 @@ package org.healthplus.shop.presentation.convertor;
 
 import org.healthplus.shop.domain.AddressDomain;
 import org.healthplus.shop.domain.BusinessDomain;
+import org.healthplus.shop.domain.ShopCategoryDomain;
 import org.healthplus.shop.domain.ShopDomain;
 import org.healthplus.shop.domain.VendorIdDomain;
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.entity.Option;
 import org.healthplus.shop.domain.entity.OptionGroup;
 import org.healthplus.shop.domain.entity.Shop;
-import org.healthplus.shop.domain.enums.IsYn;
 import org.healthplus.shop.presentation.dto.request.ShopModificationRequest;
 import org.healthplus.shop.presentation.dto.request.ShopRegistrationRequest;
 import org.healthplus.shop.presentation.dto.response.MenuRetrievalResponse;
@@ -18,7 +18,6 @@ import org.healthplus.shop.presentation.dto.response.ShopModificationResponse;
 import org.healthplus.shop.presentation.dto.response.ShopRegistrationResponse;
 import org.healthplus.shop.presentation.dto.response.ShopRetrievalResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,7 @@ public class ShopDtoConvertor {
   public static ShopDomain toRegistrationRequest(Long vendorId, ShopRegistrationRequest dto) {
     return ShopDomain.builder()
             .vendorId(new VendorIdDomain(vendorId))
+            .categoryDomain(new ShopCategoryDomain(dto.getCategoryId()))
             .minimumPrice(dto.getMinimumPrice())
             .deliveryFee(dto.getDeliveryFee())
             .business(BusinessDomain.builder()

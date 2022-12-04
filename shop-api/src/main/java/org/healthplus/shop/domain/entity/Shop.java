@@ -11,10 +11,13 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,10 @@ public class Shop {
   @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Menu> menus = new ArrayList<>();
 
+  @JoinColumn(name = "cate_id")
+  @OneToOne(fetch = FetchType.LAZY)
+  private ShopCategory category;
+
   private Long vendorId;
 
   @Embedded
@@ -48,7 +55,8 @@ public class Shop {
   private ShopStatus shopStatus;
 
   @Builder
-  public Shop(Business business, Integer minimumPrice, Integer deliveryFee, Long vendorId, Address address) {
+  public Shop(ShopCategory category, Business business, Integer minimumPrice, Integer deliveryFee, Long vendorId, Address address) {
+    this.category = category;
     this.business = business;
     this.minimumPrice = minimumPrice;
     this.deliveryFee = deliveryFee;

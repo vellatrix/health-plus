@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public class ShopRegistrationRequest {
 
+  private Integer categoryId;
   private Integer minimumPrice;
   private Integer deliveryFee;
   private String businessName;
