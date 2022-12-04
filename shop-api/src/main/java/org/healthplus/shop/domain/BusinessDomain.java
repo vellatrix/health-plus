@@ -13,8 +13,7 @@ public class BusinessDomain {
   private String mainType;
   private String subType;
 
-
-  public void changeBusinessHour(String businessHour) {
+  public BusinessDomain(String businessHour) {
     this.businessHour = businessHour;
   }
 }
