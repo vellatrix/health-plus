@@ -4,9 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.entity.Address;
 import org.healthplus.shop.domain.entity.Business;
+import org.healthplus.shop.domain.entity.Category;
+import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.entity.Shop;
 import org.healthplus.shop.domain.entity.ShopCategory;
 import org.healthplus.shop.domain.entity.Vendor;
+import org.healthplus.shop.domain.enums.IsYn;
+import org.healthplus.shop.domain.enums.Type;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
 import org.healthplus.shop.domain.enums.ShopStatus;
 
@@ -37,18 +41,16 @@ public class ShopDomain {
     this.address = address;
   }
 
+  public ShopDomain(Long id) {
+    this.id = id;
+  }
+
   public void closeShop() {
     this.shopStatus = shopStatus.CLOSED;
   }
 
   public void openShop() {
     this.shopStatus = shopStatus.OPEN;
-  }
-
-  public void addMenu(MenuDomain menu) {
-    // Entity 연관관계 처리
-    this.menus.add(menu);
-    menu.setShop(this);
   }
 
   public MenuDomain findMenu(Long menuId) {

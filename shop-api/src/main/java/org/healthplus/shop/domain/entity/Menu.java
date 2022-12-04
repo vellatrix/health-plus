@@ -2,6 +2,7 @@ package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.healthplus.shop.domain.enums.IsYn;
 import org.healthplus.shop.domain.enums.Type;
 
@@ -26,6 +27,7 @@ import java.util.List;
 @Entity
 @Table(name = "menu")
 @Getter
+@Setter
 public class Menu {
 
   @Id
@@ -62,18 +64,8 @@ public class Menu {
   private IsYn useYn;
 
   @Builder
-  public Menu(Long id, String name, Type type, Integer price, String description, List<OptionGroup> optionGroups, Category category) {
-    this.id = id;
-    this.name = name;
-    this.type = type;
-    this.price = price;
-    this.description = description;
-    this.optionGroups = optionGroups;
-    this.category = category;
-  }
-
-  @Builder
-  public Menu(String name, Type type, Integer price, String description, List<OptionGroup> optionGroups, Category category) {
+  public Menu(Long shopId, String name, Type type, Integer price, String description, List<OptionGroup> optionGroups, Category category) {
+    this.shop.setId(shopId);
     this.name = name;
     this.type = type;
     this.price = price;
