@@ -16,5 +16,5 @@ public class OptionGroupRetrievalResponse {
   private IsYn basicChoiceYn;
   private IsYn etcChoiceYn;
   private IsYn useYn;
-  private List<OptionRetrievalResponse> options = new ArrayList<>();
+  private List<OptionRetrievalResponse> options;
 }
