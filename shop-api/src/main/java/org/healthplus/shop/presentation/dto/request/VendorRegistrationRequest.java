@@ -1,4 +1,4 @@
-package org.healthplus.shop.presentation.dto;
+package org.healthplus.shop.presentation.dto.request;
 
 import lombok.Getter;
 import org.healthplus.shop.domain.entity.Vendor;
@@ -15,16 +15,6 @@ public class VendorRegistrationRequest {
   private String password;
   private Long userId;
 
-  public Vendor toVendor() {
-    return Vendor.builder()
-            .nickName(nickName)
-            .name(name)
-            .email(email)
-            .phoneNumber(phoneNumber)
-            .password(password)
-            .userId(userId)
-            .build();
-  }
 
 
 }

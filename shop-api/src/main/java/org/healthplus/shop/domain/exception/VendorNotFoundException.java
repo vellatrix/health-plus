@@ -1,4 +1,4 @@
-package org.healthplus.shop.application.exception;
+package org.healthplus.shop.domain.exception;
 
 public class VendorNotFoundException extends RuntimeException{
 
