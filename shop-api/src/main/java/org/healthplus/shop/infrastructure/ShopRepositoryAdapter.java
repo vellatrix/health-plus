@@ -16,8 +16,8 @@ public class ShopRepositoryAdapter implements ShopRepository {
   private final EntityManager em;
 
   @Override
-  public void save(Shop shop) {
-    jpaShopRepository.save(shop);
+  public Shop save(Shop shop) {
+    return jpaShopRepository.save(shop);
   }
 
   @Override
@@ -45,6 +45,16 @@ public class ShopRepositoryAdapter implements ShopRepository {
     jpaShopRepository.delete(shop);
   }
 
+  @Override
+  public List<Shop> findAllByVendorId(Long vendorId) {
+    return jpaShopRepository.findAllByVendorId(vendorId);
+  }
+
+  @Override
+  public List<Shop> findAllByCategoryId(Integer categoryId) {
+    return jpaShopRepository.findAllByCategoryId(categoryId);
+  }
+
   public void saveMenu(Menu menu) {
     em.persist(menu);
   }
@@ -53,4 +63,5 @@ public class ShopRepositoryAdapter implements ShopRepository {
   public void saveMenus(List<Menu> menus) {
     menus.forEach(menu -> em.persist(menu));
   }
+
 }

@@ -1,8 +1,8 @@
 package org.healthplus.shop.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.application.exception.ShopNotFoundException;
-import org.healthplus.shop.application.exception.VendorNotFoundException;
+import org.healthplus.shop.domain.exception.ShopNotFoundException;
+import org.healthplus.shop.domain.exception.VendorNotFoundException;
 import org.healthplus.shop.domain.entity.Shop;
 import org.healthplus.shop.infrastructure.ShopRepository;
 import org.healthplus.shop.infrastructure.VendorRepository;
@@ -24,7 +24,6 @@ public class VendorRemovalService {
     Shop shop = shopRepository.findByVendorId(vendorId).orElseThrow(ShopNotFoundException::new);
 
     shopRepository.remove(shop);
-
     vendorRepository.remove(vendor);
   }
 }

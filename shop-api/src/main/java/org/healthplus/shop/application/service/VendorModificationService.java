@@ -1,7 +1,7 @@
 package org.healthplus.shop.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.application.exception.VendorNotFoundException;
+import org.healthplus.shop.domain.exception.VendorNotFoundException;
 import org.healthplus.shop.domain.VendorDomain;
 import org.healthplus.shop.infrastructure.VendorRepository;
 import org.healthplus.shop.domain.entity.Vendor;
@@ -16,7 +16,6 @@ public class VendorModificationService {
 
   @Transactional
   public VendorDomain modifyVendor(Long vendorId, VendorDomain vendorData) {
-
     Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(VendorNotFoundException::new);
     vendorData.changeVendorData(vendor);
 

@@ -1,12 +1,33 @@
 package org.healthplus.shop.presentation.convertor;
 
+import org.healthplus.shop.domain.UserIdDomain;
 import org.healthplus.shop.domain.VendorDomain;
+import org.healthplus.shop.domain.entity.Vendor;
+import org.healthplus.shop.presentation.dto.request.VendorModificationRequest;
+import org.healthplus.shop.presentation.dto.request.VendorRegistrationRequest;
 import org.healthplus.shop.presentation.dto.response.VendorModificationResponse;
 import org.healthplus.shop.presentation.dto.response.VendorRegistrationResponse;
 import org.healthplus.shop.presentation.dto.response.VendorRetrievalResponse;
-import org.healthplus.shop.domain.entity.Vendor;
 
-public class VendorResponseDtoConvertor {
+public class VendorDtoConvertor {
+
+  public static VendorDomain toVendorRegistrationRequest(VendorRegistrationRequest dto) {
+    return VendorDomain.builder()
+            .nickName(dto.getNickName())
+            .name(dto.getName())
+            .email(dto.getEmail())
+            .phoneNumber(dto.getPhoneNumber())
+            .password(dto.getPassword())
+            .userId(new UserIdDomain(dto.getUserId()))
+            .build();
+  }
+
+  public static VendorDomain toVendorModificationRequest(VendorModificationRequest dto) {
+    return VendorDomain.builder()
+            .nickName(dto.getNickName())
+            .email(dto.getEmail())
+            .build();
+  }
 
   public static VendorRetrievalResponse toVendorRetrievalResponse(Vendor vendor) {
     return VendorRetrievalResponse.builder()
