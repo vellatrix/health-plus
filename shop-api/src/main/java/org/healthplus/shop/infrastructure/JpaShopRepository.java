@@ -20,4 +20,5 @@ public interface JpaShopRepository extends JpaRepository<Shop, Long> {
   List<Shop> findAllByVendorId(Long vendorId);
 
   List<Shop> findAllByCategoryId(Integer categoryId);
+
 }

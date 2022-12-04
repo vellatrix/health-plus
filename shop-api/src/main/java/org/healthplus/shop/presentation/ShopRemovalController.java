@@ -21,7 +21,6 @@ public class ShopRemovalController {
   @DeleteMapping("/{vendorId}/shops/{shopId}")
   public ApiResponse<String> removeShop(@PathVariable Long vendorId,
                                         @PathVariable Long shopId) {
-
     vendorRetrievalService.retrieveVendor(vendorId);
     shopRemovalService.removeShop(vendorId, shopId);
 

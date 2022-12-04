@@ -20,6 +20,7 @@ public class VendorRetrievalController {
 
   @GetMapping("/{vendorId}")
   public ApiResponse<VendorRetrievalResponse> retrieveVendor(@PathVariable Long vendorId) {
+
     Vendor vendor = vendorRetrievalService.retrieveVendor(vendorId);
     VendorRetrievalResponse responseData = VendorDtoConvertor.toVendorRetrievalResponse(vendor);
 

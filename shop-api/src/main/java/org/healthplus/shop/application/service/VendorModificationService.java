@@ -16,7 +16,6 @@ public class VendorModificationService {
 
   @Transactional
   public VendorDomain modifyVendor(Long vendorId, VendorDomain vendorData) {
-
     Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(VendorNotFoundException::new);
     vendorData.changeVendorData(vendor);
 

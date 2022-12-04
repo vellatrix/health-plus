@@ -25,7 +25,6 @@ public class VendorModificationController {
   @PatchMapping("/{vendorId}")
   public ApiResponse<VendorModificationResponse> modifyVendor(@PathVariable Long vendorId,
                                                               @RequestBody @Valid VendorModificationRequest dto) {
-
     VendorDomain vendorDomain = VendorDtoConvertor.toVendorModificationRequest(dto);
     VendorDomain modifiedVendor = vendorModificationService.modifyVendor(vendorId, vendorDomain);
     VendorModificationResponse responseData = VendorDtoConvertor.toVendorModificationResponse(modifiedVendor);

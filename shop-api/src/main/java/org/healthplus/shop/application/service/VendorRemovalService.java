@@ -24,7 +24,6 @@ public class VendorRemovalService {
     Shop shop = shopRepository.findByVendorId(vendorId).orElseThrow(ShopNotFoundException::new);
 
     shopRepository.remove(shop);
-
     vendorRepository.remove(vendor);
   }
 }
