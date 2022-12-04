@@ -2,6 +2,7 @@ package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.healthplus.shop.domain.enums.ShopStatus;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "shop")
 @Getter
+@Setter
 public class Shop {
 
   @Id

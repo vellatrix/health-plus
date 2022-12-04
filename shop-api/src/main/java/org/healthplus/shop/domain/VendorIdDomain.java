@@ -6,4 +6,8 @@ import lombok.Getter;
 public class VendorIdDomain {
 
   private Long vendorId;
+
+  public VendorIdDomain(Long vendorId) {
+    this.vendorId = vendorId;
+  }
 }
