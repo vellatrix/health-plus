@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.healthplus.shop.domain.entity.Address;
 import org.healthplus.shop.domain.entity.Business;
 import org.healthplus.shop.domain.entity.Shop;
+import org.healthplus.shop.domain.entity.ShopCategory;
 import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
 import org.healthplus.shop.domain.enums.ShopStatus;
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class ShopDomain {
 
   private Long id;
+  private ShopCategoryDomain categoryDomain;
   private BusinessDomain business;
   private Integer minimumPrice;
   private Integer deliveryFee;
@@ -26,7 +28,8 @@ public class ShopDomain {
   private ShopStatus shopStatus;
 
   @Builder
-  public ShopDomain(BusinessDomain business, Integer minimumPrice, Integer deliveryFee, VendorIdDomain vendorId, AddressDomain address) {
+  public ShopDomain(ShopCategoryDomain categoryDomain, BusinessDomain business, Integer minimumPrice, Integer deliveryFee, VendorIdDomain vendorId, AddressDomain address) {
+    this.categoryDomain = categoryDomain;
     this.business = business;
     this.minimumPrice = minimumPrice;
     this.deliveryFee = deliveryFee;
@@ -81,6 +84,7 @@ public class ShopDomain {
 
   public Shop addShop() {
     return Shop.builder()
+            .category(new ShopCategory(categoryDomain.getId()))
             .minimumPrice(minimumPrice)
             .deliveryFee(deliveryFee)
             .vendorId(vendorId.getVendorId())

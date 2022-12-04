@@ -1,7 +1,7 @@
 package org.healthplus.shop.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.application.exception.ShopNotFoundException;
+import org.healthplus.shop.domain.exception.ShopNotFoundException;
 import org.healthplus.shop.domain.ShopDomain;
 import org.healthplus.shop.domain.entity.Shop;
 import org.healthplus.shop.infrastructure.ShopRepository;
