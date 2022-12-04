@@ -11,6 +11,9 @@ import org.healthplus.shop.domain.entity.ShopCategory;
 import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.domain.enums.IsYn;
 import org.healthplus.shop.domain.enums.Type;
+import org.healthplus.shop.domain.entity.Shop;
+import org.healthplus.shop.domain.entity.ShopCategory;
+import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
 import org.healthplus.shop.domain.enums.ShopStatus;
 
@@ -40,6 +43,7 @@ public class ShopDomain {
     this.vendorId = vendorId;
     this.address = address;
   }
+
 
   public ShopDomain(Long id) {
     this.id = id;

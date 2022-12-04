@@ -27,4 +27,5 @@ public class MenuRetrievalResponse {
   private IsYn soldYn;
   private IsYn useYn;
   private List<OptionGroupRetrievalResponse> optionGroups;
+
 }

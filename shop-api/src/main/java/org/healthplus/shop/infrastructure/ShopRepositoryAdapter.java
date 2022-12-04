@@ -55,7 +55,7 @@ public class ShopRepositoryAdapter implements ShopRepository {
     return jpaShopRepository.findAllByCategoryId(categoryId);
   }
 
-  public Menu saveMenu(Menu menu) {
+  public void saveMenu(Menu menu) {
     em.persist(menu);
     em.flush();
 
