@@ -3,6 +3,7 @@ package org.healthplus.shop.domain;
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.shop.domain.entity.Bank;
+import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.domain.enums.IsYn;
 import java.time.LocalDateTime;
 
@@ -38,14 +39,19 @@ public class VendorDomain {
     this.userId = userId;
   }
 
-  public VendorDomain(Long id, String nickName, String email) {
-    this.id = id;
-    this.nickName = nickName;
-    this.email = email;
+  public void changeVendorData(Vendor entity) {
+    entity.setNickName(this.nickName);
+    entity.setEmail(this.email);
   }
 
-  public void changeVendorData(VendorDomain from) {
-    this.nickName = from.nickName;
-    this.email = from.email;
+  public Vendor addVendor() {
+    return Vendor.builder()
+            .nickName(this.nickName)
+            .name(this.name)
+            .email(this.email)
+            .phoneNumber(this.phoneNumber)
+            .password(this.password)
+            .userId(this.userId.getUserId())
+            .build();
   }
 }

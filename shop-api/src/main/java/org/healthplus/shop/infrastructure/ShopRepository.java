@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ShopRepository {
 
-  void save(Shop shop);
+  Shop save(Shop shop);
 
   Optional<Shop> findById(Long id);
 
@@ -17,4 +17,11 @@ public interface ShopRepository {
 
   List<Menu> findByShopId(Long shopId);
 
+  Optional<Shop> findByVendorId(Long vendorId);
+
+  void remove(Shop shop);
+
+  List<Shop> findAllByVendorId(Long vendorId);
+
+  List<Shop> findAllByCategoryId(Integer categoryId);
 }

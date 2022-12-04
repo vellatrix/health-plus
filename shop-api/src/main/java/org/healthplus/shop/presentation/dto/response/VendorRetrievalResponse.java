@@ -1,4 +1,4 @@
-package org.healthplus.shop.presentation.dto;
+package org.healthplus.shop.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -2,6 +2,7 @@ package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.healthplus.shop.domain.enums.IsYn;
 
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "vendor")
 @Getter
+@Setter
 public class Vendor {
 
   @Id
@@ -64,10 +66,5 @@ public class Vendor {
     this.userId = userId;
   }
 
-  public Vendor(Long id, String nickName, String email) {
-    this.id = id;
-    this.nickName = nickName;
-    this.email = email;
-  }
 
 }
