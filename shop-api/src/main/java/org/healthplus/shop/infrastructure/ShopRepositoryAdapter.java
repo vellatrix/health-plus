@@ -64,4 +64,5 @@ public class ShopRepositoryAdapter implements ShopRepository {
   public void saveMenus(List<Menu> menus) {
     menus.forEach(menu -> em.persist(menu));
   }
+
 }

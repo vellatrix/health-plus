@@ -24,7 +24,6 @@ public class VendorRegistrationController {
 
   @PostMapping
   public ApiResponse<VendorRegistrationResponse> registerVendor(@RequestBody @Valid VendorRegistrationRequest dto) {
-
     VendorDomain vendor = VendorDtoConvertor.toVendorRegistrationRequest(dto);
     Vendor savedVendor = vendorRegistrationService.registerVendor(vendor);
     VendorRegistrationResponse responseData = VendorDtoConvertor.toVendorRegistrationResponse(savedVendor);
