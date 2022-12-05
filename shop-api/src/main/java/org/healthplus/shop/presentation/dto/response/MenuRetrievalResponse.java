@@ -26,5 +26,6 @@ public class MenuRetrievalResponse {
   private String category;
   private IsYn soldYn;
   private IsYn useYn;
-  private List<OptionGroupRetrievalResponse> optionGroups = new ArrayList<>();
+  private List<OptionGroupRetrievalResponse> optionGroups;
+
 }

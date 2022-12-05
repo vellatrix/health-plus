@@ -12,4 +12,8 @@ public class CategoryDomain {
   private String type;
   private LocalDateTime createdAt;
   private IsYn useYn;
+
+  public CategoryDomain(Integer id) {
+    this.id = id;
+  }
 }

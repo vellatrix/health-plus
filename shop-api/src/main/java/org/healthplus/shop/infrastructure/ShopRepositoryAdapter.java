@@ -55,8 +55,14 @@ public class ShopRepositoryAdapter implements ShopRepository {
     return jpaShopRepository.findAllByCategoryId(categoryId);
   }
 
-  public void saveMenu(Menu menu) {
+  public Menu saveMenu(Menu menu) {
     em.persist(menu);
+    em.flush();
+
+    return em.createQuery("select m, og, o from Menu m join OptionGroup og on m.id = og.menuId " +
+            "join Option o on og.id = o.optionGroupId where m.id = :menuId", Menu.class)
+            .setParameter("menuId", menu.getId())
+            .getSingleResult();
   }
 
   @Override

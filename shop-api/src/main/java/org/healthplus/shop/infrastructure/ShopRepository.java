@@ -11,7 +11,7 @@ public interface ShopRepository {
 
   Optional<Shop> findById(Long id);
 
-  void saveMenu(Menu menu);
+  Menu saveMenu(Menu menu);
 
   void saveMenus(List<Menu> menus);
 

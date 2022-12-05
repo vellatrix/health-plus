@@ -2,6 +2,10 @@ package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.healthplus.shop.domain.entity.Category;
+import org.healthplus.shop.domain.entity.Menu;
+import org.healthplus.shop.domain.entity.Option;
+import org.healthplus.shop.domain.entity.OptionGroup;
 import org.healthplus.shop.domain.exception.OptionGroupNotFoundException;
 import org.healthplus.shop.domain.enums.IsYn;
 import org.healthplus.shop.domain.enums.Type;
@@ -9,6 +13,7 @@ import org.healthplus.shop.domain.enums.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 public class MenuDomain {
@@ -25,7 +30,14 @@ public class MenuDomain {
   private IsYn useYn;
 
   @Builder
-  public MenuDomain(Long id, String name, Type type, MoneyDomain price, String description, List<OptionGroupDomain> optionGroups, CategoryDomain category) {
+  public MenuDomain(Long id,
+                    String name,
+                    Type type,
+                    MoneyDomain price,
+                    String description,
+                    List<OptionGroupDomain> optionGroups,
+                    CategoryDomain category,
+                    ShopDomain shop) {
     this.id = id;
     this.name = name;
     this.type = type;
@@ -33,28 +45,40 @@ public class MenuDomain {
     this.description = description;
     this.optionGroups = optionGroups;
     this.category = category;
+    this.shop = shop;
   }
 
-  @Builder
-  public MenuDomain(String name, Type type, MoneyDomain price, String description, List<OptionGroupDomain> optionGroups, CategoryDomain category) {
-    this.name = name;
-    this.type = type;
-    this.price = price;
-    this.description = description;
-    this.optionGroups = optionGroups;
-    this.category = category;
-  }
 
   public MenuDomain() {
 
   }
 
-  public void checkValidCategory() {
-    if(this.category == null) throw new IllegalStateException("존재하지 않는 카테고리입니다.");
+  public Menu addMenu(Long shopId) {
+    return Menu.builder()
+            .shopId(shopId)
+            .name(name)
+            .type(type)
+            .price(price.currentMoney())
+            .description(description)
+            .category(new Category(category.getId()))
+            .optionGroups(optionGroups.stream()
+                            .map(og -> OptionGroup.builder()
+                                    .basicChoiceYn(og.getBasicChoiceYn())
+                                    .etcChoiceYn(og.getEtcChoiceYn())
+                                    .options(og.getOptions().stream()
+                                    .map(o -> Option.builder()
+                                                .name(o.getName())
+                                                .price(o.getPrice().currentMoney())
+                                                .displayOrder(o.getDisplayOrder())
+                                                .build()).collect(Collectors.toList()))
+                            .build())
+                            .collect(Collectors.toList()))
+            .build();
+
   }
 
-  public void setShop(ShopDomain shop) {
-    this.shop = shop;
+  public void checkValidCategory() {
+    if(this.category == null) throw new IllegalStateException("존재하지 않는 카테고리입니다.");
   }
 
   public void addOptionGroup(OptionGroupDomain optionGroup) {
