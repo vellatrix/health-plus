@@ -24,5 +24,6 @@ public interface ShopRepository {
   List<Shop> findAllByVendorId(Long vendorId);
 
   List<Shop> findAllByCategoryId(Integer categoryId);
-  
+
+  Optional<Menu> findMenuByMenuId(Long menuId);
 }
