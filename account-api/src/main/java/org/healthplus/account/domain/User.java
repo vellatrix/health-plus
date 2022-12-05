@@ -1,4 +1,4 @@
-package org.healthplus.account.domain.entity;
+package org.healthplus.account.domain;
 
 
 import javax.persistence.Column;

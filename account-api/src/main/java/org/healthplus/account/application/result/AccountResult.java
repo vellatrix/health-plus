@@ -3,7 +3,7 @@ package org.healthplus.account.application.result;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.healthplus.account.domain.entity.User;
+import org.healthplus.account.domain.User;
 import org.healthplus.model.role.Role;
 
 
@@ -18,6 +18,8 @@ public class AccountResult {
   private String phoneNumber;
   private Role role;
 
+  private String token;
+
   public static AccountResult fromUser(User user) {
     return new AccountResult(
         user.getId(),
@@ -26,5 +28,20 @@ public class AccountResult {
         user.getPhoneNumber(),
         user.getRole()
     );
+  }
+
+  /*
+  * return Controller to Client
+  * */
+  public AccountResult(Long id, String name, String email, String phoneNumber, Role role) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.role = role;
+  }
+
+  public void addToken(String givenToken) {
+    this.token = givenToken;
   }
 }
