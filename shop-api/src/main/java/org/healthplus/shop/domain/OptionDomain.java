@@ -2,6 +2,7 @@ package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.healthplus.shop.domain.entity.Option;
 import org.healthplus.shop.domain.enums.IsYn;
 
 import java.util.Objects;
@@ -17,11 +18,12 @@ public class OptionDomain {
   private IsYn useYn;
 
   @Builder
-  public OptionDomain(Long id, String name, MoneyDomain price, Integer displayOrder) {
+  public OptionDomain(Long id, String name, MoneyDomain price, Integer displayOrder, IsYn useYn) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.displayOrder = displayOrder;
+    this.useYn = useYn;
   }
 
   public OptionDomain(String name, MoneyDomain price, Integer displayOrder) {
@@ -34,10 +36,10 @@ public class OptionDomain {
     this.optionGroup = optionGroup;
   }
 
-  public void changeOption(OptionDomain option) {
-    this.name = option.getName();
-    this.price = option.getPrice();
-    this.displayOrder = option.getDisplayOrder();
+  public void changeOption(Option option) {
+    option.setName(name);
+    option.setPrice(price.currentMoney());
+    option.setDisplayOrder(displayOrder);
   }
 
   @Override
