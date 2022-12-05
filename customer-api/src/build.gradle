@@ -1,4 +1,3 @@
 dependencies {
     implementation project(':model')
-    implementation 'org.mindrot:jbcrypt:0.4'
 }

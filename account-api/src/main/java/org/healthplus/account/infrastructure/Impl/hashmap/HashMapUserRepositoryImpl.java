@@ -3,10 +3,9 @@ package org.healthplus.account.infrastructure.Impl.hashmap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
-import org.healthplus.account.domain.entity.User;
-import org.healthplus.account.domain.repository.UserRepository;
+import org.healthplus.account.domain.User;
+import org.healthplus.account.domain.UserRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

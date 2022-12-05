@@ -1,6 +1,6 @@
-package org.healthplus.account.domain.repository;
+package org.healthplus.account.domain;
 
-import org.healthplus.account.domain.entity.User;
+import org.healthplus.account.domain.User;
 
 public interface UserRepository {
 
