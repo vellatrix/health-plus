@@ -2,6 +2,7 @@ package org.healthplus.shop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.healthplus.shop.domain.enums.IsYn;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "options")
 @Getter
+@Setter
 public class Option {
 
   @Id

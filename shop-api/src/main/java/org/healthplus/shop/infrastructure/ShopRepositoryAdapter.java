@@ -70,4 +70,11 @@ public class ShopRepositoryAdapter implements ShopRepository {
     menus.forEach(menu -> em.persist(menu));
   }
 
+  @Override
+  public Optional<Menu> findMenuByMenuId(Long menuId) {
+    return Optional.ofNullable(em.createQuery("select m, og, o from Menu m join OptionGroup og on m.id = og.menuId " +
+            "join Option o on og.id = o.optionGroupId where m.id = :menuId", Menu.class)
+            .setParameter("menuId", menuId)
+            .getSingleResult());
+  }
 }
