@@ -2,6 +2,8 @@ package org.healthplus.shop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.healthplus.shop.domain.entity.Option;
+import org.healthplus.shop.domain.entity.OptionGroup;
 import org.healthplus.shop.domain.exception.OptionNotFoundException;
 import org.healthplus.shop.domain.enums.IsYn;
 
@@ -20,11 +22,12 @@ public class OptionGroupDomain {
   private IsYn useYn;
 
   @Builder
-  public OptionGroupDomain(Long id, IsYn basicChoiceYn, IsYn etcChoiceYn, List<OptionDomain> options) {
+  public OptionGroupDomain(Long id, IsYn basicChoiceYn, IsYn etcChoiceYn, List<OptionDomain> options, IsYn useYn) {
     this.id = id;
     this.basicChoiceYn = basicChoiceYn;
     this.etcChoiceYn = etcChoiceYn;
     this.options = options;
+    this.useYn = useYn;
   }
 
   public OptionGroupDomain(IsYn basicChoiceYn, IsYn etcChoiceYn, List<OptionDomain> options) {
@@ -33,10 +36,6 @@ public class OptionGroupDomain {
     this.options = options;
   }
 
-  public void addOption(OptionDomain option) {
-    this.options.add(option);
-    option.setOptionGroup(this);
-  }
 
   public void setMenu(MenuDomain menu) {
     this.menu = menu;
@@ -54,17 +53,13 @@ public class OptionGroupDomain {
     this.options.remove(option);
   }
 
-  public void changeOptionGroup(OptionGroupDomain optionGroup) {
-    this.basicChoiceYn = optionGroup.getBasicChoiceYn();
-    this.etcChoiceYn = optionGroup.getEtcChoiceYn();
-
-    this.options.forEach(innerOption -> {
-      OptionDomain option = optionGroup.getOptions().stream()
-              .filter(outerOption -> outerOption.getId() == innerOption.getId())
-              .findAny()
-              .orElseThrow(OptionNotFoundException::new);
-
-      innerOption.changeOption(option);
+  public void changeOptionGroup(OptionGroup optionGroup) {
+    optionGroup.setBasicChoiceYn(basicChoiceYn);
+    optionGroup.setEtcChoiceYn(etcChoiceYn);
+    optionGroup.getOptions().forEach(entity -> {
+      options.forEach(optionDomain -> {
+        if(optionDomain.getId() == entity.getId()) optionDomain.changeOption(entity);
+      });
     });
   }
 

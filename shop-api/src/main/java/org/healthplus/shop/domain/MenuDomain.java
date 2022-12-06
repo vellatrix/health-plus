@@ -81,11 +81,6 @@ public class MenuDomain {
     if(this.category == null) throw new IllegalStateException("존재하지 않는 카테고리입니다.");
   }
 
-  public void addOptionGroup(OptionGroupDomain optionGroup) {
-    this.optionGroups.add(optionGroup);
-    optionGroup.setMenu(this);
-  }
-
   public OptionGroupDomain findOptionGroup(Long optionGroupId) {
     return this.optionGroups.stream()
             .filter(og -> og.getId() == optionGroupId)
@@ -93,21 +88,16 @@ public class MenuDomain {
             .orElseThrow(OptionGroupNotFoundException::new);
   }
 
-  public void changeMenu(MenuDomain menu) {
-    this.name = menu.getName();
-    this.type = menu.getType();
-    this.price = menu.getPrice();
-    this.description = menu.getDescription();
-
-    this.optionGroups.forEach(innerOptionGroup -> {
-      OptionGroupDomain optionGroup = menu.getOptionGroups().stream()
-              .filter(outerOptionGroup -> innerOptionGroup.getId() == outerOptionGroup.getId())
-              .findAny()
-              .orElseThrow(OptionGroupNotFoundException::new);
-
-      innerOptionGroup.changeOptionGroup(optionGroup);
+  public void changeMenu(Menu menu) {
+    menu.setName(name);
+    menu.setType(type);
+    menu.setPrice(price.currentMoney());
+    menu.setDescription(description);
+    menu.getOptionGroups().forEach(entity -> {
+      optionGroups.forEach(optionGroupDomain -> {
+        if(optionGroupDomain.getId() == entity.getId()) optionGroupDomain.changeOptionGroup(entity);
+      });
     });
-
   }
 
   public void deleteOptionGroup(Long optionGroupId) {
