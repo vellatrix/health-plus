@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.healthplus.shop.domain.enums.IsYn;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,7 +21,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "options")
 @Getter
-@Setter
 public class Option {
 
   @Id
@@ -40,11 +40,12 @@ public class Option {
   private IsYn useYn;
 
   @Builder
-  public Option(Long id, String name, Integer price, Integer displayOrder) {
+  public Option(Long id, String name, Integer price, Integer displayOrder, IsYn useYn) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.displayOrder = displayOrder;
+    this.useYn = useYn;
   }
 
   public Option(String name, Integer price, Integer displayOrder) {
@@ -54,5 +55,10 @@ public class Option {
   }
 
 
-
+  public void changeData(Option option) {
+    this.name = option.getName();
+    this.price = option.getPrice();
+    this.displayOrder = option.getDisplayOrder();
+    this.useYn = option.getUseYn();
+  }
 }
