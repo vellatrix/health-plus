@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.entity.Shop;
 import org.healthplus.shop.domain.exception.ShopNotFoundException;
-import org.healthplus.shop.infrastructure.ShopRepository;
+import org.healthplus.shop.domain.repository.ShopRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
