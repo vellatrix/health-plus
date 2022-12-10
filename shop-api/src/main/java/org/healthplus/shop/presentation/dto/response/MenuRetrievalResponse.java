@@ -2,14 +2,8 @@ package org.healthplus.shop.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.healthplus.shop.domain.CategoryDomain;
-import org.healthplus.shop.domain.MoneyDomain;
-import org.healthplus.shop.domain.OptionGroupDomain;
-import org.healthplus.shop.domain.ShopDomain;
 import org.healthplus.shop.domain.enums.IsYn;
-import org.healthplus.shop.domain.enums.Type;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

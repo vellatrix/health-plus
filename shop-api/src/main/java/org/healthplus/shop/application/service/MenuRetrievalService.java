@@ -3,7 +3,7 @@ package org.healthplus.shop.application.service;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
-import org.healthplus.shop.domain.repository.ShopRepository;
+import org.healthplus.shop.infrastructure.ShopRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +20,5 @@ public class MenuRetrievalService {
 
   public List<Menu> retrieveMenus(Long shopId, int start, int size) {
     return shopRepository.findMenus(shopId, start, size);
-  }
-
-  public List<Menu> retrieveAllMenus(Long shopId) {
-    return shopRepository.findAllMenus(shopId);
   }
 }

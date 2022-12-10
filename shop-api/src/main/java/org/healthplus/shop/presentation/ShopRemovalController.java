@@ -3,7 +3,6 @@ package org.healthplus.shop.presentation;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.model.result.ApiResponse;
 import org.healthplus.shop.application.service.ShopRemovalService;
-import org.healthplus.shop.application.service.VendorRemovalService;
 import org.healthplus.shop.application.service.VendorRetrievalService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
