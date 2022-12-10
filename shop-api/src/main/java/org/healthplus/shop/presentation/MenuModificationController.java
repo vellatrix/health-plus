@@ -3,7 +3,6 @@ package org.healthplus.shop.presentation;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.model.result.ApiResponse;
 import org.healthplus.shop.application.service.MenuModificationService;
-import org.healthplus.shop.domain.MenuDomain;
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.presentation.convertor.MenuDtoConvertor;
 import org.healthplus.shop.presentation.dto.request.MenuModificationRequest;
@@ -28,9 +27,9 @@ public class MenuModificationController {
                                                           @PathVariable Long menuId,
                                                           @RequestBody @Valid MenuModificationRequest dto) {
 
-    MenuDomain menuDomain = MenuDtoConvertor.toMenuModificationRequest(dto);
-    Menu menu = menuModificationService.modifyMenu(menuDomain);
-    MenuModificationResponse responseData = MenuDtoConvertor.toMenuModificationResponse(menu);
+    Menu menu = MenuDtoConvertor.toMenuModificationRequest(dto);
+    Menu modifiedMenu = menuModificationService.modifyMenu(menu);
+    MenuModificationResponse responseData = MenuDtoConvertor.toMenuModificationResponse(modifiedMenu);
 
     return ApiResponse.success(responseData);
   }

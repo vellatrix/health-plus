@@ -3,7 +3,7 @@ package org.healthplus.shop.presentation;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.model.result.ApiResponse;
 import org.healthplus.shop.application.service.VendorModificationService;
-import org.healthplus.shop.domain.VendorDomain;
+import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.presentation.convertor.VendorDtoConvertor;
 import org.healthplus.shop.presentation.dto.request.VendorModificationRequest;
 import org.healthplus.shop.presentation.dto.response.VendorModificationResponse;
@@ -25,8 +25,8 @@ public class VendorModificationController {
   @PatchMapping("/{vendorId}")
   public ApiResponse<VendorModificationResponse> modifyVendor(@PathVariable Long vendorId,
                                                               @RequestBody @Valid VendorModificationRequest dto) {
-    VendorDomain vendorDomain = VendorDtoConvertor.toVendorModificationRequest(dto);
-    VendorDomain modifiedVendor = vendorModificationService.modifyVendor(vendorId, vendorDomain);
+    Vendor vendor = VendorDtoConvertor.toVendorModificationRequest(dto);
+    Vendor modifiedVendor = vendorModificationService.modifyVendor(vendorId, vendor);
     VendorModificationResponse responseData = VendorDtoConvertor.toVendorModificationResponse(modifiedVendor);
 
     return ApiResponse.success(responseData);

@@ -1,8 +1,8 @@
 package org.healthplus.shop.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.healthplus.shop.domain.MenuDomain;
 import org.healthplus.shop.domain.entity.Menu;
+import org.healthplus.shop.domain.entity.Shop;
 import org.healthplus.shop.domain.exception.ShopNotFoundException;
 import org.healthplus.shop.infrastructure.ShopRepository;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ public class MenuRegistrationService {
   private final ShopRepository shopRepository;
 
   @Transactional
-  public Menu registerMenu(Long shopId, MenuDomain menuDomain) {
-    shopRepository.findById(shopId).orElseThrow(ShopNotFoundException::new);
-    Menu menu = menuDomain.addMenu(shopId);
+  public Menu registerMenu(Long shopId, Menu menu) {
+    Shop shop = shopRepository.findById(shopId).orElseThrow(ShopNotFoundException::new);
+    shop.addMenu(menu);
 
-    return shopRepository.saveMenu(menu);
+    return menu;
   }
 }

@@ -3,7 +3,6 @@ package org.healthplus.shop.presentation;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.model.result.ApiResponse;
 import org.healthplus.shop.application.service.VendorRegistrationService;
-import org.healthplus.shop.domain.VendorDomain;
 import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.presentation.convertor.VendorDtoConvertor;
 import org.healthplus.shop.presentation.dto.request.VendorRegistrationRequest;
@@ -24,7 +23,7 @@ public class VendorRegistrationController {
 
   @PostMapping
   public ApiResponse<VendorRegistrationResponse> registerVendor(@RequestBody @Valid VendorRegistrationRequest dto) {
-    VendorDomain vendor = VendorDtoConvertor.toVendorRegistrationRequest(dto);
+    Vendor vendor = VendorDtoConvertor.toVendorRegistrationRequest(dto);
     Vendor savedVendor = vendorRegistrationService.registerVendor(vendor);
     VendorRegistrationResponse responseData = VendorDtoConvertor.toVendorRegistrationResponse(savedVendor);
 
