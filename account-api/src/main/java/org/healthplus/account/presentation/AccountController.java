@@ -1,5 +1,6 @@
 package org.healthplus.account.presentation;
 
+import javax.servlet.http.HttpServletRequest;
 import org.healthplus.account.application.AccountService;
 import org.healthplus.account.application.command.AuthorizationCommand;
 import org.healthplus.account.application.result.AccountResult;
@@ -20,7 +21,6 @@ public class AccountController {
   private final AccountService accountService;
   private final Authorization authorization;
 
-  @Autowired
   public AccountController(AccountService accountService, Authorization authorization) {
     this.accountService = accountService;
     this.authorization = authorization;
@@ -35,11 +35,30 @@ public class AccountController {
   @PostMapping("/signin")
   public ApiResponse signin(@RequestBody UserSignInRequest request) {
     AccountResult signinResult = accountService.signin(request.toCommand());
-    String token = authorization.login(
+    String session = authorization.login(
         new AuthorizationCommand(signinResult.getId(), signinResult.getEmail(),
             signinResult.getRole()
         ));
-    signinResult.addToken(token);
+    signinResult.addToken(session);
     return ApiResponse.success(signinResult);
+  }
+
+  @PostMapping("/jwt/signin")
+  public ApiResponse signinJwt(@RequestBody UserSignInRequest request) {
+    AccountResult signin = accountService.signin(request.toCommand());
+    String token = authorization.login(
+        new AuthorizationCommand(signin.getId(), signin.getEmail(),
+            signin.getRole())
+    );
+    signin.addToken(token);
+    return ApiResponse.success(signin);
+  }
+
+  /*
+  * HttpServletRequest : 클라이언트의 서비스 요청 단위로 유지
+  * */
+  @PostMapping("/logout")
+  public void logout(HttpServletRequest request) {
+    accountService.logout(request);
   }
 }

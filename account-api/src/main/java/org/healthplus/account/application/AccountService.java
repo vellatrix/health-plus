@@ -1,5 +1,6 @@
 package org.healthplus.account.application;
 
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.healthplus.account.application.command.SigninCommand;
 import org.healthplus.account.application.command.SignupCommand;
@@ -28,7 +29,6 @@ public class AccountService {
 
   @Transactional
   public AccountResult signup(SignupCommand signupCommand) {
-    log.info("AccountService works well");
     User signupUser = new User(
         signupCommand.getName(),
         encryptMapper.encoder(signupCommand.getPassword()),
@@ -51,5 +51,10 @@ public class AccountService {
       throw new PasswordMisMatchException("패스워드가 일치하지 않습니다.");
     }
     return AccountResult.fromUser(findUser);
+  }
+
+  @Transactional
+  public void logout(HttpServletRequest request) {
+    request.getSession().invalidate(); // 세션 종료
   }
 }
