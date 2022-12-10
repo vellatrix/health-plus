@@ -3,7 +3,7 @@ package org.healthplus.shop.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.entity.Shop;
-import org.springframework.data.domain.Pageable;
+import org.healthplus.shop.domain.repository.ShopRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -92,6 +92,14 @@ public class ShopRepositoryAdapter implements ShopRepository {
             .setParameter("shopId", shopId)
             .setFirstResult(start)
             .setMaxResults(size)
+            .getResultList();
+  }
+
+  @Override
+  public List<Menu> findAllMenus(Long shopId) {
+    return em.createQuery("select m, og, o from Menu m join OptionGroup og on m.id = og.menuId " +
+            "join Option o on og.id = o.optionGroupId where m.shopId = :shopId", Menu.class)
+            .setParameter("shopId", shopId)
             .getResultList();
   }
 }
