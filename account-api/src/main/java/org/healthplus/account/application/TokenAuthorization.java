@@ -6,7 +6,7 @@ import org.healthplus.account.domain.TokenGenerator;
 import org.healthplus.account.domain.vo.TokenPayloadVo;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 public class TokenAuthorization implements Authorization {
 
   private final TokenGenerator tokenGenerator;
