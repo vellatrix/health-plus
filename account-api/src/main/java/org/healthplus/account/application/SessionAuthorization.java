@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /*
  * Authorization Interface를 이용해 의존성 역전 -> 확작성 있게 설계됨
  * */
-// @Component
+ @Component
 public class SessionAuthorization implements Authorization {
 
   private static final String HEALTH_PLUS_ACCOUNT_SESSION_VALUE = "HEALTH_PLUS_ACCOUNT_SESSION_VALUE";
