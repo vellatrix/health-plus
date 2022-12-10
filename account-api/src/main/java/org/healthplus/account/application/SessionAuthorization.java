@@ -1,24 +1,22 @@
-package org.healthplus.account.infrastructure.auth;
+package org.healthplus.account.application;
 
 import javax.servlet.http.HttpSession;
 import org.healthplus.account.application.command.AuthorizationCommand;
 import org.healthplus.account.domain.Authorization;
-import org.healthplus.account.domain.SessionValueVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.healthplus.account.domain.vo.SessionValueVO;
 import org.springframework.stereotype.Component;
 
 
 /*
  * Authorization Interface를 이용해 의존성 역전 -> 확작성 있게 설계됨
  * */
-@Component
+// @Component
 public class SessionAuthorization implements Authorization {
 
   private static final String HEALTH_PLUS_ACCOUNT_SESSION_VALUE = "HEALTH_PLUS_ACCOUNT_SESSION_VALUE";
 
   private HttpSession httpSession;
 
-  @Autowired
   public SessionAuthorization(HttpSession httpSession) {
     this.httpSession = httpSession;
   }

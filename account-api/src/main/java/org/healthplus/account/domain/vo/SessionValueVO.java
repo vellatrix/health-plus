@@ -1,4 +1,4 @@
-package org.healthplus.account.domain;
+package org.healthplus.account.domain.vo;
 
 import org.healthplus.model.role.Role;
 
