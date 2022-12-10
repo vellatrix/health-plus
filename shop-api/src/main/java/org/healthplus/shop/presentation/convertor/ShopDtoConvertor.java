@@ -1,14 +1,12 @@
 package org.healthplus.shop.presentation.convertor;
 
-import org.healthplus.shop.domain.AddressDomain;
-import org.healthplus.shop.domain.BusinessDomain;
-import org.healthplus.shop.domain.ShopCategoryDomain;
-import org.healthplus.shop.domain.ShopDomain;
-import org.healthplus.shop.domain.VendorIdDomain;
+import org.healthplus.shop.domain.entity.Address;
+import org.healthplus.shop.domain.entity.Business;
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.entity.Option;
 import org.healthplus.shop.domain.entity.OptionGroup;
 import org.healthplus.shop.domain.entity.Shop;
+import org.healthplus.shop.domain.entity.ShopCategory;
 import org.healthplus.shop.presentation.dto.request.ShopModificationRequest;
 import org.healthplus.shop.presentation.dto.request.ShopRegistrationRequest;
 import org.healthplus.shop.presentation.dto.response.MenuRetrievalResponse;
@@ -22,20 +20,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShopDtoConvertor {
-  public static ShopDomain toRegistrationRequest(Long vendorId, ShopRegistrationRequest dto) {
-    return ShopDomain.builder()
-            .vendorId(new VendorIdDomain(vendorId))
-            .categoryDomain(new ShopCategoryDomain(dto.getCategoryId()))
+  public static Shop toRegistrationRequest(Long vendorId, ShopRegistrationRequest dto) {
+    return Shop.builder()
+            .vendorId(vendorId)
+            .category(new ShopCategory(dto.getCategoryId()))
             .minimumPrice(dto.getMinimumPrice())
             .deliveryFee(dto.getDeliveryFee())
-            .business(BusinessDomain.builder()
+            .business(Business.builder()
                     .businessName(dto.getBusinessName())
                     .businessHour(dto.getBusinessHour())
                     .businessNumber(dto.getBusinessNumber())
                     .mainType(dto.getMainType())
                     .subType(dto.getSubType())
                     .build())
-            .address(new AddressDomain(dto.getCity(), dto.getStreet(), dto.getZipCode()))
+            .address(new Address(dto.getCity(), dto.getStreet(), dto.getZipCode()))
             .build();
   }
 
@@ -54,11 +52,11 @@ public class ShopDtoConvertor {
             .build();
   }
 
-  public static ShopDomain toModificationRequest(ShopModificationRequest dto) {
-    return ShopDomain.builder()
+  public static Shop toModificationRequest(ShopModificationRequest dto) {
+    return Shop.builder()
             .minimumPrice(dto.getMinimumPrice())
             .deliveryFee(dto.getDeliveryFee())
-            .business(new BusinessDomain(dto.getBusinessHour()))
+            .business(new Business(dto.getBusinessHour()))
             .build();
   }
 
@@ -113,7 +111,7 @@ public class ShopDtoConvertor {
             .category(menu.getCategory().getType())
             .name(menu.getName())
             .description(menu.getDescription())
-            .price(menu.getPrice())
+            .price(menu.getMoney().currentMoney())
             .soldYn(menu.getSoldYn())
             .useYn(menu.getUseYn())
             .optionGroups(optionGroups)

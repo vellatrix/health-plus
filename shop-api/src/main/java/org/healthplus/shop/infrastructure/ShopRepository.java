@@ -2,6 +2,9 @@ package org.healthplus.shop.infrastructure;
 
 import org.healthplus.shop.domain.entity.Menu;
 import org.healthplus.shop.domain.entity.Shop;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,4 +29,8 @@ public interface ShopRepository {
   List<Shop> findAllByCategoryId(Integer categoryId);
 
   Optional<Menu> findMenuByMenuId(Long menuId);
+
+  void removeMenu(Menu menu);
+
+  List<Menu> findMenus(Long shopId, int start, int size);
 }

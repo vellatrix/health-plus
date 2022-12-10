@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "vendor")
 @Getter
-@Setter
 public class Vendor {
 
   @Id
@@ -36,7 +35,6 @@ public class Vendor {
   @Embedded
   private Bank bank;
 
-  @Embedded
   private Long userId;
 
   @Column(name = "create_dt")
@@ -67,4 +65,9 @@ public class Vendor {
   }
 
 
+  public void changeData(Vendor vendorData) {
+    this.nickName = vendorData.getNickName();
+    this.email = vendorData.getEmail();
+
+  }
 }

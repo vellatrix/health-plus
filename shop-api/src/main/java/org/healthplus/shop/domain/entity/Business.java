@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Getter
 @Builder
-@Setter
 public class Business {
 
   private String businessName;
@@ -18,5 +17,11 @@ public class Business {
   private String mainType;
   private String subType;
 
+  public void setBusinessHour(String businessHour) {
+    this.businessHour = businessHour;
+  }
 
+  public Business(String businessHour) {
+    this.businessHour = businessHour;
+  }
 }
