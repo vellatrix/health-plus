@@ -3,7 +3,7 @@ package org.healthplus.shop.application.service;
 import lombok.RequiredArgsConstructor;
 import org.healthplus.shop.domain.entity.Vendor;
 import org.healthplus.shop.domain.exception.VendorNotFoundException;
-import org.healthplus.shop.infrastructure.VendorRepository;
+import org.healthplus.shop.domain.repository.VendorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

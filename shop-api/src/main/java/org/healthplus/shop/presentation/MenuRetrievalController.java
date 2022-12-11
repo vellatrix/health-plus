@@ -46,4 +46,14 @@ public class MenuRetrievalController {
     return ApiResponse.success(responseDataList);
   }
 
+  @GetMapping("/{shopId}/menus-all")
+  public ApiResponse<List<?>> retrieveAllMenus(@PathVariable Long shopId) {
+
+    List<Menu> menus = menuRetrievalService.retrieveAllMenus(shopId);
+    List<MenuRetrievalResponse> responseDataList = new ArrayList<>();
+    menus.forEach(menu -> responseDataList.add(MenuDtoConvertor.toMenuRetrievalResponse(menu)));
+
+    return ApiResponse.success(responseDataList);
+  }
+
 }
