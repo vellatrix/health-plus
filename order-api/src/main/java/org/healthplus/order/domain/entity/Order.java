@@ -2,6 +2,7 @@ package org.healthplus.order.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.healthplus.model.domain.AggregateRoot;
 import org.healthplus.order.domain.enums.OrderStatus;
 
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
-public class Order {
+public class Order extends AggregateRoot {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,5 +68,13 @@ public class Order {
 
   public void changeStatus() {
     this.orderStatus = OrderStatus.ORDERED;
+  }
+
+  public Integer calculateTotalPrice() {
+    this.totalPrice = this.orderLines.stream()
+            .mapToInt(OrderLines::calculateTotalPrice)
+            .sum();
+
+    return this.totalPrice;
   }
 }

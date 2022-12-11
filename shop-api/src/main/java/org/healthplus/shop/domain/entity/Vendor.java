@@ -3,6 +3,7 @@ package org.healthplus.shop.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.healthplus.model.domain.AggregateRoot;
 import org.healthplus.shop.domain.enums.IsYn;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "vendor")
 @Getter
-public class Vendor {
+public class Vendor extends AggregateRoot {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

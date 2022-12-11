@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.healthplus.model.domain.AggregateRoot;
 import org.healthplus.shop.domain.enums.ShopStatus;
 import org.healthplus.shop.domain.exception.MenuNotFoundException;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Table(name = "shop")
 @Getter
 @NoArgsConstructor
-public class Shop {
+public class Shop extends AggregateRoot {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,5 +88,13 @@ public class Shop {
     this.business.setBusinessHour(shopData.getBusiness().getBusinessHour());
     this.minimumPrice = shopData.getMinimumPrice();
     this.deliveryFee = shopData.getDeliveryFee();
+  }
+
+  public void openShop() {
+    this.shopStatus = ShopStatus.OPEN;
+  }
+
+  public void closeShop() {
+    this.shopStatus = ShopStatus.CLOSED;
   }
 }

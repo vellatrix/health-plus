@@ -21,7 +21,9 @@ public class OrderOption {
 
   private Integer price;
 
-  public OrderOption(String name, Integer price) {
+  @Builder
+  private OrderOption(Long id, String name, Integer price) {
+    this.id = id;
     this.name = name;
     this.price = price;
   }
