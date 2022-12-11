@@ -1,5 +1,3 @@
 dependencies {
     implementation project(':model')
-    implementation project(':shop-api')
-    implementation project(':payment-api')
 }
