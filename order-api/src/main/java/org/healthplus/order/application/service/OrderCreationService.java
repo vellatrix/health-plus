@@ -7,6 +7,7 @@ import org.healthplus.order.domain.event.OrderCreationEvent;
 import org.healthplus.order.domain.exception.OrderCreationFailException;
 import org.healthplus.order.domain.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,10 +16,13 @@ public class OrderCreationService {
   private final OrderRepository orderRepository;
   private final EventPublisher eventPublisher;
 
+  @Transactional
   public void createOrder(Order orderData) {
     Order order = orderRepository.save(orderData);
 
     if(order == null) throw new OrderCreationFailException();
+
+
 
     order.changeStatus();
 
