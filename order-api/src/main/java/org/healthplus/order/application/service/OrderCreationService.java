@@ -9,6 +9,7 @@ import org.healthplus.order.domain.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @RequiredArgsConstructor
 public class OrderCreationService {
@@ -21,8 +22,6 @@ public class OrderCreationService {
     Order order = orderRepository.save(orderData);
 
     if(order == null) throw new OrderCreationFailException();
-
-
 
     order.changeStatus();
 

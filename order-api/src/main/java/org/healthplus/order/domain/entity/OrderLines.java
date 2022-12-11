@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -35,7 +37,6 @@ public class OrderLines {
   @JoinColumn(name = "order_lines_id")
   @OneToMany(cascade = CascadeType.ALL)
   private List<OrderOptionGroup> orderOptionGroups = new ArrayList<>();
-
 
   public Integer calculateTotalPrice() {
     this.price = this.orderOptionGroups.stream()
