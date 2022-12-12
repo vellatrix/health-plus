@@ -2,11 +2,18 @@ package org.healthplus.order.domain.entity;
 
 import lombok.Getter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -26,4 +33,17 @@ public class OrderLines {
 
   @Column(name = "create_dt")
   private LocalDateTime createdAt;
+
+  @JoinColumn(name = "order_lines_id")
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<OrderOptionGroup> orderOptionGroups = new ArrayList<>();
+
+  public Integer calculateTotalPrice() {
+    this.price = this.orderOptionGroups.stream()
+                  .mapToInt(OrderOptionGroup::calculateEachItemPrice)
+                  .map(each -> each * quantity)
+                  .sum();
+
+    return this.price;
+  }
 }
