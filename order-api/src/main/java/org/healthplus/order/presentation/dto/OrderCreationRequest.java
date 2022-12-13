@@ -9,6 +9,7 @@ public class OrderCreationRequest {
   private Long shopId;
   private Long riderId;
   private Integer totalPrice;
+  private Integer deliveryFee;
   private String city;
   private String street;
   private String zipCode;

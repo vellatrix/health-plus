@@ -12,6 +12,7 @@ public class OrderDtoConvertor {
             .shopId(dto.getShopId())
             .riderId(0L)
             .totalPrice(dto.getTotalPrice())
+            .deliveryFee(dto.getDeliveryFee())
             .address(new Address(dto.getCity(), dto.getStreet(), dto.getZipCode()))
             .build();
   }

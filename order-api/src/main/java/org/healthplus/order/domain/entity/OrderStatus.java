@@ -1,4 +1,4 @@
-package org.healthplus.order.domain.enums;
+package org.healthplus.order.domain.entity;
 
 public enum OrderStatus {
 

@@ -34,6 +34,7 @@ public class Order extends AggregateRoot {
   private Long customerId;
   private Long shopId;
   private Long riderId;
+  private Integer deliveryFee;
   private Integer totalPrice;
 
   @Enumerated(EnumType.STRING)
@@ -57,11 +58,13 @@ public class Order extends AggregateRoot {
                Long shopId,
                Long riderId,
                Integer totalPrice,
+               Integer deliveryFee,
                Address address) {
     this.customerId = customerId;
     this.shopId = shopId;
     this.riderId = riderId;
     this.totalPrice = totalPrice;
+    this.deliveryFee = deliveryFee;
     this.address = address;
     this.createdAt = LocalDateTime.now();
   }
@@ -73,7 +76,7 @@ public class Order extends AggregateRoot {
   public Integer calculateTotalPrice() {
     this.totalPrice = this.orderLines.stream()
             .mapToInt(OrderLines::calculateTotalPrice)
-            .sum();
+            .sum() + this.deliveryFee;
 
     return this.totalPrice;
   }

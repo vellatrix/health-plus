@@ -15,7 +15,6 @@ public class MenuModificationService {
 
   @Transactional
   public Menu modifyMenu(Menu menuData) {
-
     Menu menu = shopRepository.findMenuByMenuId(menuData.getId()).orElseThrow(MenuNotFoundException::new);
 
     menu.changeMenu(menuData);
