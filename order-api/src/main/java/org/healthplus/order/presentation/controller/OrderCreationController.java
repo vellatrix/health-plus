@@ -21,11 +21,11 @@ public class OrderCreationController {
   private final OrderCreationService orderCreationService;
 
   @PostMapping
-  public void registerOrder(@RequestBody @Valid OrderCreationRequest dto) {
+  public ApiResponse<Void> registerOrder(@RequestBody @Valid OrderCreationRequest dto) {
 
     Order order = OrderDtoConvertor.toOrderCreation(dto);
     orderCreationService.createOrder(order);
-
+    return ApiResponse.success(null);
   }
 
 }
