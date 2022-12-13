@@ -3,6 +3,7 @@ package org.healthplus.order.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.model.domain.AggregateRoot;
+import org.healthplus.order.domain.enums.OrderStatus;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
