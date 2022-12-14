@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@AllArgsConstructor
 public class OrderCreationEvent extends DomainEvent {
 
   private Long orderId;
@@ -48,7 +47,6 @@ public class OrderCreationEvent extends DomainEvent {
             .build();
   }
 
-  private Integer quantity;
   @AllArgsConstructor
   @Getter
   public static class OrderLine {

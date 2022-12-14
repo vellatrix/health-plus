@@ -36,6 +36,12 @@ public class OrderLines {
   @OneToMany(cascade = CascadeType.ALL)
   private List<OrderOptionGroup> orderOptionGroups = new ArrayList<>();
 
+  public OrderLines(String name, Integer price, Integer quantity, List<OrderOptionGroup> orderOptionGroups) {
+    this.name = name;
+    this.price = price;
+    this.quantity = quantity;
+    this.orderOptionGroups = orderOptionGroups;
+  }
 
   public Integer calculateTotalPrice() {
     this.price = this.orderOptionGroups.stream()

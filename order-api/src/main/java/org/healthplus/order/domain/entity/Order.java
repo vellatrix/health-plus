@@ -58,13 +58,15 @@ public class Order extends AggregateRoot {
                Long riderId,
                Integer totalPrice,
                Integer deliveryFee,
-               Address address) {
+               Address address,
+               List<OrderLines> orderLines) {
     this.customerId = customerId;
     this.shopId = shopId;
     this.riderId = riderId;
     this.totalPrice = totalPrice;
     this.deliveryFee = deliveryFee;
     this.address = address;
+    this.orderLines = orderLines;
     this.createdAt = LocalDateTime.now();
   }
 

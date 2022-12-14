@@ -27,9 +27,7 @@ public class OrderOptionGroup {
   @OneToMany(cascade = CascadeType.ALL)
   private List<OrderOption> orderOptions;
 
-  @Builder
-  private OrderOptionGroup(Long id, String name, List<OrderOption> orderOptions) {
-    this.id = id;
+  public OrderOptionGroup(String name, List<OrderOption> orderOptions) {
     this.name = name;
     this.orderOptions = orderOptions;
   }
