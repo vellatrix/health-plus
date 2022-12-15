@@ -3,7 +3,6 @@ package org.healthplus.order.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.model.domain.AggregateRoot;
-import org.healthplus.order.domain.enums.OrderStatus;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +33,7 @@ public class Order extends AggregateRoot {
   private Long customerId;
   private Long shopId;
   private Long riderId;
+  private Integer deliveryFee;
   private Integer totalPrice;
 
   @Enumerated(EnumType.STRING)
@@ -57,12 +57,16 @@ public class Order extends AggregateRoot {
                Long shopId,
                Long riderId,
                Integer totalPrice,
-               Address address) {
+               Integer deliveryFee,
+               Address address,
+               List<OrderLines> orderLines) {
     this.customerId = customerId;
     this.shopId = shopId;
     this.riderId = riderId;
     this.totalPrice = totalPrice;
+    this.deliveryFee = deliveryFee;
     this.address = address;
+    this.orderLines = orderLines;
     this.createdAt = LocalDateTime.now();
   }
 
@@ -73,7 +77,7 @@ public class Order extends AggregateRoot {
   public Integer calculateTotalPrice() {
     this.totalPrice = this.orderLines.stream()
             .mapToInt(OrderLines::calculateTotalPrice)
-            .sum();
+            .sum() + this.deliveryFee;
 
     return this.totalPrice;
   }

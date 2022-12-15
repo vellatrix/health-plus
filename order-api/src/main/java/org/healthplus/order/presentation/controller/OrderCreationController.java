@@ -16,16 +16,15 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/orders")
-public class OrderController {
+public class OrderCreationController {
 
   private final OrderCreationService orderCreationService;
 
   @PostMapping
-  public ApiResponse<Void> registerOrder(@RequestBody @Valid OrderCreationRequest dto) {
+  public void registerOrder(@RequestBody @Valid OrderCreationRequest dto) {
 
     Order order = OrderDtoConvertor.toOrderCreation(dto);
     orderCreationService.createOrder(order);
-    return ApiResponse.success(null);
   }
 
 }

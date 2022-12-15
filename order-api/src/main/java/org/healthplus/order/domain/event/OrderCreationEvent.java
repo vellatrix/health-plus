@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.model.domain.DomainEvent;
 import org.healthplus.order.domain.entity.Order;
-import org.healthplus.order.domain.enums.OrderStatus;
+import org.healthplus.order.domain.entity.OrderStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@AllArgsConstructor
 public class OrderCreationEvent extends DomainEvent {
 
   private Long orderId;
@@ -48,7 +47,6 @@ public class OrderCreationEvent extends DomainEvent {
             .build();
   }
 
-  private Integer quantity;
   @AllArgsConstructor
   @Getter
   public static class OrderLine {
