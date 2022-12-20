@@ -13,6 +13,4 @@ public class AuthorizationCommand {
   private String email;
   private Role role;
 
-  protected AuthorizationCommand() {
-  }
 }

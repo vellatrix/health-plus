@@ -59,6 +59,6 @@ public class AccountController {
   * */
   @PostMapping("/logout")
   public void logout(HttpServletRequest request) {
-    accountService.logout(request);
+    authorization.logout(request);
   }
 }

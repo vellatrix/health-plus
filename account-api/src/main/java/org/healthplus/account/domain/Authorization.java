@@ -1,6 +1,8 @@
 package org.healthplus.account.domain;
 
+import javax.servlet.http.HttpServletRequest;
 import org.healthplus.account.application.command.AuthorizationCommand;
+import org.healthplus.account.application.result.AuthorizationResult;
 import org.healthplus.model.role.Role;
 
 /*
@@ -12,4 +14,7 @@ public interface Authorization {
 
   String login(AuthorizationCommand authorizationCommand);
 
+  AuthorizationResult getCurrentUser(HttpServletRequest request);
+
+  void logout(HttpServletRequest request);
 }

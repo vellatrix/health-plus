@@ -11,7 +11,6 @@ import org.healthplus.account.domain.exception.PasswordMisMatchException;
 import org.healthplus.account.domain.EncryptMapper;
 import org.healthplus.account.domain.UserRepository;
 import org.healthplus.model.domain.EventPublisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,18 +57,4 @@ public class AccountService {
     return AccountResult.fromUser(findUser);
   }
 
-  @Transactional
-  public void logout(HttpServletRequest request) {
-    request.getSession().invalidate(); // 세션 종료
-  }
-  /*@Transactional
-  public void changeEmail(Long userId, String email) {
-    User user = userRepository.findById(userId);
-
-    // user entity 안 changeEmail에서 event 생성
-    user.changeEmail(email);
-
-    // 생성된 이벤트를 가져와 발행
-     user.occurredEvents().forEach(eventPublisher::publish);
-  }*/
 }
