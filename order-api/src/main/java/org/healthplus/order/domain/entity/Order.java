@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -80,5 +81,26 @@ public class Order extends AggregateRoot {
             .sum() + this.deliveryFee;
 
     return this.totalPrice;
+  }
+
+  public void payOrder(Integer amount) {
+    this.orderStatus = OrderStatus.PAYED;
+  }
+
+  public void cancelOrder() {
+    this.orderStatus = OrderStatus.CANCELED;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Order order = (Order) o;
+    return Objects.equals(id, order.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 }
