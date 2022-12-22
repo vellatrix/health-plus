@@ -1,0 +1,3 @@
+payment:
+  key: test_sk_P24xLea5zVAjPgYvyvxrQAMYNwW6
+  url: https://api.tosspayments.com/v1/payments/

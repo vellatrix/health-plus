@@ -1,0 +1,1 @@
+drop table order_option, order_option_group

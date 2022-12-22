@@ -17,5 +17,4 @@ public class OptionGroupRetrievalResponse {
   private IsYn etcChoiceYn;
   private IsYn useYn;
   private List<OptionRetrievalResponse> options;
-
 }

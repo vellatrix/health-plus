@@ -7,6 +7,7 @@ dependencies {
     implementation project(':notification-api')
     implementation project(':delivery-api')
     implementation project(':account-api')
+    implementation project(':payment-api')
 
     implementation "org.flywaydb:flyway-mysql"
     runtimeOnly 'mysql:mysql-connector-java'
