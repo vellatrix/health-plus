@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class OrderCreationEvent extends DomainEvent {
+public class OrderPaidEvent extends DomainEvent {
 
   private Long orderId;
   private Long shopId;
@@ -21,12 +21,12 @@ public class OrderCreationEvent extends DomainEvent {
   private List<OrderLine> orderLines;
 
   @Builder
-  public OrderCreationEvent(Long orderId,
-                            Long shopId,
-                            Long customerId,
-                            OrderStatus orderStatus,
-                            Integer totalPrice,
-                            List<OrderLine> orderLines) {
+  public OrderPaidEvent(Long orderId,
+                        Long shopId,
+                        Long customerId,
+                        OrderStatus orderStatus,
+                        Integer totalPrice,
+                        List<OrderLine> orderLines) {
     this.orderId = orderId;
     this.shopId = shopId;
     this.customerId = customerId;
@@ -35,8 +35,8 @@ public class OrderCreationEvent extends DomainEvent {
     this.orderLines = orderLines;
   }
 
-  public static OrderCreationEvent toEvent(Order order) {
-    return OrderCreationEvent.builder()
+  public static OrderPaidEvent toEvent(Order order) {
+    return OrderPaidEvent.builder()
             .orderId(order.getId())
             .customerId(order.getCustomerId())
             .shopId(order.getShopId())
