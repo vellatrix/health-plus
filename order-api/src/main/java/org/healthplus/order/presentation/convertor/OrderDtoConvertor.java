@@ -7,15 +7,17 @@ import org.healthplus.order.domain.entity.OrderOption;
 import org.healthplus.order.domain.entity.OrderOptionGroup;
 import org.healthplus.order.presentation.dto.OrderCreationOptionRequest;
 import org.healthplus.order.presentation.dto.OrderCreationRequest;
+import org.healthplus.order.presentation.dto.OrderCreationResponse;
 import org.healthplus.order.presentation.dto.OrderLineCreationRequest;
 import org.healthplus.order.presentation.dto.OrderOptionGroupCreationRequest;
+import org.healthplus.order.presentation.dto.OrderPaymentRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderDtoConvertor {
 
-  public static Order toOrderCreation(OrderCreationRequest dto) {
+  public static Order toOrderCreationRequest(OrderCreationRequest dto) {
     return Order.builder()
             .customerId(dto.getCustomerId())
             .shopId(dto.getShopId())
@@ -43,5 +45,24 @@ public class OrderDtoConvertor {
     return orderOptions.stream()
             .map(o -> new OrderOption(o.getName(), o.getPrice()))
             .collect(Collectors.toList());
+  }
+
+  public static OrderCreationResponse toOrderCreationResponse(Order order) {
+    List<String> menuNames = order.getOrderLines().stream()
+            .map(ol -> String.format("메뉴명 = %s / 수량 = %d개", ol.getName(), ol.getQuantity()))
+            .collect(Collectors.toList());
+
+    return OrderCreationResponse.builder()
+            .orderId(order.getId())
+            .customerId(order.getCustomerId())
+            .shopId(order.getShopId())
+            .amount(order.getTotalPrice())
+            .deliveryFee(order.getDeliveryFee())
+            .menuName(menuNames)
+            .build();
+  }
+
+  public static Order toOrderPaymentRequest(OrderPaymentRequest dto) {
+    return new Order(dto.getOrderId(), dto.getAmount());
   }
 }
