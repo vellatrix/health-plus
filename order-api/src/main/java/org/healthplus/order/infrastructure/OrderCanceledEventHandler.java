@@ -16,14 +16,9 @@ import org.springframework.stereotype.Component;
 public class OrderCanceledEventHandler {
 
   private final OrderCancellationService orderCancellationService;
-  private final OrderRepository orderRepository;
-  private final ApplicationEventPublisher publisher;
 
   @EventListener
   public void handle(OrderCanceledEvent event) {
     orderCancellationService.cancelOrder(event.getOrderId());
-    Order order = orderRepository.findById(event.getOrderId()).orElseThrow(OrderNotFoundException::new);
-
-    order.occurredEvents();
   }
 }
