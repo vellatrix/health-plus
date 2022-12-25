@@ -3,6 +3,11 @@ package org.healthplus.order.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import org.healthplus.model.domain.AggregateRoot;
+import org.healthplus.order.domain.event.OrderCanceledEvent;
+import org.healthplus.order.domain.event.OrderPaidEvent;
+import org.healthplus.order.domain.exception.AlreadyCanceledOrderException;
+import org.healthplus.order.domain.exception.OrderPriceNotMatchedException;
+import org.healthplus.order.domain.exception.OrderStatusDifferentialException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -71,8 +76,15 @@ public class Order extends AggregateRoot {
     this.createdAt = LocalDateTime.now();
   }
 
-  public void changeStatus() {
-    this.orderStatus = OrderStatus.ORDERED;
+
+
+  public Order(Long orderId) {
+    this(orderId, null);
+  }
+
+  public Order(Long orderId, Integer amount) {
+    this.id = orderId;
+    this.totalPrice = amount;
   }
 
   public Integer calculateTotalPrice() {
@@ -83,12 +95,21 @@ public class Order extends AggregateRoot {
     return this.totalPrice;
   }
 
+  public void startOrder() {
+    this.orderStatus = OrderStatus.ORDERED;
+  }
+
   public void payOrder(Integer amount) {
+    if(this.orderStatus != OrderStatus.ORDERED) throw new OrderStatusDifferentialException();
+    if(totalPrice != amount) throw new OrderPriceNotMatchedException();
     this.orderStatus = OrderStatus.PAYED;
+    raiseEvent(OrderPaidEvent.toEvent(this));
   }
 
   public void cancelOrder() {
+    if(this.orderStatus == OrderStatus.CANCELED) throw new AlreadyCanceledOrderException();
     this.orderStatus = OrderStatus.CANCELED;
+    raiseEvent(new OrderCanceledEvent(id));
   }
 
   @Override
