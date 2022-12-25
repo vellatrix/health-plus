@@ -9,5 +9,4 @@ import org.healthplus.model.domain.DomainEvent;
 public class OrderCanceledEvent extends DomainEvent {
 
   private Long orderId;
-
 }
