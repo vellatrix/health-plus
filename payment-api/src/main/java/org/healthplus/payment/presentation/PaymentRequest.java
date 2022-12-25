@@ -11,8 +11,9 @@ public class PaymentRequest {
   private Integer amount;
   private String itemName;
 
-  public PaymentRequest(Long orderId, Integer amount) {
+  public PaymentRequest(Long orderId, Integer amount, String itemName) {
     this.orderId = orderId;
     this.amount = amount;
+    this.itemName = itemName;
   }
 }

@@ -79,7 +79,7 @@ public class Order extends AggregateRoot {
 
 
   public Order(Long orderId) {
-    this.id = orderId;
+    this(orderId, null);
   }
 
   public Order(Long orderId, Integer amount) {
@@ -95,7 +95,7 @@ public class Order extends AggregateRoot {
     return this.totalPrice;
   }
 
-  public void startOrder() {
+  public void makeOrder() {
     this.orderStatus = OrderStatus.ORDERED;
   }
 
