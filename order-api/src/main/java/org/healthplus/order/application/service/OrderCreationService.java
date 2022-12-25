@@ -21,7 +21,7 @@ public class OrderCreationService {
 
     Order order = orderRepository.save(orderData);
 
-    order.startOrder();
+    order.makeOrder();
 
     return order;
   }
