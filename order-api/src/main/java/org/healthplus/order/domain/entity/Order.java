@@ -95,7 +95,7 @@ public class Order extends AggregateRoot {
     return this.totalPrice;
   }
 
-  public void makeOrder() {
+  public void startOrder() {
     this.orderStatus = OrderStatus.ORDERED;
   }
 
