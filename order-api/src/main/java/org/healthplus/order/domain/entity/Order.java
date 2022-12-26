@@ -2,6 +2,7 @@ package org.healthplus.order.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.aspectj.weaver.ast.Or;
 import org.healthplus.model.domain.AggregateRoot;
 import org.healthplus.order.domain.event.OrderCanceledEvent;
 import org.healthplus.order.domain.event.OrderPaidEvent;
@@ -59,32 +60,39 @@ public class Order extends AggregateRoot {
   private List<OrderLines> orderLines = new ArrayList<>();
 
   @Builder
-  public Order(Long customerId,
+  public Order(Long orderId,
+               Long customerId,
                Long shopId,
                Long riderId,
                Integer totalPrice,
                Integer deliveryFee,
                Address address,
+               OrderStatus status,
                List<OrderLines> orderLines) {
+    this.id = orderId;
     this.customerId = customerId;
     this.shopId = shopId;
     this.riderId = riderId;
     this.totalPrice = totalPrice;
     this.deliveryFee = deliveryFee;
     this.address = address;
+    this.orderStatus = status;
     this.orderLines = orderLines;
     this.createdAt = LocalDateTime.now();
   }
 
 
-
-  public Order(Long orderId) {
-    this(orderId, null);
+  public static Order findOrderId(Long orderId) {
+    return Order.builder()
+            .orderId(orderId)
+            .build();
   }
 
-  public Order(Long orderId, Integer amount) {
-    this.id = orderId;
-    this.totalPrice = amount;
+  public static Order toPaymentRequest(Long orderId, Integer amount) {
+    return Order.builder()
+            .orderId(orderId)
+            .totalPrice(amount)
+            .build();
   }
 
   public Integer calculateTotalPrice() {
@@ -95,7 +103,7 @@ public class Order extends AggregateRoot {
     return this.totalPrice;
   }
 
-  public void startOrder() {
+  public void makeOrder() {
     this.orderStatus = OrderStatus.ORDERED;
   }
 
@@ -103,7 +111,13 @@ public class Order extends AggregateRoot {
     if(this.orderStatus != OrderStatus.ORDERED) throw new OrderStatusDifferentialException();
     if(totalPrice != amount) throw new OrderPriceNotMatchedException();
     this.orderStatus = OrderStatus.PAYED;
-    raiseEvent(OrderPaidEvent.toEvent(this));
+    raiseEvent(OrderPaidEvent.toEvent(Order.builder()
+            .orderId(id)
+            .customerId(customerId)
+            .shopId(shopId)
+            .status(orderStatus)
+            .orderLines(orderLines)
+            .build()));
   }
 
   public void cancelOrder() {
@@ -124,4 +138,5 @@ public class Order extends AggregateRoot {
   public int hashCode() {
     return Objects.hash(id);
   }
+
 }

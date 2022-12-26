@@ -62,7 +62,7 @@ public class OrderDtoConvertor {
             .build();
   }
 
-  public static Order toOrderPaymentRequest(OrderPaymentRequest dto) {
-    return new Order(dto.getOrderId(), dto.getAmount());
+  public static Order fromOrderPaymentRequest(OrderPaymentRequest dto) {
+    return Order.toPaymentRequest(dto.getOrderId(), dto.getAmount());
   }
 }

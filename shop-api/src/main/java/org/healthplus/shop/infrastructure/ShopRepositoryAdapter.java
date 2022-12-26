@@ -28,16 +28,6 @@ public class ShopRepositoryAdapter implements ShopRepository {
   }
 
   @Override
-  public List<Menu> findByShopId(Long shopId) {
-    /*return em.createQuery("select m, og, o from Menu m " +
-            "join m.optionGroups og " +
-            "join og.options o where m.id = :shopId", Menu.class)
-             .setParameter("shopId", shopId)
-            .getResultList();*/
-    return null;
-  }
-
-  @Override
   public Optional<Shop> findByVendorId(Long vendorId) {
     return jpaShopRepository.findByVendorId(vendorId);
   }
@@ -68,21 +58,11 @@ public class ShopRepositoryAdapter implements ShopRepository {
   }
 
   @Override
-  public void saveMenus(List<Menu> menus) {
-    menus.forEach(menu -> em.persist(menu));
-  }
-
-  @Override
   public Optional<Menu> findMenuByMenuId(Long menuId) {
     return Optional.ofNullable(em.createQuery("select m, og, o from Menu m join OptionGroup og on m.id = og.menuId " +
             "join Option o on og.id = o.optionGroupId where m.id = :menuId", Menu.class)
             .setParameter("menuId", menuId)
             .getSingleResult());
-  }
-
-  @Override
-  public void removeMenu(Menu menu) {
-    em.remove(menu);
   }
 
   @Override
