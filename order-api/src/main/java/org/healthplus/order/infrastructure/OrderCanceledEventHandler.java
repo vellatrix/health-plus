@@ -17,7 +17,7 @@ public class OrderCanceledEventHandler {
 
   private final OrderCancellationService orderCancellationService;
 
-  @EventListener
+  @EventListener(OrderCanceledEvent.class)
   public void handle(OrderCanceledEvent event) {
     orderCancellationService.cancelOrder(event.getOrderId());
   }
