@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class OrderNotifiedEvent {
@@ -15,8 +16,23 @@ public class OrderNotifiedEvent {
   private String address;
   private List<OrderNotifiedEvent.OrderLine> orderLines;
 
+  public static OrderNotifiedEvent toEvent(OrderPaidEvent paidEvent) {
+    return OrderNotifiedEvent.builder()
+            .orderId(paidEvent.getOrderId())
+            .shopId(paidEvent.getShopId())
+            .totalPrice(paidEvent.getTotalPrice())
+            .address(paidEvent.getCustomerAddress())
+            .orderLines(paidEvent.getOrderLines().stream()
+                    .map(ol -> new OrderNotifiedEvent.OrderLine(
+                            ol.getName(),
+                            ol.getPrice(),
+                            ol.getQuantity()))
+                    .collect(Collectors.toList()))
+            .build();
+  }
+
   @Builder
-  public OrderNotifiedEvent(Long orderId,
+  private OrderNotifiedEvent(Long orderId,
                             Long shopId,
                             Integer totalPrice,
                             String address,

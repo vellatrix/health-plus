@@ -83,20 +83,16 @@ public class Order extends AggregateRoot {
 
 
   public static Order findOrderId(Long orderId) {
-    return new Order(orderId);
-  }
-
-  private Order(Long orderId) {
-    this.id = orderId;
+    return Order.builder()
+            .orderId(orderId)
+            .build();
   }
 
   public static Order toPaymentRequest(Long orderId, Integer amount) {
-    return new Order(orderId, amount);
-  }
-
-  private Order(Long orderId, Integer amount) {
-    this.id = orderId;
-    this.totalPrice = amount;
+    return Order.builder()
+            .orderId(orderId)
+            .totalPrice(amount)
+            .build();
   }
 
   public Integer calculateTotalPrice() {

@@ -23,7 +23,7 @@ public class OrderPaymentController {
   @PostMapping("/{orderId}/payment")
   public ApiResponse<Void> payOrder(@RequestBody @Valid OrderPaymentRequest dto) {
 
-    Order order = OrderDtoConvertor.toOrderPaymentRequest(dto);
+    Order order = OrderDtoConvertor.fromOrderPaymentRequest(dto);
     orderPaymentService.pay(order);
 
     return ApiResponse.success(null);

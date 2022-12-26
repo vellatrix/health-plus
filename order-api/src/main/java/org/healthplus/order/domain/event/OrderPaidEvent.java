@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Builder
 public class OrderPaidEvent extends DomainEvent {
 
   private Long orderId;
@@ -21,6 +20,23 @@ public class OrderPaidEvent extends DomainEvent {
   private Integer totalPrice;
   private String customerAddress;
   private List<OrderLine> orderLines;
+
+  @Builder
+  private OrderPaidEvent(Long orderId,
+                         Long shopId,
+                         Long customerId,
+                         OrderStatus orderStatus,
+                         Integer totalPrice,
+                         String customerAddress,
+                         List<OrderLine> orderLines) {
+    this.orderId = orderId;
+    this.shopId = shopId;
+    this.customerId = customerId;
+    this.orderStatus = orderStatus;
+    this.totalPrice = totalPrice;
+    this.customerAddress = customerAddress;
+    this.orderLines = orderLines;
+  }
 
   public static OrderPaidEvent toEvent(Order order) {
     String address = new StringBuilder(order.getAddress().getCity())

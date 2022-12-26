@@ -32,18 +32,7 @@ public class OrderPaidEventHandler {
                                                       String.format("%s 외 %d개", itemName, itemCount)));
 
     if(isPaymentSuccessful) {
-      publisher.publishEvent(OrderNotifiedEvent.builder()
-              .orderId(event.getOrderId())
-              .shopId(event.getShopId())
-              .totalPrice(event.getTotalPrice())
-              .address(event.getCustomerAddress())
-              .orderLines(event.getOrderLines().stream()
-                      .map(ol -> new OrderNotifiedEvent.OrderLine(
-                              ol.getName(),
-                              ol.getPrice(),
-                              ol.getQuantity()))
-                      .collect(Collectors.toList()))
-              .build());
+      publisher.publishEvent(OrderNotifiedEvent.toEvent(event));
     }
     else {
       orderRepository.remove(Order.findOrderId(event.getOrderId()));
