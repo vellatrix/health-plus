@@ -24,3 +24,16 @@ jobs:
 
       - name: Test with Gradle
         run: ./gradlew test
+
+      - name: Build and Push Docker Image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/health-plus:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/health-plus:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Production
+        run: docker-compose up
