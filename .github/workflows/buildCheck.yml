@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew test
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew :app:build
 
       - name: Build and Push Docker Image
         run: |
