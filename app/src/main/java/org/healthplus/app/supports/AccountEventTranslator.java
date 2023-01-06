@@ -1,4 +1,4 @@
-package org.healthplus.supports;
+package org.healthplus.app.supports;
 
 import org.healthplus.account.domain.RegisterCompletedEvent;
 import org.healthplus.model.domain.EventPublisher;
