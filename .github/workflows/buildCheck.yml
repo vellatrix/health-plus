@@ -36,5 +36,5 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/health-plus:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/health-plus:latest
 
-      - name: Deploy
+      - name: Deploy Project
         run: docker-compose up
