@@ -10,6 +10,7 @@ public class Ping {
 
   @GetMapping("/ping")
   public String answer() {
+    System.out.println("Ping");
     log.info("Ping is successful");
     return "pong";
   }
