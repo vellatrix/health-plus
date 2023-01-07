@@ -39,4 +39,4 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/health-plus:latest
 
       - name: Deploy Project
-        run: nohup docker-compose up &
+        run: nohup docker-compose up
