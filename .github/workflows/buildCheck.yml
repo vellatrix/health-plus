@@ -27,7 +27,7 @@ jobs:
 #      - name: Test with Gradle
 #        run: ./gradlew test
       - name: Check IP
-        run: ifconfig
+        run: ipconfig
 
       - name: Build with Gradle
         run: ./gradlew :app:build
